@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KeyCdr.TextSamples
 {
-    public class BaseTextSampleGenerator
+    public class BaseTextSampleGenerator 
     {
         public BaseTextSampleGenerator()
         {
@@ -14,5 +14,14 @@ namespace KeyCdr.TextSamples
         }
 
         protected Random _rnd;
+
+        protected string NormalizeText(string input)
+        {
+            string[] words = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string normalized = string.Join(" ", words);
+            normalized = normalized.Replace("\t", string.Empty);
+            normalized = normalized.Replace("\r\n", string.Empty);
+            return normalized.Trim();
+        }
     }
 }

@@ -32,17 +32,19 @@ namespace KeyCdr.TextSamples
 
         public string GetWord()
         {
-            return SplitAndGetARandomIndex(new char[] { ' ' });
+            string word = SplitAndGetARandomIndex(new char[] { ' ' });
+            return base.NormalizeText(word);
         }
 
         public string GetSentence()
         {
-            return SplitAndGetARandomIndex(new char[] { '.', ';' });
+            string sentence = SplitAndGetARandomIndex(new char[] { '.', ';' });
+            return base.NormalizeText(sentence);
         }
 
         public string GetParagraph()
         {
-            return _sampleParagraph;
+            return NormalizeText(_sampleParagraph);
         }
 
     }
