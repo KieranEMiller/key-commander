@@ -38,7 +38,7 @@ namespace KeyCdr.UI.ConsoleApp
             string textToShow = string.Empty;
             if (selection.Equals("1")) textToShow = generator.GetWord();
             else if (selection.Equals("2")) textToShow = generator.GetSentence();
-            else if (selection.Equals(3)) textToShow = generator.GetParagraph();
+            else if (selection.Equals("3")) textToShow = generator.GetParagraph();
 
             return textToShow;
         }
