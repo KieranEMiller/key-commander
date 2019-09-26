@@ -13,7 +13,7 @@ namespace KeyCdr.Analytics
             _analyticData = data;
         }
 
-        protected AnalyticData _analyticData;
+        public AnalyticData _analyticData;
 
         public string GetTextShown()
         {
