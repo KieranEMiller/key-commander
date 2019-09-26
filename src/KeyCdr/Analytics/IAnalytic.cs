@@ -8,13 +8,12 @@ namespace KeyCdr.Analytics
 {
     public interface IAnalytic
     {
-        AnalyticType GetAnalyticType();
-
         void Compute();
+
+        AnalyticType GetAnalyticType();
 
         string GetTextShown();
         string GetTextEntered();
-
         string GetResultSummary();
     }
 }
