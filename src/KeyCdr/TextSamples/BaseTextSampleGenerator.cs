@@ -17,6 +17,10 @@ namespace KeyCdr.TextSamples
 
         protected string NormalizeText(string input)
         {
+            //split the string to eliminate groups of more than one spaces, there is probably
+            //a more efficient way to do this; one option is regex but the current implementation
+            //is easiest to understand
+            //TODO: improve efficiency
             string[] words = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             string normalized = string.Join(" ", words);
             normalized = normalized.Replace("\t", string.Empty);
