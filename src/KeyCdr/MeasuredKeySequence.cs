@@ -14,17 +14,21 @@ namespace KeyCdr
             : this(sequence, null)
         { }
 
-        public MeasuredKeySequence(string sequence, IList<AnalyticType> analysisToRun)
+        public MeasuredKeySequence(string sequence, AnalyticType analytic)
+            : this(sequence, new List<AnalyticType>() { analytic })
+        { }
+
+        public MeasuredKeySequence(string sequence, IList<AnalyticType> analysesToRun)
         {
             this.Sequence = sequence;
             this.Analysis = new List<KeyCdr.Analytics.IAnalytic>();
             _stopwatch = new Stopwatch();
 
             //use speed as the default
-            if(_analysesToRun == null)
+            if(analysesToRun == null || analysesToRun.Count == 0)
                 _analysesToRun = new List<AnalyticType>() { AnalyticType.Speed };
             else 
-                _analysesToRun = analysisToRun;
+                _analysesToRun = analysesToRun;
         }
 
         private Stopwatch _stopwatch;
