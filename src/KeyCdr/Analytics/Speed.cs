@@ -8,8 +8,6 @@ namespace KeyCdr.Analytics
 {
     public class Speed : BaseAnalytic, IAnalytic
     {
-        public const int PRECISION = 2;
-
         public Speed(AnalyticData data)
             : base(data)
         { }
@@ -20,7 +18,7 @@ namespace KeyCdr.Analytics
         private double _wpm;
         public double WordsPerMinute {
             get {
-                return Math.Round(_wpm, PRECISION);
+                return Math.Round(_wpm, Constants.PRECISION_FOR_DECIMALS);
             }
             set { _wpm = value; }
         }
@@ -28,7 +26,7 @@ namespace KeyCdr.Analytics
         private double _charsPerSec;
         public double CharsPerSecond {
             get {
-                return Math.Round(_charsPerSec, PRECISION);
+                return Math.Round(_charsPerSec, Constants.PRECISION_FOR_DECIMALS);
             }
             set { _charsPerSec = value; }
         }
@@ -45,9 +43,9 @@ namespace KeyCdr.Analytics
         public override string GetResultSummary()
         {
             return string.Format("TotalTime (ms): {0}, WPM: {1}, Char/s: {2}"
-                , Math.Round(this.TotalTime.TotalMilliseconds, PRECISION)
-                , Math.Round(this.WordsPerMinute, PRECISION)
-                , Math.Round(this.CharsPerSecond, PRECISION)
+                , Math.Round(this.TotalTime.TotalMilliseconds, Constants.PRECISION_FOR_DECIMALS)
+                , Math.Round(this.WordsPerMinute, Constants.PRECISION_FOR_DECIMALS)
+                , Math.Round(this.CharsPerSecond, Constants.PRECISION_FOR_DECIMALS)
             );
         }
 

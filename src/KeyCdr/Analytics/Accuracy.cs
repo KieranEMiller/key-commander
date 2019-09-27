@@ -65,8 +65,8 @@ namespace KeyCdr.Analytics
 
         public void Compute()
         {
-            string[] shownWords = this._analyticData.TextShown.Split(new char[] { ' ' });
-            string[] enteredWords = this._analyticData.TextEntered.Split(new char[] { ' ' });
+            string[] shownWords = this._analyticData.TextShown.Split(Constants.StringSplits.SEPARATOR_WORD);
+            string[] enteredWords = this._analyticData.TextEntered.Split(Constants.StringSplits.SEPARATOR_WORD);
 
             //TODO: need to be able to handle different numbers of words
             for(int i=0; i < Math.Min(shownWords.Length, enteredWords.Length);i++)

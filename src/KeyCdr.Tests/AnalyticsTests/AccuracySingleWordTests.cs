@@ -84,7 +84,7 @@ namespace KeyCdr.Tests.AnalyticsTests
             double wrongExpected = (double)2 / 3;
             Assert.That(accuracy.AccuracyVal, Is.Not.EqualTo(wrongExpected));
 
-            double expected = Math.Round((double)2 / 3, AccuracyMeasurement.ACCURACY_PRECISION);
+            double expected = Math.Round((double)2 / 3, Constants.PRECISION_FOR_DECIMALS);
             Assert.That(accuracy.AccuracyVal, Is.EqualTo(expected));
         }
 

@@ -50,7 +50,7 @@ namespace KeyCdr.Tests.AnalyticsTests
             double notRoundedExpected = (double)2 / 6;
             Assert.That(speed.CharsPerSecond, Is.Not.EqualTo(notRoundedExpected));
 
-            double roundedExpected = Math.Round((double)2 / 6, Speed.PRECISION);
+            double roundedExpected = Math.Round((double)2 / 6, Constants.PRECISION_FOR_DECIMALS);
             Assert.That(speed.CharsPerSecond, Is.EqualTo(roundedExpected));
         }
 

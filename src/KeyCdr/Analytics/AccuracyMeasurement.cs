@@ -8,8 +8,6 @@ namespace KeyCdr.Analytics
 {
     public class AccuracyMeasurement
     {
-        public const int ACCURACY_PRECISION = 2;
-
         public int LengthMeasured { get; set; }
 
         public double GetAccuracy() {
@@ -27,7 +25,7 @@ namespace KeyCdr.Analytics
                 - this.NumShortChars)
                 / (double)this.LengthMeasured;
 
-            return Math.Round(accuracy, ACCURACY_PRECISION);
+            return Math.Round(accuracy, Constants.PRECISION_FOR_DECIMALS);
             
         }
 
