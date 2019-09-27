@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KeyCdr.Analytics;
 using KeyCdr.TextSamples;
 
 namespace KeyCdr.UI.ConsoleApp
@@ -14,14 +15,16 @@ namespace KeyCdr.UI.ConsoleApp
         private static void RunGameLoop()
         {
             string selection;
-            while((selection = ShowMenuAndPromptForNextAction()).Equals("x", StringComparison.CurrentCultureIgnoreCase) == false)
+            while ((selection = ShowMenuAndPromptForNextAction()).Equals("x", StringComparison.CurrentCultureIgnoreCase) == false)
             {
                 string textToShow = MenuSelectionToTextSample(selection);
                 Console.WriteLine("press enter when ready to begin.  good luck!");
                 Console.ReadLine();
                 Console.WriteLine(textToShow);
 
-                MeasuredKeySequence analysis = new MeasuredKeySequence(textToShow);
+                MeasuredKeySequence analysis = new MeasuredKeySequence(
+                    textToShow, new List<AnalyticType> { AnalyticType.Speed, AnalyticType.Accuracy }
+                );
                 analysis.Start();
 
                 string userInput = Console.ReadLine();
@@ -59,7 +62,6 @@ namespace KeyCdr.UI.ConsoleApp
         {
             Console.WriteLine();
             Console.WriteLine("your results:");
-            Console.WriteLine("\tkey sequence");
             foreach (var result in results)
                 Console.WriteLine("\t{0}", result.GetResultSummary());
 
