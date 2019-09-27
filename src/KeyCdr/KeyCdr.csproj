@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analytics\AccuracyMeasurement.cs" />
     <Compile Include="Analytics\AnalyticData.cs" />
     <Compile Include="Analytics\Speed.cs" />
     <Compile Include="Analytics\Accuracy.cs" />

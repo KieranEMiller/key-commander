@@ -11,39 +11,73 @@ namespace KeyCdr.Analytics
     //- investigate other options for complex likeness through established algorithms
     public class Accuracy : BaseAnalytic, IAnalytic
     {
-        public const int ACCURACY_PRECISION = 2;
-
         public Accuracy(AnalyticData data)
             : base(data)
-        { }
+        {
+            _measurements = new List<AccuracyMeasurement>();
+        }
 
         public override AnalyticType GetAnalyticType()
         { return AnalyticType.Accuracy; }
 
-        private double _accuracyVal;
+        private List<AccuracyMeasurement> _measurements;
+
         public double AccuracyVal {
             get {
-                return Math.Round(_accuracyVal, ACCURACY_PRECISION);
+                return _measurements.Average(m => m.GetAccuracy());
             }
-            set { _accuracyVal = value; } 
         }
 
-        public int NumIncorrectChars { get; set; }
+        public double NumWordsEvaluated {
+            get {
+                return _measurements.Count;
+            }
+        }
+
+        public double NumCharsEvaluated {
+            get {
+                return _measurements.Sum(m=>m.LengthMeasured);
+            }
+        }
+
+        public int NumIncorrectChars {
+            get {
+                return _measurements.Sum(m => m.NumIncorrectChars);
+            }
+        }
+
         public int NumCorrectChars {
-            get
-            {
-                return this._analyticData.TextShown.Length - NumIncorrectChars;
+            get {
+                return _measurements.Sum(m => m.NumCorrectChars);
             }
         }
 
-        public int NumShortChars { get; set; }
-        public int NumExtraChars { get; set; }
+        public int NumShortChars {
+            get {
+                return _measurements.Sum(m => m.NumShortChars);
+            }
+        }
+        public int NumExtraChars {
+            get {
+                return _measurements.Sum(m => m.NumExtraChars);
+            }
+        }
 
         public void Compute()
         {
-            string shown = this._analyticData.TextShown;
-            string entered = this._analyticData.TextEntered;
+            string[] shownWords = this._analyticData.TextShown.Split(new char[] { ' ' });
+            string[] enteredWords = this._analyticData.TextEntered.Split(new char[] { ' ' });
 
+            //TODO: need to be able to handle different numbers of words
+            for(int i=0; i < Math.Min(shownWords.Length, enteredWords.Length);i++)
+            {
+                var measure = ComputeForWord(shownWords[i], enteredWords[i]);
+                _measurements.Add(measure);
+            }
+        }
+
+        public AccuracyMeasurement ComputeForWord(string shown, string entered)
+        {
             //init cost to the difference in length between the two strings
             //if the entered string is too short or too long both should be counted as 'wrong'		
             int wrongChars = 0;
@@ -56,13 +90,20 @@ namespace KeyCdr.Analytics
                     wrongChars++;
             }
 
+            int correctChars = numCharsToCompare - wrongChars;
             int lengthDiff = entered.Length - shown.Length;
+
+            //positive diff => extra characters
             int extraChars = (lengthDiff > 0) ? lengthDiff : 0;
+
+            //negative diff => too few characters
             int shortChars = (lengthDiff < 0) ? Math.Abs(lengthDiff) : 0;
 
-            //TODO decide which measurement type to use
+            //reasoning behind using different lengths depending if their are
+            //too many or two few characters: you could approach the accuracy calculation 2 ways:
+
             //method 1:
-            //calculate the accuracy relative to the expected length; this ensures that 
+            //calculate the accuracy relative to the expected or shown length; this ensures that 
             //having X too many characters gets you the same accuracy as X too few characters
             //ex: expected 'test', input 'te' and 'testxy' should have the same accuracy
             //double accuracy = (shown.Length - wrongChars - Math.Abs(lengthDiff)) / (double)shown.Length;
@@ -72,35 +113,25 @@ namespace KeyCdr.Analytics
             //many characters.  as in the previous example:
             //expected 'test', input 'te' and 'testxy'; we want the later to have a better accuracy
             //since they did get 4 matches so 4/6 total vs 2/4
-
-            double accuracy = 0;
-            //edge case: if both strings are empty, then accuracy...is 100%? 
-            if (shown.Length == 0 && entered.Length == 0)
-                accuracy = 1;
-
-            else if(shortChars > 0)
-                accuracy = (shown.Length - wrongChars - shortChars) / (double)shown.Length;
-
-            else if(extraChars > 0)
-                accuracy = (entered.Length - wrongChars - extraChars) / (double)entered.Length;
-
-            else
-                accuracy = (shown.Length - wrongChars) / (double)shown.Length;
-
-            this.AccuracyVal = accuracy;
-            this.NumIncorrectChars = wrongChars;
-            this.NumShortChars = shortChars;
-            this.NumExtraChars = extraChars;
+            return new AccuracyMeasurement()
+            {
+                LengthMeasured = (lengthDiff > 0) ? entered.Length : shown.Length,
+                NumCorrectChars = correctChars,
+                NumIncorrectChars = wrongChars,
+                NumShortChars = shortChars,
+                NumExtraChars = extraChars
+            };
         }
 
         public override string GetResultSummary()
         {
-            return string.Format("{0}%: matched {1} incorrectly of {2}; extra: {3}; short: {4}",
-                this.AccuracyVal,
+            return string.Format("{0}%: matched {1} incorrectly, {5} correctly of {2} chars; extra: {3}; short: {4}",
+                this.AccuracyVal*100,
                 this.NumIncorrectChars,
-                base._analyticData.TextShown.Length,
+                this.NumCharsEvaluated,
                 this.NumExtraChars,
-                this.NumShortChars
+                this.NumShortChars,
+                this.NumCorrectChars
             );
         }
     }

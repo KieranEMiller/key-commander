@@ -60,7 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyticsTests\AccuracyTests.cs" />
+    <Compile Include="AnalyticsTests\AccuracyMultiWordTests.cs" />
+    <Compile Include="AnalyticsTests\AccuracySingleWordTests.cs" />
     <Compile Include="AnalyticsTests\BaseAnalyticTests.cs" />
     <Compile Include="AnalyticsTests\SpeedTests.cs" />
     <Compile Include="MeasuredKeySequenceTests.cs" />
