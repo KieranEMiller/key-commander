@@ -8,7 +8,7 @@ namespace KeyCdr.Analytics
 {
     public class Speed : BaseAnalytic, IAnalytic
     {
-        private const int PRECISION = 2;
+        public const int PRECISION = 2;
 
         public Speed(AnalyticData data)
             : base(data)
@@ -17,8 +17,21 @@ namespace KeyCdr.Analytics
         public override AnalyticType GetAnalyticType()
         { return AnalyticType.Speed; }
 
-        public double WordsPerMinute { get; set; }
-        public double CharsPerSecond { get; set; }
+        private double _wpm;
+        public double WordsPerMinute {
+            get {
+                return Math.Round(_wpm, PRECISION);
+            }
+            set { _wpm = value; }
+        }
+
+        private double _charsPerSec;
+        public double CharsPerSecond {
+            get {
+                return Math.Round(_charsPerSec, PRECISION);
+            }
+            set { _charsPerSec = value; }
+        }
 
         public TimeSpan TotalTime { get; set; }
 
