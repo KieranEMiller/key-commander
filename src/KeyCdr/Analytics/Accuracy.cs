@@ -11,6 +11,8 @@ namespace KeyCdr.Analytics
     //- investigate other options for complex likeness through established algorithms
     public class Accuracy : BaseAnalytic, IAnalytic
     {
+        public const int ACCURACY_PRECISION = 2;
+
         public Accuracy(AnalyticData data)
             : base(data)
         { }
@@ -18,10 +20,24 @@ namespace KeyCdr.Analytics
         public override AnalyticType GetAnalyticType()
         { return AnalyticType.Accuracy; }
 
-        public double AccuracyVal { get; set; }
-        public int IncorrectChars { get; set; }
-        public int ShortChars { get; set; }
-        public int ExtraChars { get; set; }
+        private double _accuracyVal;
+        public double AccuracyVal {
+            get {
+                return Math.Round(_accuracyVal, ACCURACY_PRECISION);
+            }
+            set { _accuracyVal = value; } 
+        }
+
+        public int NumIncorrectChars { get; set; }
+        public int NumCorrectChars {
+            get
+            {
+                return this._analyticData.TextShown.Length - NumIncorrectChars;
+            }
+        }
+
+        public int NumShortChars { get; set; }
+        public int NumExtraChars { get; set; }
 
         public void Compute()
         {
@@ -56,27 +72,35 @@ namespace KeyCdr.Analytics
             //many characters.  as in the previous example:
             //expected 'test', input 'te' and 'testxy'; we want the later to have a better accuracy
             //since they did get 4 matches so 4/6 total vs 2/4
-            double accuracy = (shown.Length - wrongChars) / (double)shown.Length;
-            if(shortChars > 0)
+
+            double accuracy = 0;
+            //edge case: if both strings are empty, then accuracy...is 100%? 
+            if (shown.Length == 0 && entered.Length == 0)
+                accuracy = 1;
+
+            else if(shortChars > 0)
                 accuracy = (shown.Length - wrongChars - shortChars) / (double)shown.Length;
 
-            if(extraChars > 0)
-                accuracy = entered.Length - wrongChars / (double)entered.Length;
+            else if(extraChars > 0)
+                accuracy = (entered.Length - wrongChars - extraChars) / (double)entered.Length;
+
+            else
+                accuracy = (shown.Length - wrongChars) / (double)shown.Length;
 
             this.AccuracyVal = accuracy;
-            this.IncorrectChars = wrongChars;
-            this.ShortChars = shortChars;
-            this.ExtraChars = extraChars;
+            this.NumIncorrectChars = wrongChars;
+            this.NumShortChars = shortChars;
+            this.NumExtraChars = extraChars;
         }
 
         public override string GetResultSummary()
         {
             return string.Format("{0}%: matched {1} incorrectly of {2}; extra: {3}; short: {4}",
                 this.AccuracyVal,
-                this.IncorrectChars,
+                this.NumIncorrectChars,
                 base._analyticData.TextShown.Length,
-                this.ExtraChars,
-                this.ShortChars
+                this.NumExtraChars,
+                this.NumShortChars
             );
         }
     }
