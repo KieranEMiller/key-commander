@@ -19,7 +19,7 @@ namespace KeyCdr.TextSamples
         {
             //split the string to eliminate groups of more than one spaces, there is probably
             //a more efficient way to do this; one option is regex but the current implementation
-            //is easiest to understand
+            //is easiest to understand in my opinion
             //TODO: improve efficiency
             string[] words = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             string normalized = string.Join(" ", words);
