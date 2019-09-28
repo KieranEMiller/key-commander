@@ -27,16 +27,22 @@ namespace KeyCdr.TextSamples
         private IConfiguration _angleSharpConfig;
         private IBrowsingContext _angleSharpContext;
 
-        public async Task<WikipediaTextResult> GetWikipediaText()
+        public async Task<WikipediaTextResult> GetWikipediaTextFromString(string html)
         {
-            WikipediaTextResult result = new WikipediaTextResult();
-            result = await LoadArticleAndParse();
+            var document = await _angleSharpContext.OpenAsync(req => req.Content(html));
+            WikipediaTextResult result = ParseHtml(document);
             return result;
         }
 
-        public async Task<WikipediaTextResult> LoadArticleAndParse()
+        public async Task<WikipediaTextResult> GetWikipediaTextFromUrl(string url)
         {
-            AngleSharp.Dom.IDocument document = await _angleSharpContext.OpenAsync(URL_RANDOM_PAGE);
+            AngleSharp.Dom.IDocument document = await _angleSharpContext.OpenAsync(url);
+            WikipediaTextResult result = ParseHtml(document);
+            return result;
+        }
+
+        public WikipediaTextResult ParseHtml(AngleSharp.Dom.IDocument document)
+        {
             bool isMobile = IsMobile(document.Url);
             var result = new WikipediaTextResult
             {
