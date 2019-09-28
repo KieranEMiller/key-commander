@@ -15,8 +15,16 @@ namespace KeyCdr.Tests.TextSamplesTests
         public async Task test()
         {
             var gen = new WikipediaTextGenerator();
-            var textSections = await gen.GetIt();
-            string qwer = "qwer";
+
+            WikipediaTextResult result = null;
+            for (int i = 0; i < 10; i++)
+            {
+                result = await gen.GetWikipediaText();
+                Console.WriteLine(result.Title);
+                Console.WriteLine(result.Url);
+                foreach (var section in result.TextSections)
+                    Console.WriteLine(section);
+            }
         }
     }
 }

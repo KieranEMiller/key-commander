@@ -64,6 +64,7 @@
     <Compile Include="TextSamples\SimpleTextGenerator.cs" />
     <Compile Include="TextSamples\HardCodedTextGenerator.cs" />
     <Compile Include="TextSamples\ITextSampleGenerator.cs" />
+    <Compile Include="TextSamples\WikipediaTextResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
