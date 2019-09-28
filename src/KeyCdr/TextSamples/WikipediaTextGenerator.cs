@@ -34,6 +34,11 @@ namespace KeyCdr.TextSamples
             return result;
         }
 
+        public async Task<WikipediaTextResult> GetWikipediaTextFromUrl()
+        {
+            return await GetWikipediaTextFromUrl(URL_RANDOM_PAGE);
+        }
+
         public async Task<WikipediaTextResult> GetWikipediaTextFromUrl(string url)
         {
             AngleSharp.Dom.IDocument document = await _angleSharpContext.OpenAsync(url);
