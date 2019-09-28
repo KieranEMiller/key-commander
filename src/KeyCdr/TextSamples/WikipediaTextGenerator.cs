@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KeyCdr.TextSamples
 {
-    public class WikipediaTextGenerator : SimpleTextGenerator, ITextSampleGenerator
+    public class WikipediaTextGenerator : BaseTextSampleGenerator, ITextSampleGenerator
     {
         public const string URL_RANDOM_PAGE = "https://en.wikipedia.org/wiki/Special:Random";
 
@@ -26,6 +26,32 @@ namespace KeyCdr.TextSamples
 
         private IConfiguration _angleSharpConfig;
         private IBrowsingContext _angleSharpContext;
+
+        private WikipediaTextResult _wikiResult;
+
+        public string GetWord()
+        {
+            if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
+            throw new NotImplementedException();
+        }
+
+        public string GetSentence()
+        {
+            if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
+            throw new NotImplementedException();
+        }
+
+        public string GetParagraph()
+        {
+            if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
+            return _wikiResult.TextSections.First();
+        }
+
+        public WikipediaTextResult GetWikipediaTextFromUrlSynchronously()
+        {
+            Task<WikipediaTextResult> task = Task.Run<WikipediaTextResult>(async () => await GetWikipediaTextFromUrl());
+            return task.Result;
+        }
 
         public async Task<WikipediaTextResult> GetWikipediaTextFromString(string html)
         {
