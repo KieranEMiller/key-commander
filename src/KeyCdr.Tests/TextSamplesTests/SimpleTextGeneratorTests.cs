@@ -101,7 +101,7 @@ namespace KeyCdr.Tests.TextSamplesTests
         {
             List<string> allSentences = new List<string>();
             var stringb = new StringBuilder();
-            for(int i=0; i < 10-1;i++)
+            for(int i=0; i < 10;i++)
             {
                 string sample = string.Format("This is a test sentence - {0}. ", i.ToString());
                 stringb.Append(sample);
