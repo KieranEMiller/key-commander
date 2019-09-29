@@ -36,7 +36,7 @@ namespace KeyCdr.UI.ConsoleApp
 
         private static string MenuSelectionToTextSample(string selection)
         {
-            ITextSampleGenerator generator = new KeyCdr.TextSamples.HardCodedTextGenerator();
+            ITextSampleGenerator generator = new KeyCdr.TextSamples.WikipediaTextGenerator();
 
             string textToShow = string.Empty;
             if (selection.Equals("1")) textToShow = generator.GetWord();
