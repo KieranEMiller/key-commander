@@ -8,6 +8,8 @@ namespace KeyCdr.TextSamples
 {
     public class WikipediaTextResult
     {
+        private const int MIN_TEXT_SECTION_CHAR_LENGTH = 30;
+
         public WikipediaTextResult()
         {
             this.TextSections = new List<string>();
@@ -24,8 +26,11 @@ namespace KeyCdr.TextSamples
             //clean up, normalize text
             text = text.Trim();
 
-            if(!string.IsNullOrWhiteSpace(text))
+            if (!string.IsNullOrWhiteSpace(text)
+                && text.Length > MIN_TEXT_SECTION_CHAR_LENGTH)
+            {
                 this.TextSections.Add(text);
+            }
         }
 
         public bool HasSufficientDataForUse()
