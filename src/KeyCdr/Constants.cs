@@ -8,7 +8,6 @@ namespace KeyCdr
 {
     public class Constants
     {
-        //precision for decimal numbers
         public const int PRECISION_FOR_DECIMALS = 2;
 
         public class StringSplits
