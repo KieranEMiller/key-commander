@@ -32,19 +32,28 @@ namespace KeyCdr.TextSamples
         public string GetWord()
         {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
-            throw new NotImplementedException();
+
+            string text = _wikiResult.TextSections[base.GetRandomIndex(_wikiResult.TextSections)];
+            string word = SplitAndGetARandomIndex(text, Constants.StringSplits.SEPARATOR_WORD);
+            return base.NormalizeText(word);
         }
 
         public string GetSentence()
         {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
-            throw new NotImplementedException();
+
+            string text = _wikiResult.TextSections[base.GetRandomIndex(_wikiResult.TextSections)];
+            string word = SplitAndGetARandomIndex(text, Constants.StringSplits.SEPARATOR_SENTENACE);
+            return base.NormalizeText(word);
         }
 
         public string GetParagraph()
         {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
-            return _wikiResult.TextSections.First();
+
+            string text = _wikiResult.TextSections[base.GetRandomIndex(_wikiResult.TextSections)];
+            text = base.GetParagraphFromTextBlock(text, Constants.StringSplits.SEPARATOR_SENTENACE);
+            return base.NormalizeText(text);
         }
 
         public WikipediaTextResult GetWikipediaTextFromUrlSynchronously()
@@ -84,7 +93,7 @@ namespace KeyCdr.TextSamples
 
             IEnumerable<string> textSections = ExtractTextSections(document, isMobile);
             foreach (var section in textSections)
-                result.AddText(section);
+                result.AddText(base.NormalizeText(section));
 
             return result;
         }

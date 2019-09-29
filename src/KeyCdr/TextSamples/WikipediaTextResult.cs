@@ -22,8 +22,10 @@ namespace KeyCdr.TextSamples
         public void AddText(string text)
         {
             //clean up, normalize text
-            
-            this.TextSections.Add(text);
+            text = text.Trim();
+
+            if(!string.IsNullOrWhiteSpace(text))
+                this.TextSections.Add(text);
         }
 
         public bool HasSufficientDataForUse()
