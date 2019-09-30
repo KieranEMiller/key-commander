@@ -17,7 +17,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("a", 60, 1)]
         [TestCase("the quick brown fox jumps over the lazy dog this_is_10_words", 10, 60)]
         [TestCase("", 10, 0)]
-        public void speed_calc_given_timespan_in_s_wpm_is_accurate_for_whole_numbers(string text, int numSeconds, int expectedWpm)
+        public void given_timespan_in_s_wpm_is_accurate_for_whole_numbers(string text, int numSeconds, int expectedWpm)
         {
             var time = new TimeSpan(0, 0, 0, numSeconds);
             var data = new AnalyticData() { Elapsed = time, TextEntered = text};
@@ -30,7 +30,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("ab", 1, 2)]
         [TestCase("abcdefghij", 1, 10)]
         [TestCase("abcde", 5, 1)]
-        public void speed_calc_given_timespan_in_s_chars_per_sec_accurate_for_whole_numbers(string text, int numSeconds, int expected)
+        public void given_timespan_in_s_chars_per_sec_accurate_for_whole_numbers(string text, int numSeconds, int expected)
         {
             var time = new TimeSpan(0, 0, 0, numSeconds);
             var data = new AnalyticData() { Elapsed = time, TextEntered = text};
@@ -40,7 +40,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         }
 
         [Test]
-        public void speed_calc_given_timespan_in_s_chars_per_sec_accurate_for_fractions()
+        public void given_timespan_in_s_chars_per_sec_accurate_for_fractions()
         {
             var time = new TimeSpan(0, 0, 0, 6);
             var data = new AnalyticData() { Elapsed = time, TextEntered = "ab"};
@@ -56,7 +56,7 @@ namespace KeyCdr.Tests.AnalyticsTests
 
         [TestCase(120, "abcd", 0.5)]
         [TestCase(10, "a b c d e", 30.0)]
-        public void speed_calc_given_timespan_in_s_wpm_accurate_for_fractions(int numSeconds, string text, double expected)
+        public void given_timespan_in_s_wpm_accurate_for_fractions(int numSeconds, string text, double expected)
         {
             var time = new TimeSpan(0, 0, 0, numSeconds);
             var data = new AnalyticData() { Elapsed = time, TextEntered = text};

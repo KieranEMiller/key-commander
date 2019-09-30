@@ -12,7 +12,7 @@ namespace KeyCdr.Tests
     public class MeasuredKeySequenceTests
     {
         [Test]
-        public void measuredkeyseq_uses_a_default_analysis_type_when_none_set()
+        public void uses_a_default_analysis_type_when_none_set()
         {
             var seq = new MeasuredKeySequence(string.Empty);
             seq.Start();
@@ -23,7 +23,7 @@ namespace KeyCdr.Tests
 
         [TestCase(AnalyticType.Speed)]
         [TestCase(AnalyticType.Accuracy)]
-        public void measuredkeyseq_uses_the_specific_analysis_type_when_one_set_in_ctor(AnalyticType type)
+        public void uses_the_specific_analysis_type_when_one_set_in_ctor(AnalyticType type)
         {
             var seq = new MeasuredKeySequence(string.Empty, type);
             seq.Start();
@@ -32,7 +32,7 @@ namespace KeyCdr.Tests
         }
 
         [Test]
-        public void measuredkeyseq_uses_multiple_analysisttypes_when_used_in_ctor()
+        public void uses_multiple_analysisttypes_when_used_in_ctor()
         {
             var seq = new MeasuredKeySequence(string.Empty, new List<AnalyticType> {AnalyticType.Accuracy, AnalyticType.Speed});
             seq.Start();
@@ -42,7 +42,7 @@ namespace KeyCdr.Tests
         }
 
         [Test]
-        public void measuredkeyseq_running_generates_a_non_zero_time_span()
+        public void running_generates_a_non_zero_time_span()
         {
             var seq = new MeasuredKeySequence(string.Empty, AnalyticType.Speed);
             seq.Start();
@@ -52,7 +52,7 @@ namespace KeyCdr.Tests
         }
 
         [Test]
-        public void measuredkeyseq_running_generates_a_ianalytic_with_all_run_data()
+        public void running_generates_a_ianalytic_with_all_run_data()
         {
             var seq = new MeasuredKeySequence("textin", AnalyticType.Accuracy);
             seq.Start();

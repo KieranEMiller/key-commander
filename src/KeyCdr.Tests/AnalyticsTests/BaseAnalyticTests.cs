@@ -14,7 +14,7 @@ namespace KeyCdr.Tests.AnalyticsTests
     {
         [TestCase(AnalyticType.Accuracy, typeof(Accuracy))]
         [TestCase(AnalyticType.Speed, typeof(Speed))]
-        public void baseanalytic_factory_returns_correct_IAnalytic_by_type(AnalyticType type, Type result)
+        public void factory_returns_correct_IAnalytic_by_type(AnalyticType type, Type result)
         {
             IAnalytic analytic = BaseAnalytic.Create(type, null);
             Assert.That(analytic, Is.TypeOf(result));

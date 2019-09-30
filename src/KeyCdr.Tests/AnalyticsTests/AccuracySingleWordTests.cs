@@ -14,7 +14,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         //test prefix: accuracy_sw
 
         [TestCase("qwer", "zxcv")]
-        public void accuracy_sw_text_shown_and_entered_correct_after_compute(string input, string expected)
+        public void text_shown_and_entered_correct_after_compute(string input, string expected)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -28,7 +28,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("abc", "xyz", 3)]
         [TestCase("abc", "ayc", 1)]
         [TestCase("abc", "ayz", 2)]
-        public void accuracy_sw_counts_number_of_wrong_chars_for_equal_length_strings(string input, string expected, int numDiffChars)
+        public void counts_number_of_wrong_chars_for_equal_length_strings(string input, string expected, int numDiffChars)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -41,7 +41,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("abc", "xyz", 0)]
         [TestCase("abc", "ayc", 2)]
         [TestCase("abc", "zyc", 1)]
-        public void accuracy_sw_counts_number_of_correct_chars_for_equal_length_strings(string input, string expected, int numSameChars)
+        public void counts_number_of_correct_chars_for_equal_length_strings(string input, string expected, int numSameChars)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -54,7 +54,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("qwer", "", 4)]
         [TestCase("qwer", "qwer", 0)]
         [TestCase("qwer", "qwerqwer", 0)]
-        public void accuracy_sw_counts_num_short_chars_when_expected_length_less_than_shown(string input, string expected, int numShortChars)
+        public void counts_num_short_chars_when_expected_length_less_than_shown(string input, string expected, int numShortChars)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -68,7 +68,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("qwer", "qwerq", 1)]
         [TestCase("qwer", "zxcvq", 1)]
         [TestCase("qwer", "qwerqwer", 4)]
-        public void accuracy_sw_counts_num_extra_chars_when_expected_length_greater_than_shown(string input, string expected, int numExtraChars)
+        public void counts_num_extra_chars_when_expected_length_greater_than_shown(string input, string expected, int numExtraChars)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -76,7 +76,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         }
 
         [Test]
-        public void accuracy_sw_is_calculated_to_configured_precision()
+        public void is_calculated_to_configured_precision()
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = "qwerty", TextEntered = "qwer" });
             accuracy.Compute();
@@ -94,7 +94,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("abcd", "zbxy", 0.25)]
         [TestCase("abcd", "zbcd", 0.75)]
         [TestCase("abcd", "abcz", 0.75)]
-        public void accuracy_sw_calculated_correctly_for_equal_length_strings(string input, string expected, double expectedAcc)
+        public void calculated_correctly_for_equal_length_strings(string input, string expected, double expectedAcc)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -106,7 +106,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("abcd", "azx", 0.25)]
         [TestCase("abcd", "zby", 0.25)]
         [TestCase("abcd", "a", 0.25)]
-        public void accuracy_sw_calculated_correctly_for_shorted_strings(string input, string expected, double expectedAcc)
+        public void calculated_correctly_for_shorted_strings(string input, string expected, double expectedAcc)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -118,7 +118,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("abcd", "abcde", 0.80)]
         [TestCase("abcd", "abzdv", 0.60)]
         [TestCase("abcd", "abcdabcd", 0.50)]
-        public void accuracy_sw_calculated_correctly_for_extra_long_strings(string input, string expected, double expectedAcc)
+        public void calculated_correctly_for_extra_long_strings(string input, string expected, double expectedAcc)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -128,7 +128,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("", "", 1.0)]
         [TestCase("abc", "", 0.0)]
         [TestCase("", "abc", 0.0)]
-        public void accuracy_sw_edge_cases(string input, string expected, double expectedAcc)
+        public void edge_cases(string input, string expected, double expectedAcc)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -136,7 +136,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         }
 
         [Test]
-        public void accuracy_sw_summary_contains_accuracy_percent()
+        public void summary_contains_accuracy_percent()
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = "abcd", TextEntered = "abxx" });
             accuracy.Compute();
