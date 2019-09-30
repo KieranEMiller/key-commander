@@ -73,7 +73,9 @@
     <Compile Include="EmbeddedResources.cs" />
     <Compile Include="MeasuredKeySequenceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextSamplesTests\FakeAngleSharpBrowsingContext.cs" />
     <Compile Include="TextSamplesTests\SimpleTextGeneratorTests.cs" />
+    <Compile Include="TextSamplesTests\WikipediaTextGeneratorParsingTests.cs" />
     <Compile Include="TextSamplesTests\WikipediaTextGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
