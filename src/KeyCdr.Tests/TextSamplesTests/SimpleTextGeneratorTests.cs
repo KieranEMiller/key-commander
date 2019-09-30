@@ -64,6 +64,14 @@ namespace KeyCdr.Tests.TextSamplesTests
             Assert.That(simple.GetSentence(), Is.AnyOf(possibilities)); 
         }
 
+        [TestCase("  This is         a test-it   contains      a   few sent; With  diff blah blah    . Yada Yada Yada    ", new string[]
+            {"This is a test-it contains a few sent", "With diff blah blah", "Yada Yada Yada" })]
+        public void simple_sentence_extra_whitespace(string fullText, string[] possibilities)
+        {
+            var simple = new SimpleTextGenerator(fullText);
+            Assert.That(simple.GetSentence(), Is.AnyOf(possibilities));
+        }
+
         [Test]
         [Repeat(3)]
         public void simple_sentence_tabs_newlines_get_stripped()
@@ -109,7 +117,7 @@ namespace KeyCdr.Tests.TextSamplesTests
             }
 
             List<string> possibilities = new List<string>();
-            for (int i = 0; i < allSentences.Count - SimpleTextGenerator.NUM_SENTENCES_IN_A_PARAGRAPH; i++)
+            for (int i = 0; i <= allSentences.Count - SimpleTextGenerator.NUM_SENTENCES_IN_A_PARAGRAPH; i++)
             {
                 possibilities.Add(string.Join("", allSentences.Skip(i).Take(SimpleTextGenerator.NUM_SENTENCES_IN_A_PARAGRAPH)).Trim());
             }
