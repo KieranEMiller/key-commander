@@ -31,13 +31,13 @@ namespace KeyCdr.Tests.TextSamplesTests
         [TestCase("https://en.m.blah/test")]
         [TestCase("https://en.M.blah/test")]
         [TestCase("HTTPS://EN.M.BLAH/TEST")]
-        public void wikipedia_text_gen_mobile_detected_correctly(string url)
+        public void mobile_url_detected_correctly(string url)
         {
             Assert.That(_wikiGenerator.IsMobile(url), Is.True);
         }
 
         [Test]
-        public void wikipedia_text_gen_mobile_title_retrieved_with_correct_selector()
+        public void mobile_title_retrieved_with_correct_selector()
         {
             var doc = new Moq.Mock<IDocument>();
 
@@ -61,7 +61,7 @@ namespace KeyCdr.Tests.TextSamplesTests
         }
 
         [Test]
-        public void wikipedia_text_gen_desktop_title_retrieved_with_correct_selector()
+        public void desktop_title_retrieved_with_correct_selector()
         {
             var doc = new Moq.Mock<IDocument>();
             
@@ -76,10 +76,29 @@ namespace KeyCdr.Tests.TextSamplesTests
                     It.Is<string>(a => a.Equals(Constants.Wikipedia.ArticleTitle.TITLE_DESKTOP))
                 )
             ).Returns(desktopTitle.Object);
+            doc.Setup(s => s.QuerySelectorAll(It.IsAny<string>())).Returns(default(IHtmlCollection<IElement>));
 
             var result = _wikiGenerator.ParseHtml(doc.Object);
             Assert.That(result.IsMobile, Is.False);
             Assert.That(result.Title, Is.EqualTo(TITLE));
+        }
+
+        [Test]
+        public void no_text_sections_or_title_does_not_throw_exception()
+        {
+            var doc = new Moq.Mock<IDocument>();
+            
+            string mobileUrl = string.Empty;
+            doc.Setup(s => s.Url).Returns(mobileUrl);
+
+            var desktopTitle = new Moq.Mock<IElement>();
+            doc.Setup(s => s.QuerySelector(It.IsAny<string>())).Returns(()=>null);
+            doc.Setup(s => s.QuerySelectorAll(It.IsAny<string>())).Returns(()=>null);
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = _wikiGenerator.ParseHtml(doc.Object);
+            });
         }
     }
 }
