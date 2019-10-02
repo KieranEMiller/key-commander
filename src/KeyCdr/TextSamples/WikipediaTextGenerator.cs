@@ -29,31 +29,47 @@ namespace KeyCdr.TextSamples
 
         private WikipediaTextResult _wikiResult;
 
-        public string GetWord()
+        public override TextSampleSourceType GetSourceType()
+        {
+            return TextSampleSourceType.Wikipedia;
+        }
+
+        public ITextSample TextToTextSample(string text, string sourceKey)
+        {
+            return new TextSample {
+                Text = base.NormalizeText(text),
+
+                //the article's url serves as the source key
+                SourceKey = sourceKey,
+                SourceType = GetSourceType()
+            };
+        }
+
+        public ITextSample GetWord()
         {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
 
             string text = _wikiResult.TextSections[base.GetRandomIndex(_wikiResult.TextSections)];
             string word = SplitAndGetARandomIndex(text, Constants.StringSplits.SEPARATOR_WORD);
-            return base.NormalizeText(word);
+            return TextToTextSample(text, _wikiResult.Url);
         }
 
-        public string GetSentence()
+        public ITextSample GetSentence()
         {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
 
             string text = _wikiResult.TextSections[base.GetRandomIndex(_wikiResult.TextSections)];
             string sentence = SplitAndGetARandomIndex(text, Constants.StringSplits.SEPARATOR_SENTENACE);
-            return base.NormalizeText(sentence);
+            return TextToTextSample(text, _wikiResult.Url);
         }
 
-        public string GetParagraph()
+        public ITextSample GetParagraph()
         {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
 
             string text = _wikiResult.TextSections[base.GetRandomIndex(_wikiResult.TextSections)];
             text = base.GetParagraphFromTextBlock(text, Constants.StringSplits.SEPARATOR_SENTENACE);
-            return base.NormalizeText(text);
+            return TextToTextSample(text, _wikiResult.Url);
         }
 
         public WikipediaTextResult GetWikipediaTextFromUrlSynchronously()

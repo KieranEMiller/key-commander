@@ -12,6 +12,11 @@ namespace KeyCdr.TextSamples
             : base(_sampleParagraph)
         { }
 
+        public override TextSampleSourceType GetSourceType()
+        {
+            return TextSampleSourceType.HardCoded;
+        }
+
         //from the first paragraph of moby dick to use as a sample
         private const string _sampleParagraph = @"
             Call me Ishmael. Some years ago—never mind how long precisely—having

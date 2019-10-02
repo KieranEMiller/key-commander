@@ -19,22 +19,31 @@ namespace KeyCdr.TextSamples
 
         public string Text { get; set; }
 
-        public string GetWord()
+        public ITextSample TextToTextSample(string text)
+        {
+            return new TextSample {
+                Text = base.NormalizeText(text),
+                SourceKey = "SimpleText",
+                SourceType = base.GetSourceType()
+            };
+        }
+        
+        public ITextSample GetWord()
         {
             string word = base.SplitAndGetARandomIndex(this.Text, Constants.StringSplits.SEPARATOR_WORD);
-            return base.NormalizeText(word);
+            return TextToTextSample(word);
         }
 
-        public string GetSentence()
+        public ITextSample GetSentence()
         {
             string sentence = base.SplitAndGetARandomIndex(this.Text, Constants.StringSplits.SEPARATOR_SENTENACE);
-            return base.NormalizeText(sentence);
+            return TextToTextSample(sentence);
         }
 
-        public string GetParagraph()
+        public ITextSample GetParagraph()
         {
             string paragraph = base.GetParagraphFromTextBlock(this.Text, Constants.StringSplits.SEPARATOR_SENTENACE);
-            return base.NormalizeText(paragraph);
+            return TextToTextSample(paragraph);
         }
     }
 }
