@@ -19,9 +19,9 @@
         <AssociationConnector Association="KeyCommanderModel.FK_KeySequence_Session" ManuallyRouted="false" />
         <AssociationConnector Association="KeyCommanderModel.FK_KeySequence_SourceType" ManuallyRouted="false" />
         <AssociationConnector Association="KeyCommanderModel.FK_KeySequenceAnalysis_KeySequence" ManuallyRouted="false" />
-        <AssociationConnector Association="KeyCommanderModel.UserSession" ManuallyRouted="false" />
         <AssociationConnector Association="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis" />
         <AssociationConnector Association="KeyCommanderModel.FK_AnalysisSpeed_KeySequenceAnalysis" />
+        <AssociationConnector Association="KeyCommanderModel.FK_Session_KCUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

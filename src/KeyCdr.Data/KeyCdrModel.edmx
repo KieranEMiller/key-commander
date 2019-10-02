@@ -45,6 +45,7 @@
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LoginName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="KeySequence">
           <Key>
@@ -56,6 +57,7 @@
           <Property Name="SourceKey" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="TextShown" Type="nvarchar" MaxLength="2048" Nullable="false" />
           <Property Name="TextEntered" Type="nvarchar" MaxLength="2048" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="KeySequenceAnalysis">
           <Key>
@@ -64,14 +66,15 @@
           <Property Name="KeySequenceAnalysisId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="KeySequenceId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="AnalysisTypeId" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Session">
           <Key>
             <PropertyRef Name="SessionId" />
           </Key>
           <Property Name="SessionId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime" Nullable="false" />
-          <Property Name="LastSessionDate" Type="datetime" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="SourceType">
           <Key>
@@ -79,14 +82,6 @@
           </Key>
           <Property Name="SourceTypeId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserSession">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="SessionId" />
-          </Key>
-          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="SessionId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <Association Name="FK_AnalysisAccuracy_AnalysisType">
           <End Role="AnalysisType" Type="Self.AnalysisType" Multiplicity="1" />
@@ -184,27 +179,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserSession_KCUser">
+        <Association Name="FK_Session_KCUser">
           <End Role="KCUser" Type="Self.KCUser" Multiplicity="1" />
-          <End Role="UserSession" Type="Self.UserSession" Multiplicity="*" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="KCUser">
               <PropertyRef Name="UserId" />
             </Principal>
-            <Dependent Role="UserSession">
+            <Dependent Role="Session">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserSession_Session">
-          <End Role="Session" Type="Self.Session" Multiplicity="1" />
-          <End Role="UserSession" Type="Self.UserSession" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Session">
-              <PropertyRef Name="SessionId" />
-            </Principal>
-            <Dependent Role="UserSession">
-              <PropertyRef Name="SessionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -217,7 +200,6 @@
           <EntitySet Name="KeySequenceAnalysis" EntityType="Self.KeySequenceAnalysis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SourceType" EntityType="Self.SourceType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserSession" EntityType="Self.UserSession" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AnalysisAccuracy_AnalysisType" Association="Self.FK_AnalysisAccuracy_AnalysisType">
             <End Role="AnalysisType" EntitySet="AnalysisType" />
             <End Role="AnalysisAccuracy" EntitySet="AnalysisAccuracy" />
@@ -250,13 +232,9 @@
             <End Role="KeySequence" EntitySet="KeySequence" />
             <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysis" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserSession_KCUser" Association="Self.FK_UserSession_KCUser">
+          <AssociationSet Name="FK_Session_KCUser" Association="Self.FK_Session_KCUser">
             <End Role="KCUser" EntitySet="KCUser" />
-            <End Role="UserSession" EntitySet="UserSession" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserSession_Session" Association="Self.FK_UserSession_Session">
             <End Role="Session" EntitySet="Session" />
-            <End Role="UserSession" EntitySet="UserSession" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -310,7 +288,8 @@
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Sessions" Relationship="Self.UserSession" FromRole="KCUser" ToRole="Session" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Sessions" Relationship="KeyCommanderModel.FK_Session_KCUser" FromRole="KCUser" ToRole="Session" />
         </EntityType>
         <EntityType Name="KeySequence">
           <Key>
@@ -325,6 +304,7 @@
           <NavigationProperty Name="Session" Relationship="Self.FK_KeySequence_Session" FromRole="KeySequence" ToRole="Session" />
           <NavigationProperty Name="SourceType" Relationship="Self.FK_KeySequence_SourceType" FromRole="KeySequence" ToRole="SourceType" />
           <NavigationProperty Name="KeySequenceAnalysis" Relationship="Self.FK_KeySequenceAnalysis_KeySequence" FromRole="KeySequence" ToRole="KeySequenceAnalysis" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="KeySequenceAnalysis">
           <Key>
@@ -337,16 +317,17 @@
           <NavigationProperty Name="KeySequence" Relationship="Self.FK_KeySequenceAnalysis_KeySequence" FromRole="KeySequenceAnalysis" ToRole="KeySequence" />
           <NavigationProperty Name="AnalysisAccuracy" Relationship="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis" FromRole="KeySequenceAnalysis" ToRole="AnalysisAccuracy" />
           <NavigationProperty Name="AnalysisSpeed" Relationship="KeyCommanderModel.FK_AnalysisSpeed_KeySequenceAnalysis" FromRole="KeySequenceAnalysis" ToRole="AnalysisSpeed" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Session">
           <Key>
             <PropertyRef Name="SessionId" />
           </Key>
           <Property Name="SessionId" Type="Guid" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastSessionDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="KeySequences" Relationship="Self.FK_KeySequence_Session" FromRole="Session" ToRole="KeySequence" />
-          <NavigationProperty Name="KCUsers" Relationship="Self.UserSession" FromRole="Session" ToRole="KCUser" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="KCUser" Relationship="KeyCommanderModel.FK_Session_KCUser" FromRole="Session" ToRole="KCUser" />
         </EntityType>
         <EntityType Name="SourceType">
           <Key>
@@ -428,10 +409,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserSession">
-          <End Role="KCUser" Type="Self.KCUser" Multiplicity="*" />
-          <End Role="Session" Type="Self.Session" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="KeyCommanderEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AnalysisAccuracys" EntityType="Self.AnalysisAccuracy" />
           <EntitySet Name="AnalysisSpeeds" EntityType="Self.AnalysisSpeed" />
@@ -465,10 +442,6 @@
             <End Role="KeySequence" EntitySet="KeySequences" />
             <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysises" />
           </AssociationSet>
-          <AssociationSet Name="UserSession" Association="Self.UserSession">
-            <End Role="KCUser" EntitySet="KCUsers" />
-            <End Role="Session" EntitySet="Sessions" />
-          </AssociationSet>
           <AssociationSet Name="FK_AnalysisAccuracy_KeySequenceAnalysis" Association="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis">
             <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysises" />
             <End Role="AnalysisAccuracy" EntitySet="AnalysisAccuracys" />
@@ -476,6 +449,10 @@
           <AssociationSet Name="FK_AnalysisSpeed_KeySequenceAnalysis" Association="KeyCommanderModel.FK_AnalysisSpeed_KeySequenceAnalysis">
             <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysises" />
             <End Role="AnalysisSpeed" EntitySet="AnalysisSpeeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_KCUser" Association="KeyCommanderModel.FK_Session_KCUser">
+            <End Role="KCUser" EntitySet="KCUsers" />
+            <End Role="Session" EntitySet="Sessions" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="FK_AnalysisAccuracy_KeySequenceAnalysis">
@@ -499,6 +476,18 @@
             </Principal>
             <Dependent Role="AnalysisSpeed">
               <PropertyRef Name="KeySequenceAnalysisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_KCUser">
+          <End Type="KeyCommanderModel.KCUser" Role="KCUser" Multiplicity="1" />
+          <End Type="KeyCommanderModel.Session" Role="Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KCUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -547,6 +536,7 @@
           <EntitySetMapping Name="KCUsers">
             <EntityTypeMapping TypeName="KeyCommanderModel.KCUser">
               <MappingFragment StoreEntitySet="KCUser">
+                <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LoginName" ColumnName="LoginName" />
@@ -556,6 +546,7 @@
           <EntitySetMapping Name="KeySequences">
             <EntityTypeMapping TypeName="KeyCommanderModel.KeySequence">
               <MappingFragment StoreEntitySet="KeySequence">
+                <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="KeySequenceId" ColumnName="KeySequenceId" />
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
                 <ScalarProperty Name="SourceTypeId" ColumnName="SourceTypeId" />
@@ -568,6 +559,7 @@
           <EntitySetMapping Name="KeySequenceAnalysises">
             <EntityTypeMapping TypeName="KeyCommanderModel.KeySequenceAnalysis">
               <MappingFragment StoreEntitySet="KeySequenceAnalysis">
+                <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="KeySequenceAnalysisId" ColumnName="KeySequenceAnalysisId" />
                 <ScalarProperty Name="KeySequenceId" ColumnName="KeySequenceId" />
                 <ScalarProperty Name="AnalysisTypeId" ColumnName="AnalysisTypeId" />
@@ -577,10 +569,10 @@
           <EntitySetMapping Name="Sessions">
             <EntityTypeMapping TypeName="KeyCommanderModel.Session">
               <MappingFragment StoreEntitySet="Session">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastSessionDate" ColumnName="LastSessionDate" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SourceTypes">
@@ -591,14 +583,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="UserSession" TypeName="KeyCommanderModel.UserSession" StoreEntitySet="UserSession">
-            <EndProperty Name="KCUser">
-              <ScalarProperty Name="UserId" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="Session">
-              <ScalarProperty Name="SessionId" ColumnName="SessionId" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

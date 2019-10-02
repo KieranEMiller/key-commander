@@ -18,16 +18,14 @@ namespace KeyCdr.Data
         public Session()
         {
             this.KeySequences = new HashSet<KeySequence>();
-            this.KCUsers = new HashSet<KCUser>();
         }
     
         public System.Guid SessionId { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public Nullable<System.DateTime> LastSessionDate { get; set; }
+        public System.Guid UserId { get; set; }
+        public System.DateTime Created { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KeySequence> KeySequences { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KCUser> KCUsers { get; set; }
+        public virtual KCUser KCUser { get; set; }
     }
 }
