@@ -17,7 +17,7 @@ namespace KeyCdr.Tests.TextSamplesTests
         public void simple_word_parsed_correctly(string input, string[] possibleMatches)
         {
             var simple = new SimpleTextGenerator(input);
-            Assert.That(simple.GetWord(), Is.AnyOf(possibleMatches));
+            Assert.That(simple.GetWord().GetText(), Is.AnyOf(possibleMatches));
         }
 
         [TestCase("qwer      ", new string[]{"qwer"})]
@@ -26,7 +26,7 @@ namespace KeyCdr.Tests.TextSamplesTests
         public void simple_word_misc_whitespace_chars_get_stripped(string input, string[] possibleMatches)
         {
             var simple = new SimpleTextGenerator(input);
-            Assert.That(simple.GetWord(), Is.AnyOf(possibleMatches));
+            Assert.That(simple.GetWord().GetText(), Is.AnyOf(possibleMatches));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace KeyCdr.Tests.TextSamplesTests
             stringb.Append("  ");
             stringb.Append("zxcv\t");
             var simple = new SimpleTextGenerator(stringb.ToString());
-            Assert.That(simple.GetWord(), Is.AnyOf(new string[] { "qwer", "zxcv" }));
+            Assert.That(simple.GetWord().GetText(), Is.AnyOf(new string[] { "qwer", "zxcv" }));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace KeyCdr.Tests.TextSamplesTests
             stringb.Append("zxcv\t");
             stringb.Append(Environment.NewLine);
             var simple = new SimpleTextGenerator(stringb.ToString());
-            Assert.That(simple.GetWord(), Is.AnyOf(new string[] { "qwer", "zxcv" }));
+            Assert.That(simple.GetWord().GetText(), Is.AnyOf(new string[] { "qwer", "zxcv" }));
         }
 
         [TestCase("This is a test-it contains a few sent; With diff blah blah. Yada Yada Yada" , new string[]
@@ -61,7 +61,7 @@ namespace KeyCdr.Tests.TextSamplesTests
         public void simple_sentence_parsed_correctly(string fullText, string[] possibilities)
         {
             var simple = new SimpleTextGenerator(fullText);
-            Assert.That(simple.GetSentence(), Is.AnyOf(possibilities)); 
+            Assert.That(simple.GetSentence().GetText(), Is.AnyOf(possibilities)); 
         }
 
         [TestCase("  This is         a test-it   contains      a   few sent; With  diff blah blah    . Yada Yada Yada    ", new string[]
@@ -69,7 +69,7 @@ namespace KeyCdr.Tests.TextSamplesTests
         public void simple_sentence_extra_whitespace(string fullText, string[] possibilities)
         {
             var simple = new SimpleTextGenerator(fullText);
-            Assert.That(simple.GetSentence(), Is.AnyOf(possibilities));
+            Assert.That(simple.GetSentence().GetText(), Is.AnyOf(possibilities));
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace KeyCdr.Tests.TextSamplesTests
             stringb.Append("THis is another; and a 4th\t");
             stringb.Append(Environment.NewLine);
             var simple = new SimpleTextGenerator(stringb.ToString());
-            Assert.That(simple.GetSentence(), Is.AnyOf(
+            Assert.That(simple.GetSentence().GetText(), Is.AnyOf(
                 new string[] {
                     "This is a test sentence", "Sentence Two", "THis is another", "and a 4th"
                 }
@@ -100,7 +100,7 @@ namespace KeyCdr.Tests.TextSamplesTests
             }
 
             var simple = new SimpleTextGenerator(stringb.ToString());
-            Assert.That(simple.GetParagraph(), Is.EqualTo(stringb.ToString().Trim()));
+            Assert.That(simple.GetParagraph().GetText(), Is.EqualTo(stringb.ToString().Trim()));
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace KeyCdr.Tests.TextSamplesTests
             }
 
             var simple = new SimpleTextGenerator(stringb.ToString());
-            string paragraph = simple.GetParagraph();
+            string paragraph = simple.GetParagraph().GetText();
             Assert.That(paragraph, Is.AnyOf(possibilities.ToArray()));
         }
     }
