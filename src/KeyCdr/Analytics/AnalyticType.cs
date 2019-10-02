@@ -8,13 +8,13 @@ namespace KeyCdr.Analytics
 {
     public enum AnalyticType
     {
-        Accuracy,
+        Accuracy = 1,
 
         //in words per minute (WPM)
-        Speed,
+        Speed = 2,
 
         //how difficult was the sample text; difficult is subjective 
         //but should mean variety of keys and reach
-        Difficulty
+        Difficulty = 3
     }
 }
