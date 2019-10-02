@@ -8,7 +8,6 @@ namespace KeyCdr.TextSamples
 {
     public class SimpleTextGenerator : BaseTextSampleGenerator, ITextSampleGenerator
     {
-        
         public SimpleTextGenerator()
         { }
 

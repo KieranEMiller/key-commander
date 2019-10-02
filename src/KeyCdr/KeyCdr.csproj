@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Analytics\AccuracyMeasurement.cs" />
     <Compile Include="Analytics\AnalyticData.cs" />
+    <Compile Include="Analytics\IAnalyticRecordable.cs" />
     <Compile Include="Analytics\Speed.cs" />
     <Compile Include="Analytics\Accuracy.cs" />
     <Compile Include="Analytics\AnalyticType.cs" />
@@ -93,6 +94,11 @@
     <Compile Include="Constants.cs" />
     <Compile Include="MeasuredKeySequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextSamples\WikipediaTextGeneratorWithLocalCache.cs" />
+    <Compile Include="TextSamples\ITextSample.cs" />
+    <Compile Include="TextSamples\TextSample.cs" />
+    <Compile Include="TextSamples\TextSampleSourceType.cs" />
+    <Compile Include="UserSession.cs" />
     <Compile Include="TextSamples\BaseTextSampleGenerator.cs" />
     <Compile Include="TextSamples\WikipediaTextGenerator.cs" />
     <Compile Include="TextSamples\SimpleTextGenerator.cs" />

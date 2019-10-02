@@ -45,7 +45,7 @@ namespace KeyCdr.TextSamples
             };
         }
 
-        public ITextSample GetWord()
+        public virtual ITextSample GetWord()
         {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
 
@@ -54,7 +54,7 @@ namespace KeyCdr.TextSamples
             return TextToTextSample(text, _wikiResult.Url);
         }
 
-        public ITextSample GetSentence()
+        public virtual ITextSample GetSentence()
         {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
 
@@ -63,7 +63,7 @@ namespace KeyCdr.TextSamples
             return TextToTextSample(text, _wikiResult.Url);
         }
 
-        public ITextSample GetParagraph()
+        public virtual ITextSample GetParagraph()
         {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
 
