@@ -18,12 +18,12 @@ namespace KeyCdr.Data
         public int AnalysisTypeId { get; set; }
         public System.Guid KeySequenceAnalysisId { get; set; }
         public decimal Accuracy { get; set; }
-        public string NumWords { get; set; }
-        public string NumChars { get; set; }
-        public string NumCorrectChars { get; set; }
-        public string NumIncorrectChars { get; set; }
-        public string NumExtraChars { get; set; }
-        public string NumShortChars { get; set; }
+        public int NumWords { get; set; }
+        public int NumChars { get; set; }
+        public int NumCorrectChars { get; set; }
+        public int NumIncorrectChars { get; set; }
+        public int NumExtraChars { get; set; }
+        public int NumShortChars { get; set; }
     
         public virtual AnalysisType AnalysisType { get; set; }
         public virtual KeySequenceAnalysis KeySequenceAnalysises { get; set; }

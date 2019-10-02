@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KeyCdr.Data;
 
 namespace KeyCdr.Analytics
 {
-    public class Speed : BaseAnalytic, IAnalytic
+    public class Speed : BaseAnalytic, IAnalytic, IAnalyticRecordable
     {
         public Speed(AnalyticData data)
             : base(data)
         { }
 
+        private double _wpm;
+        private double _charsPerSec;
+
         public override AnalyticType GetAnalyticType()
         { return AnalyticType.Speed; }
 
-        private double _wpm;
         public double WordsPerMinute {
             get {
                 return Math.Round(_wpm, Constants.PRECISION_FOR_DECIMALS);
@@ -23,7 +26,6 @@ namespace KeyCdr.Analytics
             set { _wpm = value; }
         }
 
-        private double _charsPerSec;
         public double CharsPerSecond {
             get {
                 return Math.Round(_charsPerSec, Constants.PRECISION_FOR_DECIMALS);
@@ -58,6 +60,19 @@ namespace KeyCdr.Analytics
         private double ComputeCharsPerSecond(string allText, double seconds)
         {
             return allText.Length / seconds;
+        }
+
+        public void Record(KeyCommanderEntities db, KeySequenceAnalysis seqAnalysis)
+        {
+            Data.AnalysisSpeed speed = new AnalysisSpeed();
+            speed.AnalysisSpeedId = Guid.NewGuid();
+            speed.AnalysisTypeId = (int)this.GetAnalyticType();
+            speed.KeySequenceAnalysisId = seqAnalysis.KeySequenceAnalysisId;
+            speed.TotalTimeInMilliSec = (decimal)base._analyticData.Elapsed.TotalMilliseconds;
+            speed.CharsPerSec = (decimal) _charsPerSec;
+            speed.WordPerMin = (decimal) _wpm;
+            
+            db.AnalysisSpeeds.Add(speed);
         }
     }
 }

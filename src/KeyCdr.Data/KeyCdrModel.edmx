@@ -13,12 +13,12 @@
           <Property Name="AnalysisTypeId" Type="int" Nullable="false" />
           <Property Name="KeySequenceAnalysisId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Accuracy" Type="decimal" Precision="4" Scale="4" Nullable="false" />
-          <Property Name="NumWords" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="NumChars" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="NumCorrectChars" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="NumIncorrectChars" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="NumExtraChars" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="NumShortChars" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumWords" Type="int" Nullable="false" />
+          <Property Name="NumChars" Type="int" Nullable="false" />
+          <Property Name="NumCorrectChars" Type="int" Nullable="false" />
+          <Property Name="NumIncorrectChars" Type="int" Nullable="false" />
+          <Property Name="NumExtraChars" Type="int" Nullable="false" />
+          <Property Name="NumShortChars" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AnalysisSpeed">
           <Key>
@@ -249,12 +249,12 @@
           <Property Name="AnalysisTypeId" Type="Int32" Nullable="false" />
           <Property Name="KeySequenceAnalysisId" Type="Guid" Nullable="false" />
           <Property Name="Accuracy" Type="Decimal" Precision="4" Scale="4" Nullable="false" />
-          <Property Name="NumWords" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="NumChars" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="NumCorrectChars" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="NumIncorrectChars" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="NumExtraChars" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="NumShortChars" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="NumWords" Type="Int32" Nullable="false" />
+          <Property Name="NumChars" Type="Int32" Nullable="false" />
+          <Property Name="NumCorrectChars" Type="Int32" Nullable="false" />
+          <Property Name="NumIncorrectChars" Type="Int32" Nullable="false" />
+          <Property Name="NumExtraChars" Type="Int32" Nullable="false" />
+          <Property Name="NumShortChars" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AnalysisType" Relationship="Self.FK_AnalysisAccuracy_AnalysisType" FromRole="AnalysisAccuracy" ToRole="AnalysisType" />
           <NavigationProperty Name="KeySequenceAnalysises" Relationship="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis" FromRole="AnalysisAccuracy" ToRole="KeySequenceAnalysis" />
         </EntityType>

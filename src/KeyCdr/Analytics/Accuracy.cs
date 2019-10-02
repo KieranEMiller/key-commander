@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KeyCdr.Data;
 
 namespace KeyCdr.Analytics
 {
     //TODO: other accuracy variables to consider for implementation
     //- should case sensitivity be ignored?  probably not, case is one measure of accuracy
     //- investigate other options for complex likeness through established algorithms
-    public class Accuracy : BaseAnalytic, IAnalytic
+    public class Accuracy : BaseAnalytic, IAnalytic, IAnalyticRecordable
     {
         public Accuracy(AnalyticData data)
             : base(data)
@@ -28,13 +29,13 @@ namespace KeyCdr.Analytics
             }
         }
 
-        public double NumWordsEvaluated {
+        public int NumWordsEvaluated {
             get {
                 return _measurements.Count;
             }
         }
 
-        public double NumCharsEvaluated {
+        public int NumCharsEvaluated {
             get {
                 return _measurements.Sum(m=>m.LengthMeasured);
             }
@@ -133,6 +134,23 @@ namespace KeyCdr.Analytics
                 this.NumShortChars,
                 this.NumCorrectChars
             );
+        }
+
+        public void Record(KeyCommanderEntities db, KeySequenceAnalysis seqAnalysis)
+        {
+            Data.AnalysisAccuracy accuracy = new AnalysisAccuracy();
+            accuracy.AnalysisAccuracyId = Guid.NewGuid();
+            accuracy.AnalysisTypeId = (int)this.GetAnalyticType();
+            accuracy.KeySequenceAnalysisId = seqAnalysis.KeySequenceAnalysisId;
+            accuracy.NumWords = this.NumWordsEvaluated;
+            accuracy.NumChars = this.NumCharsEvaluated;
+            accuracy.NumCorrectChars = this.NumCorrectChars;
+            accuracy.NumIncorrectChars = this.NumIncorrectChars;
+            accuracy.NumExtraChars = this.NumExtraChars;
+            accuracy.NumShortChars = this.NumShortChars;
+            accuracy.Accuracy = (decimal)this.AccuracyVal;
+
+            db.AnalysisAccuracys.Add(accuracy);
         }
     }
 }

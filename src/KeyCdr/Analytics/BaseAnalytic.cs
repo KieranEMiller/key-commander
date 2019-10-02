@@ -14,6 +14,7 @@ namespace KeyCdr.Analytics
         }
 
         public AnalyticData _analyticData;
+        public abstract AnalyticType GetAnalyticType();
 
         public string GetTextShown()
         {
@@ -24,8 +25,6 @@ namespace KeyCdr.Analytics
         {
             return _analyticData.TextEntered ;
         }
-
-        public abstract AnalyticType GetAnalyticType();
 
         public virtual string GetResultSummary()
         {
