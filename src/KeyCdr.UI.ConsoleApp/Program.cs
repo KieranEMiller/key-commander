@@ -8,7 +8,7 @@ namespace KeyCdr.UI.ConsoleApp
         static void Main(string[] args)
         {
             KeyCdrApp app = new KeyCdrApp();
-            app.RunGameLoop();
+            app.Run();
         }
     }
 }
