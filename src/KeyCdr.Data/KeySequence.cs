@@ -26,6 +26,7 @@ namespace KeyCdr.Data
         public string SourceKey { get; set; }
         public string TextShown { get; set; }
         public string TextEntered { get; set; }
+        public System.DateTime Created { get; set; }
     
         public virtual Session Session { get; set; }
         public virtual SourceType SourceType { get; set; }

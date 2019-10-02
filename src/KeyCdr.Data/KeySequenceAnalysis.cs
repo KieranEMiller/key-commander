@@ -24,6 +24,7 @@ namespace KeyCdr.Data
         public System.Guid KeySequenceAnalysisId { get; set; }
         public System.Guid KeySequenceId { get; set; }
         public int AnalysisTypeId { get; set; }
+        public System.DateTime Created { get; set; }
     
         public virtual AnalysisType AnalysisType { get; set; }
         public virtual KeySequence KeySequence { get; set; }
