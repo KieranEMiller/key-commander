@@ -15,7 +15,7 @@ namespace KeyCdr.UI.ConsoleApp
             _wikiTextGenerator = new WikipediaTextGenerator();
             _cachedData = new Queue<WikipediaTextResult>();
 
-            Init();
+            //Init();
             PrefetchMoreIfNeeded();
         }
 
@@ -24,9 +24,9 @@ namespace KeyCdr.UI.ConsoleApp
 
         private Queue<WikipediaTextResult> _cachedData;
 
-        private void Init()
+        private async void Init()
         {
-            _wikiText = _wikiTextGenerator.GetWikipediaTextFromUrlSynchronously();
+            _wikiText = await _wikiTextGenerator.GetWikipediaTextFromUrl();
         }
 
         private async void PrefetchMoreIfNeeded()
