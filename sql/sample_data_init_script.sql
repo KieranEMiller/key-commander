@@ -28,6 +28,24 @@ INSERT INTO [dbo].[SourceType]
            ,[Name])
      VALUES
            (/*<SourceTypeId, int,>*/	1
+           ,/*<Name, nvarchar(50),>*/	'Unknown'
+		   )
+GO
+
+INSERT INTO [dbo].[SourceType]
+           ([SourceTypeId]
+           ,[Name])
+     VALUES
+           (/*<SourceTypeId, int,>*/	2
+           ,/*<Name, nvarchar(50),>*/	'HardCoded'
+		   )
+GO
+
+INSERT INTO [dbo].[SourceType]
+           ([SourceTypeId]
+           ,[Name])
+     VALUES
+           (/*<SourceTypeId, int,>*/	3
            ,/*<Name, nvarchar(50),>*/	'Wikipedia'
 		   )
 GO
