@@ -1,40 +1,37 @@
-﻿using KeyCdr.TextSamples;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace KeyCdr.UI.ConsoleApp
+namespace KeyCdr.TextSamples
 {
-    public class TextPrefetcher
+    public class WikipediaTextGeneratorWithLocalCache : WikipediaTextGenerator, ITextSampleGenerator
     {
         public int NUM_PREFETCHES_TO_KEEP_ON_HAND = 3;
 
-        public TextPrefetcher()
+        public WikipediaTextGeneratorWithLocalCache()
+            : base()
         {
-            _wikiTextGenerator = new WikipediaTextGenerator();
             _cachedData = new Queue<WikipediaTextResult>();
 
-            //Init();
             PrefetchMoreIfNeeded();
         }
 
-        private WikipediaTextGenerator _wikiTextGenerator;
         private WikipediaTextResult _wikiText;
-
         private Queue<WikipediaTextResult> _cachedData;
 
         private async void Init()
         {
-            _wikiText = await _wikiTextGenerator.GetWikipediaTextFromUrl();
+            _wikiText = await base.GetWikipediaTextFromUrl();
         }
 
         private async void PrefetchMoreIfNeeded()
         {
-            for(int i=1; i <= NUM_PREFETCHES_TO_KEEP_ON_HAND - _cachedData.Count; i++)
+            for (int i = 1; i <= NUM_PREFETCHES_TO_KEEP_ON_HAND - _cachedData.Count; i++)
             {
-                var data = await _wikiTextGenerator.GetWikipediaTextFromUrl();
-                
+                var data = await base.GetWikipediaTextFromUrl();
+
                 _cachedData.Enqueue(data);
                 if (_wikiText == null)
                     _wikiText = data;
@@ -45,9 +42,9 @@ namespace KeyCdr.UI.ConsoleApp
         {
             string textSection = string.Empty;
             int counter = 0;
-            while(string.IsNullOrEmpty(textSection) && counter < 5)
+            while (string.IsNullOrEmpty(textSection) && counter < 5)
             {
-                if(_wikiText == null || _wikiText.TextSections.Count == 0)
+                if (_wikiText == null || _wikiText.TextSections.Count == 0)
                 {
                     _wikiText = _cachedData.Dequeue();
                 }
@@ -57,7 +54,7 @@ namespace KeyCdr.UI.ConsoleApp
                     _wikiText.TextSections.RemoveAt(0);
                     break;
                 }
-                
+
                 counter++;
             }
 
@@ -66,28 +63,25 @@ namespace KeyCdr.UI.ConsoleApp
             return textSection;
         }
 
-        public string GetWord()
+        public override ITextSample GetWord()
         {
             string text = GetNextTextSection();
             var simple = new SimpleTextGenerator(text);
-            string word = simple.GetWord();
-            return word;
-        }
-        
-        public string GetSentence()
-        {
-            string text = GetNextTextSection();
-            var simple = new SimpleTextGenerator(text);
-            string sentence = simple.GetSentence();
-            return sentence;
+            return simple.GetWord();
         }
 
-        public string GetParagraph()
+        public override ITextSample GetSentence()
         {
             string text = GetNextTextSection();
             var simple = new SimpleTextGenerator(text);
-            string paragraph = simple.GetParagraph();
-            return paragraph;
+            return simple.GetSentence();
+        }
+
+        public override ITextSample GetParagraph()
+        {
+            string text = GetNextTextSection();
+            var simple = new SimpleTextGenerator(text);
+            return simple.GetParagraph();
         }
     }
 }

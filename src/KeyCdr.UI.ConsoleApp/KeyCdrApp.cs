@@ -11,16 +11,16 @@ namespace KeyCdr.UI.ConsoleApp
         private const string EXIT_KEY = "x";
 
         public KeyCdrApp()
-        {
-            _textSampleFetcher = new TextPrefetcher();
-        }
+        { }
 
-        private TextPrefetcher _textSampleFetcher;
         private KeyCdr.Data.KCUser _user;
+        private KeyCdr.UserSession _session;
 
         public void Run()
         {
             _user = DoLogin();
+            _session = new UserSession(_user, new WikipediaTextGeneratorWithLocalCache());
+
             RunGameLoop();
         }
 
@@ -29,28 +29,24 @@ namespace KeyCdr.UI.ConsoleApp
             string selection;
             while ((selection = ShowMenuAndPromptForNextAction()).Equals(EXIT_KEY, StringComparison.CurrentCultureIgnoreCase) == false)
             {
-                string textToShow = MenuSelectionToTextSample(selection);
+                ITextSample sample = MenuSelectionToTextSample(selection);
                 ShowWaitMsgAndPauseForInput();
-                Console.WriteLine(textToShow);
+                Console.WriteLine(sample.GetText());
 
-                MeasuredKeySequence analysis = new MeasuredKeySequence(
-                    textToShow, new List<AnalyticType> { AnalyticType.Speed, AnalyticType.Accuracy }
-                );
-                analysis.Start(_user);
-
+                _session.StartNewSequence(sample);
                 string userInput = Console.ReadLine();
+                var results = _session.Stop(userInput);
 
-                var results = analysis.Stop(userInput);
-                ShowResults(analysis, results);
+                ShowResults(results);
             }
         }
 
-        private string MenuSelectionToTextSample(string selection)
+        private ITextSample MenuSelectionToTextSample(string selection)
         {
-            string textToShow = string.Empty;
-            if (selection.Equals("1")) textToShow = _textSampleFetcher.GetWord();
-            else if (selection.Equals("2")) textToShow = _textSampleFetcher.GetSentence();
-            else if (selection.Equals("3")) textToShow = _textSampleFetcher.GetParagraph();
+            ITextSample textToShow = null;
+            if (selection.Equals("1")) textToShow = _session.GetWord();
+            else if (selection.Equals("2")) textToShow = _session.GetSentence();
+            else if (selection.Equals("3")) textToShow = _session.GetParagraph();
 
             return textToShow;
         }
@@ -103,7 +99,7 @@ namespace KeyCdr.UI.ConsoleApp
             return Console.ReadLine();
         }
 
-        private void ShowResults(MeasuredKeySequence whatToMeasure, IList<KeyCdr.Analytics.IAnalytic> results)
+        private void ShowResults(IList<KeyCdr.Analytics.IAnalytic> results)
         {
             Console.WriteLine();
             Console.WriteLine("your results:");
