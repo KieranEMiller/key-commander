@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d5d2faed9cf54438abf0f5cf2f763995" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="KeyCommanderModel.AnalysisAccuracy" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KeyCommanderModel.AnalysisSpeed" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KeyCommanderModel.AnalysisType" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KeyCommanderModel.KCUser" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KeyCommanderModel.KeySequence" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="KeyCommanderModel.KeySequenceAnalysis" Width="2.25" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KeyCommanderModel.Session" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KeyCommanderModel.SourceType" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <AssociationConnector Association="KeyCommanderModel.FK_AnalysisAccuracy_AnalysisType" ManuallyRouted="false" />
+        <AssociationConnector Association="KeyCommanderModel.FK_AnalysisSpeed_AnalysisType" ManuallyRouted="false" />
+        <AssociationConnector Association="KeyCommanderModel.FK_KeySequenceAnalysis_AnalysisType" ManuallyRouted="false" />
+        <AssociationConnector Association="KeyCommanderModel.FK_KeySequence_Session" ManuallyRouted="false" />
+        <AssociationConnector Association="KeyCommanderModel.FK_KeySequence_SourceType" ManuallyRouted="false" />
+        <AssociationConnector Association="KeyCommanderModel.FK_KeySequenceAnalysis_KeySequence" ManuallyRouted="false" />
+        <AssociationConnector Association="KeyCommanderModel.UserSession" ManuallyRouted="false" />
+        <AssociationConnector Association="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis" />
+        <AssociationConnector Association="KeyCommanderModel.FK_AnalysisSpeed_KeySequenceAnalysis" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
