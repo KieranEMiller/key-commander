@@ -8,13 +8,13 @@ namespace KeyCdr.TextSamples
 {
     public interface ITextSampleGenerator
     {
-        string GetWord();
+        ITextSample GetWord();
 
         //TODO: probably need some way to handle restricted characters or sequences
         //string GetWord(IList<string> restrictions);
 
-        string GetSentence();
+        ITextSample GetSentence();
 
-        string GetParagraph();
+        ITextSample GetParagraph();
     }
 }

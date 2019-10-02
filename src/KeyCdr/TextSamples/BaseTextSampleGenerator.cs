@@ -18,6 +18,11 @@ namespace KeyCdr.TextSamples
 
         protected Random _rnd;
 
+        public virtual TextSampleSourceType GetSourceType()
+        {
+            return TextSampleSourceType.Unknown;
+        }
+
         protected string NormalizeText(string input)
         {
             //split the string to eliminate groups of more than one spaces, there is probably
@@ -92,6 +97,5 @@ namespace KeyCdr.TextSamples
         {
             return _rnd.Next(0, totalItems);
         }
-
     }
 }
