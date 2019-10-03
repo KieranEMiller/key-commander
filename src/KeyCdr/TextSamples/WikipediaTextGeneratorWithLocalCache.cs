@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AngleSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,20 +14,27 @@ namespace KeyCdr.TextSamples
         public WikipediaTextGeneratorWithLocalCache()
             : base()
         {
-            _cachedData = new Queue<WikipediaTextResult>();
+            Init();
+        }
 
-            PrefetchMoreIfNeeded();
+        public WikipediaTextGeneratorWithLocalCache(IConfiguration config, IBrowsingContext context)
+            : base(config, context)
+        {
+            Init();
         }
 
         private WikipediaTextResult _wikiText;
         private Queue<WikipediaTextResult> _cachedData;
 
-        private async void Init()
+        public async void Init()
         {
             _wikiText = await base.GetWikipediaTextFromUrl();
+            _cachedData = new Queue<WikipediaTextResult>();
+
+            PrefetchMoreIfNeeded();
         }
 
-        private async void PrefetchMoreIfNeeded()
+        public async void PrefetchMoreIfNeeded()
         {
             for (int i = 1; i <= NUM_PREFETCHES_TO_KEEP_ON_HAND - _cachedData.Count; i++)
             {
@@ -38,7 +46,7 @@ namespace KeyCdr.TextSamples
             }
         }
 
-        private string GetNextTextSection()
+        public string GetNextTextSection()
         {
             string textSection = string.Empty;
             int counter = 0;
