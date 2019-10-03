@@ -59,7 +59,7 @@ INSERT INTO [dbo].[KCUser]
            ,[LoginName])
      VALUES
            (/*<UserId, uniqueidentifier,>*/	NEWID()
-           ,/*<Name, nvarchar(50),>*/		'kem'
-           ,/*<LoginName, nvarchar(50),>*/	'kem'
+           ,/*<Name, nvarchar(50),>*/		'default'
+           ,/*<LoginName, nvarchar(50),>*/	'default'
 		   )
 GO
