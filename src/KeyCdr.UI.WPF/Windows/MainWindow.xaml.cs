@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KeyCdr.UI.WPF
+namespace KeyCdr.UI.WPF.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

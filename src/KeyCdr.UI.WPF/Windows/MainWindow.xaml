@@ -1,9 +1,9 @@
-﻿<Window x:Class="KeyCdr.UI.WPF.MainWindow"
+﻿<Window x:Class="KeyCdr.UI.WPF.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KeyCdr.UI.WPF"
+        xmlns:local="clr-namespace:KeyCdr.UI.WPF.Windows"
         mc:Ignorable="d"
         Title="MainWindow" Height="297.782" Width="615.323">
     <Grid>
@@ -14,8 +14,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Label Content="Key Commander" Grid.Column="0" FontSize="25" VerticalContentAlignment="Center" FontWeight="Bold" />
+                <Label Content="Key Commander" Grid.Column="0" FontSize="25" VerticalContentAlignment="Center" />
                 <Label Content="Logged in as &lt;USERNAME&gt;" Grid.Column="2" FontSize="14" VerticalContentAlignment="Center" />
+                <Line Margin="0,42,0,0" Stretch="Fill" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Top" Stroke="Black" Height="5" StrokeThickness="5" X1="0" X2="100"/>
             </Grid>
         </DockPanel>
 
