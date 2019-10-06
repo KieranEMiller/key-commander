@@ -13,5 +13,19 @@ namespace KeyCdr.UI.WPF
     /// </summary>
     public partial class App : Application
     {
+        private void RunApp(object sender, StartupEventArgs e)
+        {
+            Window login = new Windows.LoginWindow();
+            login.ShowDialog();
+
+            var loginvm = login.DataContext as ViewModels.LoginViewModel;
+            if (!loginvm.LoginSuccessful)
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+
+            Windows.MainWindow win = new Windows.MainWindow();
+            win.Show();
+        }
     }
 }
