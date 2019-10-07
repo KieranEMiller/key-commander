@@ -21,28 +21,48 @@ namespace KeyCdr.UI.WPF.ViewModels
         private LoginModel _loginModel;
         private UserManager _userMgr;
 
+        public string ErrorMsg { get; set; }
+        public bool LoginSuccessful { get; set; }
+        public KCUser User { get; set; }
+
+        public event EventHandler<LoginViewClosedEventArgs> OnLoginClose;
+        public void OnCloseEventHandler(LoginViewClosedEventArgs e)
+        {
+            EventHandler<LoginViewClosedEventArgs> handler = OnLoginClose;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
         public string LoginName {
             get { return _loginModel.LoginName; }
             set { _loginModel.LoginName = value; }
         }
 
-        public string ErrorMsg { get; set; }
-
-        public bool LoginSuccessful { get; set; }
-        public KCUser User { get; set; }
+        public void LoginAsGuest()
+        {
+            KCUser user = _userMgr.CreateGuest();
+            ProcessLogin(user);
+        }
 
         public void DoLogin()
         {
             KCUser user = _userMgr.GetByLoginName(_loginModel.LoginName);
-            this.LoginSuccessful = (user != null);
 
             if(user == null) {
                 ShowError("invalid login name");
             }
             else {
-                this.User = user;
-
+                ProcessLogin(user);
             }
+        }
+
+        public void ProcessLogin(KCUser user)
+        {
+            this.User = user;
+            this.LoginSuccessful = (user != null);
+            OnCloseEventHandler(new LoginViewClosedEventArgs() { User = user });
         }
 
         public void ShowError(string msg)

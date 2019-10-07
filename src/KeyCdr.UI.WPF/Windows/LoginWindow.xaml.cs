@@ -21,10 +21,14 @@ namespace KeyCdr.UI.WPF.Windows
     public partial class LoginWindow : Window
     {
         public LoginWindow()
+            : this(new LoginViewModel())
+        { }
+        
+        public LoginWindow(LoginViewModel viewmodel)
         {
             InitializeComponent();
 
-            _loginvm = new LoginViewModel();
+            _loginvm = viewmodel;
             this.DataContext = _loginvm;
         }
 
@@ -33,6 +37,11 @@ namespace KeyCdr.UI.WPF.Windows
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             _loginvm.DoLogin();
+        }
+
+        private void btnLoginGuest_Click(object sender, RoutedEventArgs e)
+        {
+            _loginvm.LoginAsGuest();
         }
     }
 }

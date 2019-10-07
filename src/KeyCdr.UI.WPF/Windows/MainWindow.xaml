@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyCdr.UI.WPF.Windows"
         mc:Ignorable="d"
-        Title="MainWindow" Height="297.782" Width="615.323">
-    <Grid>
-        <DockPanel VerticalAlignment="Top" Height="45" Margin="5, 2" >
+        Title="MainWindow" Height="437.782" Width="691.823" WindowStartupLocation="CenterScreen">
+    <Grid Margin="5 0 5 5">
+        <DockPanel VerticalAlignment="Top" Height="45" Margin="5 0 5 5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -15,10 +15,23 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Label Content="Key Commander" Grid.Column="0" FontSize="25" VerticalContentAlignment="Center" />
-                <Label Content="Logged in as &lt;USERNAME&gt;" Grid.Column="2" FontSize="14" VerticalContentAlignment="Center" />
+                <Label Content="{Binding WelcomeMsg}" Grid.Column="2" FontSize="14" VerticalContentAlignment="Center" />
                 <Line Margin="0,42,0,0" Stretch="Fill" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Top" Stroke="Black" Height="5" StrokeThickness="5" X1="0" X2="100"/>
             </Grid>
         </DockPanel>
+
+        <GroupBox Header="Start a New Session" HorizontalAlignment="Stretch" Height="110" Margin="10,52,10,0" VerticalAlignment="Top" >
+            <StackPanel Margin="10 10 10 0">
+                <ComboBox Margin="0 0 0 10" Height="30"></ComboBox>
+                <Button Content="New Session" Width="150" Height="30" HorizontalAlignment="Right" Margin="202,0,0,0"></Button>
+            </StackPanel>
+        </GroupBox>
+
+
+        <GroupBox Header="Review Previous Sessions" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,167,10,0">
+            <DataGrid Margin="0,10,0,0" ItemsSource="{Binding RecentSessions}"  AutoGenerateColumns="True">
+            </DataGrid>
+        </GroupBox>
 
     </Grid>
 </Window>

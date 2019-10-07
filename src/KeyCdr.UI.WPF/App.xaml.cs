@@ -15,17 +15,34 @@ namespace KeyCdr.UI.WPF
     {
         private void RunApp(object sender, StartupEventArgs e)
         {
-            Window login = new Windows.LoginWindow();
-            login.ShowDialog();
+            //prevent the application from shutting down prematurely by
+            //making shutdown explicit
+            Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            var loginvm = login.DataContext as ViewModels.LoginViewModel;
+            var loginvm = new ViewModels.LoginViewModel();
+            var loginWindow = new Windows.LoginWindow(loginvm);
+            loginvm.OnLoginClose += (s, args) =>
+            {
+                loginWindow.Close();    
+            };
+            loginWindow.ShowDialog();
+
             if (!loginvm.LoginSuccessful)
             {
-                System.Windows.Application.Current.Shutdown();
+                Application.Current.Shutdown();
             }
+            else
+            {
+                ViewModels.MainViewModel mainvm = new ViewModels.MainViewModel(loginvm.User);
+                Windows.MainWindow win = new Windows.MainWindow(mainvm);
 
-            Windows.MainWindow win = new Windows.MainWindow();
-            win.Show();
+                //now that we have a user we can switch back to standard window behavior
+                //that will shutdown the application when the main window closes
+                Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+                App.Current.MainWindow = win;
+
+                win.Show();
+            }
         }
     }
 }

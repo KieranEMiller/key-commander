@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using KeyCdr.UI.WPF.ViewModels;
 
 namespace KeyCdr.UI.WPF.Windows
 {
@@ -21,8 +22,16 @@ namespace KeyCdr.UI.WPF.Windows
     public partial class MainWindow : Window
     {
         public MainWindow()
+            :this(null)
+        { }
+
+        public MainWindow(MainViewModel vm)
         {
             InitializeComponent();
+            _mainvm = vm;
+            this.DataContext = _mainvm;
         }
+
+        private MainViewModel _mainvm;
     }
 }

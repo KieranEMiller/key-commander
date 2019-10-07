@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="btnLoginGuest" Grid.Column="0" Content="Login as a Guest" Width="130" HorizontalAlignment="Left" FontSize="16"/>
+                <Button x:Name="btnLoginGuest" Grid.Column="0" Content="Login as a Guest" Width="130" HorizontalAlignment="Left" FontSize="16" Click="btnLoginGuest_Click"/>
                 <Button x:Name="btnLogin" Content="Login" Grid.Column="2" Width="130" HorizontalAlignment="Right" FontSize="16" Click="btnLogin_Click"/>
             </Grid>
         </StackPanel>
