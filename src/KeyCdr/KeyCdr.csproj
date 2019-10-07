@@ -91,7 +91,9 @@
     <Compile Include="Analytics\AnalyticType.cs" />
     <Compile Include="Analytics\BaseAnalytic.cs" />
     <Compile Include="Analytics\IAnalytic.cs" />
+    <Compile Include="BaseDBAccess.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="History\UserSessionHistory.cs" />
     <Compile Include="MeasuredKeySequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextSamples\WikipediaTextGeneratorWithLocalCache.cs" />
@@ -117,6 +119,7 @@
       <Name>KeyCdr.Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
