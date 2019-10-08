@@ -35,7 +35,7 @@ namespace KeyCdr.UI.WPF.Models
                 //return collection;
 
                 ListCollectionView collectionView = new ListCollectionView(collection);
-                collectionView.GroupDescriptions.Add(new PropertyGroupDescription("SessionId"));
+                collectionView.GroupDescriptions.Add(new PropertyGroupDescription("SessionDisplayName"));
                 return collectionView;
                 //myDataGrid.ItemsSource = collectionView;
             }

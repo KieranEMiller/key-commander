@@ -12,18 +12,9 @@ namespace KeyCdr.UI.WPF.Models
         public TextSampleSourceType SequenceSource { get; set; }
         public DateTime SequenceCreated { get; set; }
 
-        public override string ToString()
-        {
-            return Name;
-        }
-        public string Name {
-            get
-            {
+        public string SessionDisplayName {
+            get {
                 return string.Format("Session from {0}, with id {1}", SessionCreated.ToString(), SessionId.ToString());
-            }
-            set
-            {
-
             }
         }
     }

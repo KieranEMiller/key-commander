@@ -42,8 +42,7 @@
                                             <Expander IsExpanded="True" BorderThickness="1,1,1,1" BorderBrush="#FF002255" >
                                                 <Expander.Header>
                                                     <DockPanel>
-                                                        <TextBlock FontWeight="Bold" Text="OMG WTF" Margin="5,0,0,0" Width="100"/>
-                                                       
+                                                        <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="5,0,0,0" />
                                                     </DockPanel>
                                                 </Expander.Header>
                                                 <Expander.Content>
