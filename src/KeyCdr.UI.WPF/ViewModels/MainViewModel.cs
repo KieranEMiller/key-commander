@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using KeyCdr.UI.WPF.Models;
 using KeyCdr.Data;
 using System.ComponentModel;
+using System.Windows.Data;
 
 namespace KeyCdr.UI.WPF.ViewModels
 {
@@ -43,7 +44,8 @@ namespace KeyCdr.UI.WPF.ViewModels
             }
         }
 
-        public IList<Session> RecentSessions
-        { get { return _mainModel.RecentSessions; } }
+        //public IList<MainModelSessionView> RecentSessionsView
+        public ListCollectionView RecentSessionsView
+        { get { return _mainModel.RecentSessionsView; } }
     }
 }
