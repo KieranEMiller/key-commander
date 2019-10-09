@@ -22,10 +22,17 @@ namespace KeyCdr.UI.WPF.ViewModels
         {
             _mainModel = new MainModel();
             _mainModel.User = user;
-            _mainModel.RecentSessions = new KeyCdr.History.UserSessionHistory().GetSessionsByUser(user);
+
+            RefreshRecentSessions();
         }
 
         private MainModel _mainModel;
+
+        public void RefreshRecentSessions()
+        {
+            _mainModel.RecentSessions = new KeyCdr.History.UserSessionHistory().GetSessionsByUser(_mainModel.User);
+            RaisePropertyChanged("RecentSessionsView");
+        }
 
         public TextSampleSourceType SelectedSourceType
         {
@@ -65,5 +72,13 @@ namespace KeyCdr.UI.WPF.ViewModels
 
         public ListCollectionView RecentSessionsView
         { get { return _mainModel.RecentSessionsView; } }
+
+        public void StartNewSession()
+        {
+            TextSequenceInputViewModel vm = new TextSequenceInputViewModel(_mainModel.User, new WikipediaTextGeneratorWithLocalCache());
+            Windows.TextSequenceInputWindow textSeq = new Windows.TextSequenceInputWindow(vm);
+            textSeq.ShowDialog();
+            RefreshRecentSessions();
+        }
     }
 }

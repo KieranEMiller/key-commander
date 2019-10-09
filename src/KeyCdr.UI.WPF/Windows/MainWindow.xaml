@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyCdr.UI.WPF.Windows"
         mc:Ignorable="d"
-        Title="MainWindow" Height="437.782" Width="691.823" WindowStartupLocation="CenterScreen">
+        Title="Key Commander" Height="437.782" Width="691.823" WindowStartupLocation="CenterScreen">
     <Grid Margin="5 0 5 5">
         <DockPanel VerticalAlignment="Top" Height="45" Margin="5 0 5 5">
             <Grid>
@@ -35,7 +35,7 @@
                         <CheckBox Content="Paragraphs"  Margin="0 0 20 0" />
                     </StackPanel>
                     <Button IsEnabled="False" Content="Advanced" Grid.Column="1" Width="150" Height="30" HorizontalAlignment="Right" Margin="0,0,20,0"></Button>
-                    <Button Content="New Session" Grid.Column="2" Width="150" Height="30" HorizontalAlignment="Right" Margin="0,0,0,0"></Button>
+                    <Button Content="New Session" Grid.Column="2" Width="150" Height="30" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Button_Click"></Button>
                 </Grid>
             </StackPanel>
         </GroupBox>

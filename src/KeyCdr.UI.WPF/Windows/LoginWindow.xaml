@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyCdr.UI.WPF.Windows"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="244.131" Width="334.144" WindowStartupLocation="CenterScreen">
+        Title="Key Commander: Login" Height="244.131" Width="334.144" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,0,0">
         <StackPanel Margin="10,10,10,0" VerticalAlignment="Top">
             <Label x:Name="label" Content="Key Commander" FontSize="25" Margin="0 0 0 2"/>

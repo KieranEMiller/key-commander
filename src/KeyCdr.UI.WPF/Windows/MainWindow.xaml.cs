@@ -33,5 +33,10 @@ namespace KeyCdr.UI.WPF.Windows
         }
 
         private MainViewModel _mainvm;
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _mainvm.StartNewSession();
+        }
     }
 }
