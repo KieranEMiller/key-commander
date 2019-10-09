@@ -83,6 +83,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analytics\AccuracyIncorrectChar.cs" />
     <Compile Include="Analytics\AccuracyMeasurement.cs" />
     <Compile Include="Analytics\AnalyticData.cs" />
     <Compile Include="Analytics\IAnalyticRecordable.cs" />

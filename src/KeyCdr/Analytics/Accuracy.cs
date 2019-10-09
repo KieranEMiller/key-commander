@@ -12,6 +12,10 @@ namespace KeyCdr.Analytics
     //- investigate other options for complex likeness through established algorithms
     public class Accuracy : BaseAnalytic, IAnalytic, IAnalyticRecordable
     {
+        public Accuracy()
+            :this(null)
+        { }
+
         public Accuracy(AnalyticData data)
             : base(data)
         {
@@ -25,6 +29,7 @@ namespace KeyCdr.Analytics
 
         public double AccuracyVal {
             get {
+                if (_measurements.Count == 0) return 0;
                 return _measurements.Average(m => m.GetAccuracy());
             }
         }
@@ -81,17 +86,24 @@ namespace KeyCdr.Analytics
         {
             //init cost to the difference in length between the two strings
             //if the entered string is too short or too long both should be counted as 'wrong'		
-            int wrongChars = 0;
             int numCharsToCompare = Math.Min(shown.Length, entered.Length);
+
+            IList<AccuracyIncorrectChar> incorrectChars = new List<AccuracyIncorrectChar>();
 
             //loop over the shortest length
             for (int i = 0; i < numCharsToCompare; i++)
             {
                 if (shown[i] != entered[i])
-                    wrongChars++;
+                {
+                    incorrectChars.Add(new AccuracyIncorrectChar() {
+                        Expected = shown[i],
+                        Found=entered[i],
+                        Index=i
+                    });
+                }
             }
 
-            int correctChars = numCharsToCompare - wrongChars;
+            int correctChars = numCharsToCompare - incorrectChars.Count;
             int lengthDiff = entered.Length - shown.Length;
 
             //positive diff => extra characters
@@ -116,11 +128,14 @@ namespace KeyCdr.Analytics
             //since they did get 4 matches so 4/6 total vs 2/4
             return new AccuracyMeasurement()
             {
+                TextShown = shown,
+                TextEntered = entered,
                 LengthMeasured = (lengthDiff > 0) ? entered.Length : shown.Length,
                 NumCorrectChars = correctChars,
-                NumIncorrectChars = wrongChars,
+                NumIncorrectChars = incorrectChars.Count,
                 NumShortChars = shortChars,
-                NumExtraChars = extraChars
+                NumExtraChars = extraChars,
+                IncorrectChars = incorrectChars
             };
         }
 

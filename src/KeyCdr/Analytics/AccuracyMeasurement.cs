@@ -26,7 +26,6 @@ namespace KeyCdr.Analytics
                 / (double)this.LengthMeasured;
 
             return Math.Round(accuracy, Constants.PRECISION_FOR_DECIMALS);
-            
         }
 
         public int NumIncorrectChars { get; set; }
@@ -34,5 +33,9 @@ namespace KeyCdr.Analytics
 
         public int NumShortChars { get; set; }
         public int NumExtraChars { get; set; }
+
+        public string TextShown { get; set; }
+        public string TextEntered { get; set; }
+        public IList<AccuracyIncorrectChar> IncorrectChars { get; set; }
     }
 }
