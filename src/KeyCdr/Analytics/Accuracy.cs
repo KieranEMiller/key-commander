@@ -27,62 +27,30 @@ namespace KeyCdr.Analytics
 
         private List<AccuracyMeasurement> _measurements;
 
-        public double AccuracyVal {
-            get {
-                if (_measurements.Count == 0) return 0;
-                return _measurements.Average(m => m.GetAccuracy());
-            }
-        }
-
-        public int NumWordsEvaluated {
-            get {
-                return _measurements.Count;
-            }
-        }
-
-        public int NumCharsEvaluated {
-            get {
-                return _measurements.Sum(m=>m.LengthMeasured);
-            }
-        }
-
-        public int NumIncorrectChars {
-            get {
-                return _measurements.Sum(m => m.NumIncorrectChars);
-            }
-        }
-
-        public int NumCorrectChars {
-            get {
-                return _measurements.Sum(m => m.NumCorrectChars);
-            }
-        }
-
-        public int NumShortChars {
-            get {
-                return _measurements.Sum(m => m.NumShortChars);
-            }
-        }
-        public int NumExtraChars {
-            get {
-                return _measurements.Sum(m => m.NumExtraChars);
-            }
-        }
 
         public void Compute()
         {
             string[] shownWords = this._analyticData.TextShown.Split(Constants.StringSplits.SEPARATOR_WORD);
             string[] enteredWords = this._analyticData.TextEntered.Split(Constants.StringSplits.SEPARATOR_WORD);
 
+            int charIndexCounter = 0;
+
             //TODO: need to be able to handle different numbers of words
             for(int i=0; i < Math.Min(shownWords.Length, enteredWords.Length);i++)
             {
-                var measure = ComputeForWord(shownWords[i], enteredWords[i]);
+                var measure = ComputeForWord(shownWords[i], enteredWords[i], charIndexCounter);
                 _measurements.Add(measure);
+
+                charIndexCounter += enteredWords[i].Length;
             }
         }
 
         public AccuracyMeasurement ComputeForWord(string shown, string entered)
+        {
+            return ComputeForWord(shown, entered, 0);
+        }
+
+        public AccuracyMeasurement ComputeForWord(string shown, string entered, int indexInLargerText)
         {
             //init cost to the difference in length between the two strings
             //if the entered string is too short or too long both should be counted as 'wrong'		
@@ -135,7 +103,8 @@ namespace KeyCdr.Analytics
                 NumIncorrectChars = incorrectChars.Count,
                 NumShortChars = shortChars,
                 NumExtraChars = extraChars,
-                IncorrectChars = incorrectChars
+                IncorrectChars = incorrectChars,
+                IndexInLargerText = indexInLargerText
             };
         }
 
@@ -166,6 +135,48 @@ namespace KeyCdr.Analytics
             accuracy.Accuracy = (decimal)this.AccuracyVal;
 
             db.AnalysisAccuracys.Add(accuracy);
+        }
+
+        public double AccuracyVal {
+            get {
+                if (_measurements.Count == 0) return 0;
+                return _measurements.Average(m => m.GetAccuracy());
+            }
+        }
+
+        public int NumWordsEvaluated {
+            get {
+                return _measurements.Count;
+            }
+        }
+
+        public int NumCharsEvaluated {
+            get {
+                return _measurements.Sum(m=>m.LengthMeasured);
+            }
+        }
+
+        public int NumIncorrectChars {
+            get {
+                return _measurements.Sum(m => m.NumIncorrectChars);
+            }
+        }
+
+        public int NumCorrectChars {
+            get {
+                return _measurements.Sum(m => m.NumCorrectChars);
+            }
+        }
+
+        public int NumShortChars {
+            get {
+                return _measurements.Sum(m => m.NumShortChars);
+            }
+        }
+        public int NumExtraChars {
+            get {
+                return _measurements.Sum(m => m.NumExtraChars);
+            }
         }
     }
 }

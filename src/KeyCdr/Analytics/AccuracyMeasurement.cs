@@ -37,5 +37,7 @@ namespace KeyCdr.Analytics
         public string TextShown { get; set; }
         public string TextEntered { get; set; }
         public IList<AccuracyIncorrectChar> IncorrectChars { get; set; }
+
+        public int IndexInLargerText { get; set; }
     }
 }
