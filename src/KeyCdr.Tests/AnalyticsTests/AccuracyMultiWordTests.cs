@@ -8,11 +8,10 @@ using NUnit.Framework;
 
 namespace KeyCdr.Tests.AnalyticsTests
 {
+    [Category("Analytics_Accuracy_MultiWord")]
     [TestFixture]
     public class AccuracyMultiWordTests
     {
-        //test prefix: accuracy_mw
-
         [TestCase("ab cd g", "ab cd g", 5)]
         [TestCase("ab cd g", "ab xd g", 4)]
         [TestCase("ab cd g", "ab xz g", 3)]

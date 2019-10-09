@@ -8,11 +8,10 @@ using KeyCdr.Analytics;
 
 namespace KeyCdr.Tests.AnalyticsTests
 {
+    [Category("Analytics_Accuracy_SingleWord")]
     [TestFixture]
     public class AccuracySingleWordTests
     {
-        //test prefix: accuracy_sw
-
         [TestCase("qwer", "zxcv")]
         public void text_shown_and_entered_correct_after_compute(string input, string expected)
         {
