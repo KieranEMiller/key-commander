@@ -11,10 +11,16 @@ namespace KeyCdr.UI.WPF.Models
 {
     public class MainModel
     {
+        private const TextSampleSourceType DEFAULT_SOURCE_TYPE = TextSampleSourceType.Wikipedia;
+
         public MainModel()
-        { }
+        {
+            SelectedSourceType = DEFAULT_SOURCE_TYPE;
+        }
 
         public KCUser User { get; set; }
+        public TextSampleSourceType SelectedSourceType { get; set; }
+
         public IList<Session> RecentSessions { get; set; }
         public ListCollectionView RecentSessionsView
         {
@@ -32,12 +38,10 @@ namespace KeyCdr.UI.WPF.Models
                     }))
                     .OrderByDescending(o=>o.SequenceCreated)
                     .ToList();
-                //return collection;
 
                 ListCollectionView collectionView = new ListCollectionView(collection);
                 collectionView.GroupDescriptions.Add(new PropertyGroupDescription("SessionDisplayName"));
                 return collectionView;
-                //myDataGrid.ItemsSource = collectionView;
             }
         }
     }

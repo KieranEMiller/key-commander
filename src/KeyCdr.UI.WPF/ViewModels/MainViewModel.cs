@@ -7,11 +7,13 @@ using KeyCdr.UI.WPF.Models;
 using KeyCdr.Data;
 using System.ComponentModel;
 using System.Windows.Data;
+using KeyCdr.TextSamples;
 
 namespace KeyCdr.UI.WPF.ViewModels
 {
     public class MainViewModel : BaseViewModel, INotifyPropertyChanged
     {
+
         public MainViewModel()
             : this(new KCUser())
         {}
@@ -24,6 +26,23 @@ namespace KeyCdr.UI.WPF.ViewModels
         }
 
         private MainModel _mainModel;
+
+        public TextSampleSourceType SelectedSourceType
+        {
+            get { return _mainModel.SelectedSourceType; }
+            set {
+                _mainModel.SelectedSourceType = value;
+                RaisePropertyChanged("SelectedSourceType");
+            }
+        }
+
+        public IEnumerable<TextSampleSourceType> NewSessionSourceTypes
+        {
+            get {
+                return Enum.GetValues(typeof(TextSampleSourceType))
+                    .Cast<TextSampleSourceType>();
+            }
+        }
 
         public KCUser User {
             get {
@@ -44,7 +63,6 @@ namespace KeyCdr.UI.WPF.ViewModels
             }
         }
 
-        //public IList<MainModelSessionView> RecentSessionsView
         public ListCollectionView RecentSessionsView
         { get { return _mainModel.RecentSessionsView; } }
     }

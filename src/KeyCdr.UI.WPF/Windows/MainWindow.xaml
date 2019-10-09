@@ -22,16 +22,27 @@
 
         <GroupBox Header="Start a New Session" HorizontalAlignment="Stretch" Height="110" Margin="10,52,10,0" VerticalAlignment="Top" >
             <StackPanel Margin="10 10 10 0">
-                <ComboBox Margin="0 0 0 10" Height="30"></ComboBox>
-                <Button Content="New Session" Width="150" Height="30" HorizontalAlignment="Right" Margin="202,0,0,0"></Button>
+                <ComboBox Margin="0 0 0 10" Height="30" SelectedItem="{Binding SelectedSourceType}" ItemsSource="{Binding NewSessionSourceTypes}"></ComboBox>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions >
+                    <StackPanel Margin="5" Orientation="Horizontal" Grid.Column="1">
+                        <CheckBox Content="Words" Margin="0 0 20 0" />
+                        <CheckBox Content="Sentences"  Margin="0 0 20 0" />
+                        <CheckBox Content="Paragraphs"  Margin="0 0 20 0" />
+                    </StackPanel>
+                    <Button IsEnabled="False" Content="Advanced" Grid.Column="1" Width="150" Height="30" HorizontalAlignment="Right" Margin="0,0,20,0"></Button>
+                    <Button Content="New Session" Grid.Column="2" Width="150" Height="30" HorizontalAlignment="Right" Margin="0,0,0,0"></Button>
+                </Grid>
             </StackPanel>
         </GroupBox>
 
-
         <GroupBox Header="Review Previous Sessions" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,167,10,0">
-            <DataGrid Margin="0,10,0,0" ItemsSource="{Binding RecentSessionsView}" CanUserAddRows="False">
+            <DataGrid Margin="0,10,0,0" ItemsSource="{Binding RecentSessionsView}" CanUserAddRows="False" AutoGenerateColumns="False">
                 <DataGrid.GroupStyle>
-                    <!-- Style for groups at top level. -->
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
                             <Style TargetType="{x:Type GroupItem}">
@@ -55,19 +66,15 @@
                             </Style>
                         </GroupStyle.ContainerStyle>
                     </GroupStyle>
-                    <!-- Style for groups under the top level. 
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <DockPanel>
-                                    <TextBlock Text="{Binding SessionId}" Margin="30,0,0,0" Width="100"/>
-                                    <TextBlock Text="{Binding SequenceCreated}" Margin="30,0,0,0" Width="100"/>
-
-                                </DockPanel>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle-->
                 </DataGrid.GroupStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding UserId}" Header="UserId" Width="70"/>
+                    <DataGridTextColumn Binding="{Binding SessionId}" Header="SessionId" Width="70"/>
+                    <DataGridTextColumn Binding="{Binding SessionCreated}" Header="Session Created On" Width="130"/>
+                    <DataGridTextColumn Binding="{Binding SequenceCount}" Header="# Sequences" Width="80" />
+                    <DataGridTextColumn Binding="{Binding SequenceCreated}" Header="Sequence Created On" Width="130"/>
+                    <DataGridTextColumn Binding="{Binding SequenceSource}" Header="Source" />
+                </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
 
