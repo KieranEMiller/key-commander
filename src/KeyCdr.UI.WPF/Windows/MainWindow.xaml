@@ -15,14 +15,14 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Label Content="Key Commander" Grid.Column="0" FontSize="25" VerticalContentAlignment="Center" />
-                <Label Content="{Binding WelcomeMsg}" Grid.Column="2" FontSize="14" VerticalContentAlignment="Center" />
+                <Label Content="{Binding Model.User.LoginName}" ContentStringFormat="Welcome, {0}" Grid.Column="2" FontSize="14" VerticalContentAlignment="Center" />
                 <Line Margin="0,42,0,0" Stretch="Fill" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Top" Stroke="Black" Height="5" StrokeThickness="5" X1="0" X2="100"/>
             </Grid>
         </DockPanel>
 
         <GroupBox Header="Start a New Session" HorizontalAlignment="Stretch" Height="110" Margin="10,52,10,0" VerticalAlignment="Top" >
             <StackPanel Margin="10 10 10 0">
-                <ComboBox Margin="0 0 0 10" Height="30" SelectedItem="{Binding SelectedSourceType}" ItemsSource="{Binding NewSessionSourceTypes}"></ComboBox>
+                <ComboBox Margin="0 0 0 10" Height="30" SelectedItem="{Binding Model.SelectedSourceType}" ItemsSource="{Binding NewSessionSourceTypes}"></ComboBox>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -41,7 +41,7 @@
         </GroupBox>
 
         <GroupBox Header="Review Previous Sessions" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,167,10,0">
-            <DataGrid Margin="0,10,0,0" ItemsSource="{Binding RecentSessionsView}" CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid Margin="0,10,0,0" ItemsSource="{Binding Model.RecentSessionsView}" CanUserAddRows="False" AutoGenerateColumns="False">
                 <DataGrid.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>

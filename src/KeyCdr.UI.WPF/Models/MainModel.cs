@@ -1,7 +1,9 @@
 ﻿using KeyCdr.Data;
 using KeyCdr.TextSamples;
+using KeyCdr.UI.WPF.Util;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +11,7 @@ using System.Windows.Data;
 
 namespace KeyCdr.UI.WPF.Models
 {
-    public class MainModel
+    public class MainModel : BasePropertyChanged, INotifyPropertyChanged
     {
         private const TextSampleSourceType DEFAULT_SOURCE_TYPE = TextSampleSourceType.Wikipedia;
 
@@ -18,8 +20,27 @@ namespace KeyCdr.UI.WPF.Models
             SelectedSourceType = DEFAULT_SOURCE_TYPE;
         }
 
-        public KCUser User { get; set; }
-        public TextSampleSourceType SelectedSourceType { get; set; }
+        private KCUser _user;
+        private TextSampleSourceType _selectedSourceType;
+
+        public KCUser User {
+            get {
+                return _user;
+            }
+            set {
+                _user = value;
+                RaisePropertyChanged(nameof(this.User));
+            }
+        }
+
+        public TextSampleSourceType SelectedSourceType
+        {
+            get { return _selectedSourceType; }
+            set {
+               _selectedSourceType = value;
+                RaisePropertyChanged(nameof(this.SelectedSourceType));
+            }
+        }
 
         public IList<Session> RecentSessions { get; set; }
         public ListCollectionView RecentSessionsView

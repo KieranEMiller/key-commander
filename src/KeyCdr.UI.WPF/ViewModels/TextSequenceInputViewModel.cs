@@ -1,6 +1,8 @@
-﻿using KeyCdr.Data;
+﻿using KeyCdr.Analytics;
+using KeyCdr.Data;
 using KeyCdr.TextSamples;
 using KeyCdr.UI.WPF.Models;
+using KeyCdr.UI.WPF.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,8 +15,10 @@ using System.Windows.Threading;
 
 namespace KeyCdr.UI.WPF.ViewModels
 {
-    public class TextSequenceInputViewModel: BaseViewModel, INotifyPropertyChanged
+    public class TextSequenceInputViewModel
     {
+        private const int UPDATE_INTERVAL_IN_MS = 250;
+
         public TextSequenceInputViewModel()
             : this(new KCUser(), new WikipediaTextGenerator())
         { }
@@ -37,6 +41,8 @@ namespace KeyCdr.UI.WPF.ViewModels
         private Stopwatch _elapsed;
         private DispatcherTimer _elapsedTimer;
 
+        public TextSequenceInputModel Model { get { return _seqInputModel; } }
+
         public void RegisterKeyDown(KeyEventArgs keyArgs)
         {
             if(keyArgs.Key == Key.Enter)
@@ -53,16 +59,14 @@ namespace KeyCdr.UI.WPF.ViewModels
         public void StartSequence()
         {
             ITextSample sample = _sessionMgr.GetSentence();
-            this.TextShown = sample.GetText();
+            _seqInputModel.TextShown = sample.GetText();
             _sessionMgr.StartNewSequence(sample);
 
             _elapsed = new Stopwatch();
             _elapsedTimer = new DispatcherTimer(DispatcherPriority.Normal, App.Current.Dispatcher);
-            _elapsedTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
-            _elapsedTimer.Tick += (_, a) =>
-            {
-                _seqInputModel.Elapsed = _elapsed.Elapsed.ToString("c");
-                RaisePropertyChanged("Elapsed");
+            _elapsedTimer.Interval = new TimeSpan(0, 0, 0, 0, UPDATE_INTERVAL_IN_MS);
+            _elapsedTimer.Tick += (_, a) => {
+                 DoInterval();
             };
             _elapsed.Start();
             _elapsedTimer.Start();
@@ -75,28 +79,25 @@ namespace KeyCdr.UI.WPF.ViewModels
             _sessionMgr.Stop(_seqInputModel.TextEntered);
         }
 
-        public string Elapsed {
-            get {
-                return string.Format("Elapsed: {0}", _seqInputModel.Elapsed);
-            }
-            set {
-                _seqInputModel.Elapsed = value;
-            }
-        }
+        public void DoInterval()
+        {
+            if (string.IsNullOrWhiteSpace(_seqInputModel.TextEntered))
+                return;
 
-        public string TextShown {
-            get {
-                return _seqInputModel.TextShown;
+            IList<IAnalytic> analyses = _sessionMgr.Peek(_seqInputModel.TextEntered);
+            foreach(IAnalytic analytic in analyses)
+            {
+                if(analytic is Speed)
+                {
+                    var speed = (Speed)analytic;
+                    _seqInputModel.AnalyticSpeed = speed;
+                }
+                else if(analytic is Accuracy)
+                {
+                    var accuracy = (Accuracy)analytic;
+                    _seqInputModel.AnalyticAccuracy = accuracy;
+                }
             }
-            set {
-                _seqInputModel.TextShown = value;
-                RaisePropertyChanged("TextShown");
-            }
-        }
-
-        public string TextEntered {
-            get { return _seqInputModel.TextEntered; }
-            set { _seqInputModel.TextEntered = value; }
         }
     }
 }

@@ -8,12 +8,12 @@ using KeyCdr.Data;
 using System.ComponentModel;
 using System.Windows.Data;
 using KeyCdr.TextSamples;
+using KeyCdr.UI.WPF.Util;
 
 namespace KeyCdr.UI.WPF.ViewModels
 {
-    public class MainViewModel : BaseViewModel, INotifyPropertyChanged
+    public class MainViewModel : BasePropertyChanged, INotifyPropertyChanged
     {
-
         public MainViewModel()
             : this(new KCUser())
         {}
@@ -27,20 +27,12 @@ namespace KeyCdr.UI.WPF.ViewModels
         }
 
         private MainModel _mainModel;
+        public MainModel Model { get { return _mainModel; } }
 
         public void RefreshRecentSessions()
         {
             _mainModel.RecentSessions = new KeyCdr.History.UserSessionHistory().GetSessionsByUser(_mainModel.User);
-            RaisePropertyChanged("RecentSessionsView");
-        }
-
-        public TextSampleSourceType SelectedSourceType
-        {
-            get { return _mainModel.SelectedSourceType; }
-            set {
-                _mainModel.SelectedSourceType = value;
-                RaisePropertyChanged("SelectedSourceType");
-            }
+            RaisePropertyChanged(nameof(this.RefreshRecentSessions));
         }
 
         public IEnumerable<TextSampleSourceType> NewSessionSourceTypes
@@ -51,33 +43,12 @@ namespace KeyCdr.UI.WPF.ViewModels
             }
         }
 
-        public KCUser User {
-            get {
-                return _mainModel.User;
-            }
-            set {
-                _mainModel.User = value;
-                RaisePropertyChanged("WelcomeMsg");
-            }
-        }
-
-        public string WelcomeMsg {
-            get {
-                if(_mainModel.User != null)
-                    return string.Format("Welcome, {0}", _mainModel.User.LoginName);
-
-                return string.Empty;
-            }
-        }
-
-        public ListCollectionView RecentSessionsView
-        { get { return _mainModel.RecentSessionsView; } }
-
         public void StartNewSession()
         {
             TextSequenceInputViewModel vm = new TextSequenceInputViewModel(_mainModel.User, new WikipediaTextGeneratorWithLocalCache());
             Windows.TextSequenceInputWindow textSeq = new Windows.TextSequenceInputWindow(vm);
             textSeq.ShowDialog();
+
             RefreshRecentSessions();
         }
     }

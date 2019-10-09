@@ -8,27 +8,50 @@
         Title="Key Commander: Input" Height="466.234" Width="644.444" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" PreviewKeyDown="Window_PreviewKeyDown">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="110"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label FontWeight="Bold" Margin="5" Content="press ENTER to start and ENTER when complete" HorizontalAlignment="Center"></Label>
         <GroupBox Header="Statistics">
-            <WrapPanel Orientation="Horizontal" Margin="10">
-                <WrapPanel.Resources>
+            <Grid>
+                <Grid.Resources>
                     <Style TargetType="{x:Type Label}">
-                        <Setter Property="Margin" Value="0 5 20 0" />
+                        <Setter Property="Margin" Value="0 5 40 0" />
                     </Style>
-                </WrapPanel.Resources>
-                <Label Content="{Binding Elapsed}" ></Label>
-                <Label Content="CPM:"></Label>
-            </WrapPanel>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Content="Speed: " FontWeight="Bold"></Label>
+                <Label Grid.Column="1" Content="{Binding Model.AnalyticSpeed.TotalTime}" ContentStringFormat="Elapsed: {0:c}" ></Label>
+                <Label Grid.Column="2" Content="{Binding Model.AnalyticSpeed.WordsPerMinute}" ContentStringFormat="Words/min: {0}"></Label>
+                <Label Grid.Column="3" Content="{Binding Model.AnalyticSpeed.CharsPerSecond}" ContentStringFormat="Chars/sec: {0}"></Label>
+                    
+                <Label Grid.Row="1" Content="Accuracy: " FontWeight="Bold"></Label>
+                <Label Grid.Row="1" Grid.Column="1" Content="{Binding Model.AnalyticAccuracy.AccuracyVal}" ContentStringFormat="Accuracy %: {0}" ></Label>
+                <Label Grid.Row="1" Grid.Column="2" Content="{Binding Model.AnalyticAccuracy.NumWordsEvaluated}" ContentStringFormat="# Words: {0}"></Label>
+                <Label Grid.Row="1" Grid.Column="3" Content="{Binding Model.AnalyticAccuracy.NumCharsEvaluated}" ContentStringFormat="# Chars: {0}"></Label>
+                
+                <Label Grid.Row="2" Grid.Column="1" Content="{Binding Model.AnalyticAccuracy.NumCorrectChars}" ContentStringFormat="# Correct Chars: {0}"></Label>
+                <Label Grid.Row="2" Grid.Column="2" Content="{Binding Model.AnalyticAccuracy.NumIncorrectChars}" ContentStringFormat="# Incorrect Chars: {0}"></Label>
+                <Label Grid.Row="2" Grid.Column="3" Content="{Binding Model.AccuracyExtraAndShortChars}" ContentStringFormat="Extra/Short Chars: {0}"></Label>
+            </Grid>
         </GroupBox>
         <GroupBox Header="Text Sequence" Grid.Row="1">
-            <TextBlock Margin="10" Text="{Binding TextShown}" FontSize="20" TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding Model.TextShown}" Margin="10" FontSize="20" TextWrapping="Wrap"/>
         </GroupBox>
         <GroupBox Header="Your Input" Grid.Row="2">
-            <TextBox Name="txtInput" TextWrapping="Wrap" MinHeight="100" Margin="10" FontSize="20" Text="{Binding TextEntered, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalContentAlignment="Center" AcceptsReturn="False"/>
+            <TextBox Text="{Binding Model.TextEntered, UpdateSourceTrigger=PropertyChanged}" Name="txtInput" TextWrapping="Wrap" MinHeight="100" Margin="10" FontSize="20" VerticalAlignment="Center" HorizontalContentAlignment="Center" AcceptsReturn="False"/>
         </GroupBox>
     </Grid>
 </Window>
