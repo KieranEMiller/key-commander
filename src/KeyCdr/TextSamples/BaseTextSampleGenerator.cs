@@ -54,9 +54,26 @@ namespace KeyCdr.TextSamples
             return items[randomIndex];
         }
 
+        protected string GetWordFromTextBlock(string text)
+        {
+            string word = SplitAndGetARandomIndex(text, Constants.StringSplits.SEPARATOR_WORD);
+            return word;
+        }
+
+        protected string GetSentenceFromTextBlock(string text)
+        {
+            string sentence = SplitAndGetARandomIndex(text, Constants.StringSplits.SEPARATOR_SENTENACE);
+            return sentence;
+        }
+
+        protected string GetParagraphFromTextBlock(string text)
+        {
+            return GetParagraphFromTextBlock(text, Constants.StringSplits.SEPARATOR_SENTENACE);
+        }
+
         protected string GetParagraphFromTextBlock(string text, char[] splitOn)
         {
-            var sentences = text.Split(Constants.StringSplits.SEPARATOR_SENTENACE, StringSplitOptions.RemoveEmptyEntries);
+            var sentences = text.Split(splitOn, StringSplitOptions.RemoveEmptyEntries);
 
             int startIndex = 0;
             int endIndex = 0;

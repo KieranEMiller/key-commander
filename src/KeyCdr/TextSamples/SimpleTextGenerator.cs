@@ -29,19 +29,19 @@ namespace KeyCdr.TextSamples
         
         public ITextSample GetWord()
         {
-            string word = base.SplitAndGetARandomIndex(this.Text, Constants.StringSplits.SEPARATOR_WORD);
+            string word = base.GetWordFromTextBlock(this.Text);
             return TextToTextSample(word);
         }
 
         public ITextSample GetSentence()
         {
-            string sentence = base.SplitAndGetARandomIndex(this.Text, Constants.StringSplits.SEPARATOR_SENTENACE);
+            string sentence = base.GetSentenceFromTextBlock(this.Text);
             return TextToTextSample(sentence);
         }
 
         public ITextSample GetParagraph()
         {
-            string paragraph = base.GetParagraphFromTextBlock(this.Text, Constants.StringSplits.SEPARATOR_SENTENACE);
+            string paragraph = base.GetParagraphFromTextBlock(this.Text);
             return TextToTextSample(paragraph);
         }
     }

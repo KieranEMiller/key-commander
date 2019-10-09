@@ -28,7 +28,8 @@ namespace KeyCdr.TextSamples
 
         public async void Init()
         {
-            _wikiText = await base.GetWikipediaTextFromUrl();
+            //_wikiText = await base.GetWikipediaTextFromUrl();
+            _wikiText = base.GetWikipediaTextFromUrlSynchronously();
             _cachedData = new Queue<WikipediaTextResult>();
 
             PrefetchMoreIfNeeded();
@@ -73,23 +74,29 @@ namespace KeyCdr.TextSamples
 
         public override ITextSample GetWord()
         {
-            string text = GetNextTextSection();
-            var simple = new SimpleTextGenerator(text);
-            return simple.GetWord();
+            return GetNextTextSection(s => base.GetWordFromTextBlock(s));
         }
 
         public override ITextSample GetSentence()
         {
-            string text = GetNextTextSection();
-            var simple = new SimpleTextGenerator(text);
-            return simple.GetSentence();
+            return GetNextTextSection(s => base.GetSentenceFromTextBlock(s));
         }
 
         public override ITextSample GetParagraph()
         {
+            return GetNextTextSection(s => base.GetParagraphFromTextBlock(s));
+        }
+
+        public ITextSample GetNextTextSection(Func<string, string> baseMethod)
+        {
             string text = GetNextTextSection();
-            var simple = new SimpleTextGenerator(text);
-            return simple.GetParagraph();
+            string section = baseMethod(text);
+            return new TextSample()
+            {
+                Text = section,
+                SourceType = TextSampleSourceType.Wikipedia,
+                SourceKey = _wikiText.Url
+            };
         }
     }
 }
