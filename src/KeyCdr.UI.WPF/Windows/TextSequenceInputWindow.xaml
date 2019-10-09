@@ -1,0 +1,34 @@
+﻿<Window x:Class="KeyCdr.UI.WPF.Windows.TextSequenceInputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KeyCdr.UI.WPF.Windows"
+        mc:Ignorable="d"
+        Title="Key Commander: Input" Height="466.234" Width="644.444" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label FontWeight="Bold" Margin="5" Content="press ENTER to start and ENTER when complete" HorizontalAlignment="Center"></Label>
+        <GroupBox Header="Statistics">
+            <WrapPanel Orientation="Horizontal" Margin="10">
+                <WrapPanel.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Margin" Value="0 5 20 0" />
+                    </Style>
+                </WrapPanel.Resources>
+                <Label Content="{Binding Elapsed}" ></Label>
+                <Label Content="CPM:"></Label>
+            </WrapPanel>
+        </GroupBox>
+        <GroupBox Header="Text Sequence" Grid.Row="1">
+            <TextBlock Margin="10" Text="{Binding TextShown}" FontSize="20" TextWrapping="Wrap"/>
+        </GroupBox>
+        <GroupBox Header="Your Input" Grid.Row="2">
+            <TextBox Name="txtInput" TextWrapping="Wrap" MinHeight="100" Margin="10" FontSize="20" Text="{Binding TextEntered, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalContentAlignment="Center" AcceptsReturn="False"/>
+        </GroupBox>
+    </Grid>
+</Window>
