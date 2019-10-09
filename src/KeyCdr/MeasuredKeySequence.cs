@@ -21,12 +21,12 @@ namespace KeyCdr
         public MeasuredKeySequence(string sequence, IList<AnalyticType> analysesToRun)
         {
             this.Sequence = sequence;
-            this.Analysis = new List<KeyCdr.Analytics.IAnalytic>();
+            this.Analysis = new List<IAnalytic>();
             _stopwatch = new Stopwatch();
 
-            //use speed as the default
+            //use speed and accuracy as the default
             if(analysesToRun == null || analysesToRun.Count == 0)
-                _analysesToRun = new List<AnalyticType>() { AnalyticType.Speed };
+                _analysesToRun = new List<AnalyticType>() { AnalyticType.Speed, AnalyticType.Accuracy };
             else 
                 _analysesToRun = analysesToRun;
         }
@@ -35,7 +35,7 @@ namespace KeyCdr
         private IList<AnalyticType> _analysesToRun;
 
         public string Sequence { get; set; }
-        public IList<KeyCdr.Analytics.IAnalytic> Analysis { get; private set; }
+        public IList<IAnalytic> Analysis { get; private set; }
 
         public void Start()
         {
@@ -43,7 +43,27 @@ namespace KeyCdr
             _stopwatch.Start();
         }
 
-        public IList<KeyCdr.Analytics.IAnalytic> Stop(string enteredText)
+        public IList<IAnalytic> Peek(string enteredText)
+        {
+            IList<IAnalytic> analyses = new List<IAnalytic>();
+            AnalyticData data = new AnalyticData
+            {
+                TextShown = this.Sequence,
+                TextEntered = enteredText,
+                Elapsed = _stopwatch.Elapsed
+            };
+
+            foreach (var analyticType in _analysesToRun)
+            {
+                var analysis = BaseAnalytic.Create(analyticType, data);
+                analysis.Compute();
+                analyses.Add(analysis);
+            }
+
+            return analyses;
+        }
+
+        public IList<IAnalytic> Stop(string enteredText)
         {
             _stopwatch.Stop();
 
