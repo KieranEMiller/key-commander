@@ -117,7 +117,7 @@ namespace KeyCdr.Tests.AnalyticsTests
         [TestCase("abcd", "abcde", 0.80)]
         [TestCase("abcd", "abzdv", 0.60)]
         [TestCase("abcd", "abcdabcd", 0.50)]
-        public void calculated_correctly_for_extra_long_strings(string input, string expected, double expectedAcc)
+        public void calculated_correctly_for_long_strings(string input, string expected, double expectedAcc)
         {
             var accuracy = new Accuracy(new AnalyticData { TextShown = input, TextEntered = expected });
             accuracy.Compute();
@@ -141,5 +141,6 @@ namespace KeyCdr.Tests.AnalyticsTests
             accuracy.Compute();
             Assert.That(accuracy.GetResultSummary(), Contains.Substring("50%"));
         }
+
     }
 }

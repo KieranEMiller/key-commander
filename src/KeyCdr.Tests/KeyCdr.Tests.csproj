@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyticsTests\AccuracyIncorrectCharacterTests.cs" />
     <Compile Include="AnalyticsTests\AccuracyMultiWordTests.cs" />
     <Compile Include="AnalyticsTests\AccuracySingleWordTests.cs" />
     <Compile Include="AnalyticsTests\BaseAnalyticTests.cs" />
