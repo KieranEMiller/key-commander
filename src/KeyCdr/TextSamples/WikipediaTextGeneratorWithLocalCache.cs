@@ -26,7 +26,7 @@ namespace KeyCdr.TextSamples
         private WikipediaTextResult _wikiText;
         private Queue<WikipediaTextResult> _cachedData;
 
-        public async void Init()
+        public void Init()
         {
             //_wikiText = await base.GetWikipediaTextFromUrl();
             _wikiText = base.GetWikipediaTextFromUrlSynchronously();
