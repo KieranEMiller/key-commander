@@ -32,7 +32,6 @@ namespace KeyCdr.UI.WPF.ViewModels
         public void RefreshRecentSessions()
         {
             _mainModel.RecentSessions = new KeyCdr.History.UserSessionHistory().GetSessionsByUser(_mainModel.User);
-            RaisePropertyChanged(nameof(this.RefreshRecentSessions));
         }
 
         public IEnumerable<TextSampleSourceType> NewSessionSourceTypes

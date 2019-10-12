@@ -22,6 +22,7 @@ namespace KeyCdr.UI.WPF.Models
 
         private KCUser _user;
         private TextSampleSourceType _selectedSourceType;
+        private IList<Session> _recentSessions;
 
         public KCUser User {
             get {
@@ -42,7 +43,14 @@ namespace KeyCdr.UI.WPF.Models
             }
         }
 
-        public IList<Session> RecentSessions { get; set; }
+        public IList<Session> RecentSessions {
+            get { return _recentSessions; }
+            set {
+                _recentSessions = value;
+                RaisePropertyChanged(nameof(this.RecentSessionsView));
+            }
+        }
+
         public ListCollectionView RecentSessionsView
         {
             get {
