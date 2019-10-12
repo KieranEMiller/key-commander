@@ -48,7 +48,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="Text Sequence" Grid.Row="1">
-            <TextBlock Text="{Binding Model.TextShown}" Margin="10" FontSize="20" TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding Model.TextShown}" Margin="10" FontSize="20" TextWrapping="Wrap" Name="txtExpected"/>
         </GroupBox>
         <GroupBox Header="Your Input" Grid.Row="2">
             <TextBox Text="{Binding Model.TextEntered, UpdateSourceTrigger=PropertyChanged}" Name="txtInput" TextWrapping="Wrap" MinHeight="100" Margin="10" FontSize="20" VerticalAlignment="Center" HorizontalContentAlignment="Center" AcceptsReturn="False"/>

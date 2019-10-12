@@ -11,7 +11,10 @@ namespace KeyCdr.UI.WPF.Models
     public class TextSequenceInputModel : BasePropertyChanged, INotifyPropertyChanged
     {
         public TextSequenceInputModel()
-        { }
+        {
+            _analyticSpeed = new Analytics.Speed();
+            _analyticAccuracy = new Analytics.Accuracy();
+        }
 
         private Analytics.Speed _analyticSpeed;
         private Analytics.Accuracy _analyticAccuracy;
@@ -24,6 +27,7 @@ namespace KeyCdr.UI.WPF.Models
             set {
                 _analyticSpeed = value;
                 RaisePropertyChanged(nameof(this.AnalyticSpeed));
+                RaisePropertyChanged(nameof(this.AccuracyExtraAndShortChars));
             }
         }
 
