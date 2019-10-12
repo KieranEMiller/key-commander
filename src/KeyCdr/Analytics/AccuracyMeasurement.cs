@@ -8,7 +8,17 @@ namespace KeyCdr.Analytics
 {
     public class AccuracyMeasurement
     {
+        public string TextShown { get; set; }
+        public string TextEntered { get; set; }
+
         public int LengthMeasured { get; set; }
+
+        public int NumShortChars { get; set; }
+        public int NumExtraChars { get; set; }
+        public int NumCorrectChars { get; set; }
+        public IList<AccuracyIncorrectChar> IncorrectChars { get; set; }
+
+        public int IndexInLargerText { get; set; }
 
         public double GetAccuracy() {
             //edge case: if the strings are empty, then accuracy...is 100%? 
@@ -20,24 +30,12 @@ namespace KeyCdr.Analytics
             //see Accuracy.cs comments
             double accuracy =
                 (this.LengthMeasured 
-                - this.NumIncorrectChars 
+                - this.IncorrectChars.Count 
                 - this.NumExtraChars 
                 - this.NumShortChars)
                 / (double)this.LengthMeasured;
 
             return Math.Round(accuracy, Constants.PRECISION_FOR_DECIMALS);
         }
-
-        public int NumIncorrectChars { get; set; }
-        public int NumCorrectChars { get; set; }
-
-        public int NumShortChars { get; set; }
-        public int NumExtraChars { get; set; }
-
-        public string TextShown { get; set; }
-        public string TextEntered { get; set; }
-        public IList<AccuracyIncorrectChar> IncorrectChars { get; set; }
-
-        public int IndexInLargerText { get; set; }
     }
 }
