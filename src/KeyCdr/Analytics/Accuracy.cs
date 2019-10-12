@@ -27,7 +27,6 @@ namespace KeyCdr.Analytics
 
         private List<AccuracyMeasurement> _measurements;
 
-
         public void Compute()
         {
             string[] shownWords = this._analyticData.TextShown.Split(Constants.StringSplits.SEPARATOR_WORD);
@@ -41,7 +40,12 @@ namespace KeyCdr.Analytics
                 var measure = ComputeForWord(shownWords[i], enteredWords[i], charIndexCounter);
                 _measurements.Add(measure);
 
-                charIndexCounter += enteredWords[i].Length;
+                charIndexCounter += shownWords[i].Length;
+
+                //add number of iterations + 1 to represent the spaces in the original string that
+                //the word was split on
+                if(i>0)
+                    charIndexCounter += (i+1);
             }
         }
 
@@ -100,7 +104,6 @@ namespace KeyCdr.Analytics
                 TextEntered = entered,
                 LengthMeasured = (lengthDiff > 0) ? entered.Length : shown.Length,
                 NumCorrectChars = correctChars,
-                NumIncorrectChars = incorrectChars.Count,
                 NumShortChars = shortChars,
                 NumExtraChars = extraChars,
                 IncorrectChars = incorrectChars,
@@ -137,6 +140,16 @@ namespace KeyCdr.Analytics
             db.AnalysisAccuracys.Add(accuracy);
         }
 
+        public IList<AccuracyMeasurement> Measurements
+        {
+            get { return _measurements; }
+        }
+
+        public IList<AccuracyIncorrectChar> GetAllIncorrectCharacters()
+        {
+            return _measurements.SelectMany(m => m.IncorrectChars).ToList();
+        }
+
         public double AccuracyVal {
             get {
                 if (_measurements.Count == 0) return 0;
@@ -158,7 +171,7 @@ namespace KeyCdr.Analytics
 
         public int NumIncorrectChars {
             get {
-                return _measurements.Sum(m => m.NumIncorrectChars);
+                return _measurements.Sum(m => m.IncorrectChars.Count);
             }
         }
 
