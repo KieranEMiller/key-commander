@@ -30,6 +30,12 @@ namespace KeyCdr.UI.WPF.ViewModels
 
             _generator = gen;
             _sessionMgr = new UserSession(user, gen);
+
+            _elapsedTimer = new DispatcherTimer(DispatcherPriority.Normal, App.Current.Dispatcher);
+            _elapsedTimer.Interval = new TimeSpan(0, 0, 0, 0, UPDATE_INTERVAL_IN_MS);
+            _elapsedTimer.Tick += (_, a) => {
+                 DoInterval();
+            };
         }
 
         private bool _seqActive;
@@ -38,7 +44,6 @@ namespace KeyCdr.UI.WPF.ViewModels
         private ITextSampleGenerator _generator;
         private UserSession _sessionMgr;
 
-        private Stopwatch _elapsed;
         private DispatcherTimer _elapsedTimer;
 
         public TextSequenceInputModel Model { get { return _seqInputModel; } }
@@ -62,19 +67,13 @@ namespace KeyCdr.UI.WPF.ViewModels
             _seqInputModel.TextShown = sample.GetText();
             _sessionMgr.StartNewSequence(sample);
 
-            _elapsed = new Stopwatch();
-            _elapsedTimer = new DispatcherTimer(DispatcherPriority.Normal, App.Current.Dispatcher);
-            _elapsedTimer.Interval = new TimeSpan(0, 0, 0, 0, UPDATE_INTERVAL_IN_MS);
-            _elapsedTimer.Tick += (_, a) => {
-                 DoInterval();
-            };
-            _elapsed.Start();
+            _seqInputModel.TextEntered = string.Empty;
+
             _elapsedTimer.Start();
         }
 
         public void StopSequence()
         {
-            _elapsed.Stop();
             _elapsedTimer.Stop();
             _sessionMgr.Stop(_seqInputModel.TextEntered);
         }
