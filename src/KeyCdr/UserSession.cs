@@ -62,6 +62,11 @@ namespace KeyCdr
             _currentSeq.Start();
         }
 
+        public IList<IAnalytic> Peek(string entered)
+        {
+            return _currentSeq.Peek(entered);
+        }
+
         public IList<IAnalytic> Stop(string entered)
         {
             IList<IAnalytic> results = _currentSeq.Stop(entered);

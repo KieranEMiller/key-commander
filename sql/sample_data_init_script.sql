@@ -50,6 +50,17 @@ INSERT INTO [dbo].[SourceType]
 		   )
 GO
 
+
+INSERT INTO [dbo].[SourceType]
+           ([SourceTypeId]
+           ,[Name])
+     VALUES
+           (/*<SourceTypeId, int,>*/	4
+           ,/*<Name, nvarchar(50),>*/	'UserLoaded'
+		   )
+GO
+
+
 USE [KeyCommander]
 GO
 

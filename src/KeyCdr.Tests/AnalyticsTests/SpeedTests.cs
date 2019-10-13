@@ -8,6 +8,7 @@ using KeyCdr.Analytics;
 
 namespace KeyCdr.Tests.AnalyticsTests
 {
+    [Category("analytics_speed")]
     [TestFixture]
     public class SpeedTests
     {

@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using KeyCdr.Users;
 using KeyCdr.Data;
 using KeyCdr.UI.WPF.Models;
+using KeyCdr.UI.WPF.Util;
 
 namespace KeyCdr.UI.WPF.ViewModels
 {
-    public class LoginViewModel : BaseViewModel, INotifyPropertyChanged
+    public class LoginViewModel 
     {
         public LoginViewModel()
         {
@@ -21,9 +22,10 @@ namespace KeyCdr.UI.WPF.ViewModels
         private LoginModel _loginModel;
         private UserManager _userMgr;
 
-        public string ErrorMsg { get; set; }
         public bool LoginSuccessful { get; set; }
         public KCUser User { get; set; }
+
+        public LoginModel Model { get { return _loginModel; } }
 
         public event EventHandler<LoginViewClosedEventArgs> OnLoginClose;
         public void OnCloseEventHandler(LoginViewClosedEventArgs e)
@@ -33,11 +35,6 @@ namespace KeyCdr.UI.WPF.ViewModels
             {
                 handler(this, e);
             }
-        }
-
-        public string LoginName {
-            get { return _loginModel.LoginName; }
-            set { _loginModel.LoginName = value; }
         }
 
         public void LoginAsGuest()
@@ -51,7 +48,7 @@ namespace KeyCdr.UI.WPF.ViewModels
             KCUser user = _userMgr.GetByLoginName(_loginModel.LoginName);
 
             if(user == null) {
-                ShowError("invalid login name");
+                _loginModel.ErrorMsg = "invalid login name";
             }
             else {
                 ProcessLogin(user);
@@ -63,12 +60,6 @@ namespace KeyCdr.UI.WPF.ViewModels
             this.User = user;
             this.LoginSuccessful = (user != null);
             OnCloseEventHandler(new LoginViewClosedEventArgs() { User = user });
-        }
-
-        public void ShowError(string msg)
-        {
-            this.ErrorMsg = msg;
-            RaisePropertyChanged("ErrorMsg");
         }
     }
 }

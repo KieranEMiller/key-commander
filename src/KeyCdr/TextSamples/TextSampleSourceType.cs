@@ -13,5 +13,7 @@ namespace KeyCdr.TextSamples
         HardCoded = 2,
 
         Wikipedia = 3,
+
+        UserLoaded = 4,
     }
 }

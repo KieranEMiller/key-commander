@@ -9,6 +9,10 @@ namespace KeyCdr.Analytics
 {
     public class Speed : BaseAnalytic, IAnalytic, IAnalyticRecordable
     {
+        public Speed()
+            : this(null)
+        { }
+
         public Speed(AnalyticData data)
             : base(data)
         { }

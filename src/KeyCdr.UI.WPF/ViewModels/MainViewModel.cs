@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using KeyCdr.UI.WPF.Models;
 using KeyCdr.Data;
 using System.ComponentModel;
+using System.Windows.Data;
+using KeyCdr.TextSamples;
+using KeyCdr.UI.WPF.Util;
 
 namespace KeyCdr.UI.WPF.ViewModels
 {
-    public class MainViewModel : BaseViewModel, INotifyPropertyChanged
+    public class MainViewModel : BasePropertyChanged, INotifyPropertyChanged
     {
         public MainViewModel()
             : this(new KCUser())
@@ -19,31 +22,33 @@ namespace KeyCdr.UI.WPF.ViewModels
         {
             _mainModel = new MainModel();
             _mainModel.User = user;
-            _mainModel.RecentSessions = new KeyCdr.History.UserSessionHistory().GetSessionsByUser(user);
+
+            RefreshRecentSessions();
         }
 
         private MainModel _mainModel;
+        public MainModel Model { get { return _mainModel; } }
 
-        public KCUser User {
+        public void RefreshRecentSessions()
+        {
+            _mainModel.RecentSessions = new KeyCdr.History.UserSessionHistory().GetSessionsByUser(_mainModel.User);
+        }
+
+        public IEnumerable<TextSampleSourceType> NewSessionSourceTypes
+        {
             get {
-                return _mainModel.User;
-            }
-            set {
-                _mainModel.User = value;
-                RaisePropertyChanged("WelcomeMsg");
+                return Enum.GetValues(typeof(TextSampleSourceType))
+                    .Cast<TextSampleSourceType>();
             }
         }
 
-        public string WelcomeMsg {
-            get {
-                if(_mainModel.User != null)
-                    return string.Format("Welcome, {0}", _mainModel.User.LoginName);
+        public void StartNewSession()
+        {
+            TextSequenceInputViewModel vm = new TextSequenceInputViewModel(_mainModel.User, new WikipediaTextGeneratorWithLocalCache());
+            Windows.TextSequenceInputWindow textSeq = new Windows.TextSequenceInputWindow(vm);
+            textSeq.ShowDialog();
 
-                return string.Empty;
-            }
+            RefreshRecentSessions();
         }
-
-        public IList<Session> RecentSessions
-        { get { return _mainModel.RecentSessions; } }
     }
 }

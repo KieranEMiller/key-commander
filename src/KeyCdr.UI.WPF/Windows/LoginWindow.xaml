@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyCdr.UI.WPF.Windows"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="244.131" Width="334.144" WindowStartupLocation="CenterScreen">
+        Title="Key Commander: Login" Height="244.131" Width="334.144" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,0,0">
         <StackPanel Margin="10,10,10,0" VerticalAlignment="Top">
             <Label x:Name="label" Content="Key Commander" FontSize="25" Margin="0 0 0 2"/>
-            <Label x:Name="lblError" Content="{Binding ErrorMsg}" Height="25" Margin="0 0 0 2" Foreground="Red" FontSize="14"/>
+            <Label x:Name="lblError" Content="{Binding Path=Model.ErrorMsg}" Height="30" Margin="0 0 0 2" Foreground="Red" FontSize="14"/>
             <Label x:Name="label1" Content="Login Name:" Height="30" Margin="0 0 0 2" FontSize="16"/>
-            <TextBox x:Name="txtLoginName" Height="30" TextWrapping="Wrap" Text="{Binding LoginName}" Margin="0 0 0 10" BorderThickness="2" FontSize="16"/>
+            <TextBox x:Name="txtLoginName" Height="30" TextWrapping="Wrap" Text="{Binding Model.LoginName}" Margin="0 0 0 10" BorderThickness="2" FontSize="16"/>
             <Grid Margin="0 10 0 10" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -22,6 +22,5 @@
                 <Button x:Name="btnLogin" Content="Login" Grid.Column="2" Width="130" HorizontalAlignment="Right" FontSize="16" Click="btnLogin_Click"/>
             </Grid>
         </StackPanel>
-
     </Grid>
 </Window>
