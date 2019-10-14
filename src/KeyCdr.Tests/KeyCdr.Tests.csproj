@@ -72,6 +72,8 @@
     <Compile Include="AnalyticsTests\BaseAnalyticTests.cs" />
     <Compile Include="AnalyticsTests\SpeedTests.cs" />
     <Compile Include="EmbeddedResources.cs" />
+    <Compile Include="HighlightingTests\HighlightDetailTests.cs" />
+    <Compile Include="HighlightingTests\HighlightDeterminatorTests.cs" />
     <Compile Include="MeasuredKeySequenceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextSamplesTests\FakeAngleSharpBrowsingContext.cs" />
@@ -95,6 +97,7 @@
   <ItemGroup>
     <EmbeddedResource Include="TextSamplesTests\WikipediaParsingSamples\wikipedia_sample_01_title_and_content_sections.html" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
