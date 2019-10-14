@@ -95,6 +95,8 @@
     <Compile Include="BaseDBAccess.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Highlighting\HighlightDetail.cs" />
+    <Compile Include="Highlighting\HighlightedText.cs" />
+    <Compile Include="Highlighting\HighlightedTextBuilder.cs" />
     <Compile Include="Highlighting\HighlightType.cs" />
     <Compile Include="History\UserSessionHistory.cs" />
     <Compile Include="MeasuredKeySequence.cs" />
