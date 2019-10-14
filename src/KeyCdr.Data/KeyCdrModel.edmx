@@ -248,7 +248,7 @@
           <Property Name="AnalysisAccuracyId" Type="Guid" Nullable="false" />
           <Property Name="AnalysisTypeId" Type="Int32" Nullable="false" />
           <Property Name="KeySequenceAnalysisId" Type="Guid" Nullable="false" />
-          <Property Name="Accuracy" Type="Decimal" Precision="4" Scale="4" Nullable="false" />
+          <Property Name="Accuracy" Type="Decimal" Precision="5" Scale="4" Nullable="false" />
           <Property Name="NumWords" Type="Int32" Nullable="false" />
           <Property Name="NumChars" Type="Int32" Nullable="false" />
           <Property Name="NumCorrectChars" Type="Int32" Nullable="false" />
