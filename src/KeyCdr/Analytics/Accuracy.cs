@@ -143,6 +143,7 @@ namespace KeyCdr.Analytics
         public IList<AccuracyMeasurement> Measurements
         {
             get { return _measurements; }
+            set { _measurements = value.ToList(); }
         }
 
         public IList<AccuracyIncorrectChar> GetAllIncorrectCharacters()

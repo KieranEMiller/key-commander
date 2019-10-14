@@ -30,10 +30,14 @@ namespace KeyCdr.Tests.AnalyticsTests
             accuracy.Compute();
 
             var incorrectChars = accuracy.GetAllIncorrectCharacters();
+            Assert.That(incorrectChars, Is.EquivalentTo(new List<AccuracyIncorrectChar>() {
+                new AccuracyIncorrectChar() {
+                    Expected='c',
+                    Found='x',
+                    Index=2
+                }
+            }));
             Assert.That(incorrectChars.Count, Is.EqualTo(1));
-            Assert.That(incorrectChars[0].Expected, Is.EqualTo('c'));
-            Assert.That(incorrectChars[0].Found, Is.EqualTo('x'));
-            Assert.That(incorrectChars[0].Index, Is.EqualTo(2));
         }
 
         [Test]
@@ -46,13 +50,18 @@ namespace KeyCdr.Tests.AnalyticsTests
 
             var incorrectChars = accuracy.GetAllIncorrectCharacters();
             Assert.That(incorrectChars.Count, Is.EqualTo(2));
-            Assert.That(incorrectChars[0].Expected, Is.EqualTo('a'));
-            Assert.That(incorrectChars[0].Found, Is.EqualTo('q'));
-            Assert.That(incorrectChars[0].Index, Is.EqualTo(0));
-
-            Assert.That(incorrectChars[1].Expected, Is.EqualTo('c'));
-            Assert.That(incorrectChars[1].Found, Is.EqualTo('x'));
-            Assert.That(incorrectChars[1].Index, Is.EqualTo(2));
+            Assert.That(incorrectChars, Is.EquivalentTo(new List<AccuracyIncorrectChar>() {
+                new AccuracyIncorrectChar() {
+                    Expected='a',
+                    Found='q',
+                    Index=0
+                },
+                new AccuracyIncorrectChar() {
+                    Expected='c',
+                    Found='x',
+                    Index=2
+                }
+            }));
         }
 
         [Test]
@@ -65,17 +74,23 @@ namespace KeyCdr.Tests.AnalyticsTests
 
             var incorrectChars = accuracy.GetAllIncorrectCharacters();
             Assert.That(incorrectChars.Count, Is.EqualTo(3));
-            Assert.That(incorrectChars[0].Expected, Is.EqualTo('a'));
-            Assert.That(incorrectChars[0].Found, Is.EqualTo('x'));
-            Assert.That(incorrectChars[0].Index, Is.EqualTo(0));
-
-            Assert.That(incorrectChars[1].Expected, Is.EqualTo('b'));
-            Assert.That(incorrectChars[1].Found, Is.EqualTo('y'));
-            Assert.That(incorrectChars[1].Index, Is.EqualTo(1));
-
-            Assert.That(incorrectChars[2].Expected, Is.EqualTo('c'));
-            Assert.That(incorrectChars[2].Found, Is.EqualTo('z'));
-            Assert.That(incorrectChars[2].Index, Is.EqualTo(2));
+            Assert.That(incorrectChars, Is.EquivalentTo(new List<AccuracyIncorrectChar>() {
+                new AccuracyIncorrectChar() {
+                    Expected='a',
+                    Found='x',
+                    Index=0
+                },
+                new AccuracyIncorrectChar() {
+                    Expected='b',
+                    Found='y',
+                    Index=1
+                },
+                new AccuracyIncorrectChar() {
+                    Expected='c',
+                    Found='z',
+                    Index=2
+                }
+            }));
         }
 
         [Test]
@@ -90,9 +105,70 @@ namespace KeyCdr.Tests.AnalyticsTests
             var incorrectChars = measurements.SelectMany(m=>m.IncorrectChars).ToList();
 
             Assert.That(incorrectChars.Count, Is.EqualTo(1));
-            Assert.That(incorrectChars[0].Expected, Is.EqualTo('z'));
-            Assert.That(incorrectChars[0].Found, Is.EqualTo('y'));
-            Assert.That(incorrectChars[0].Index, Is.EqualTo(0));
+            Assert.That(incorrectChars, Is.EquivalentTo(new List<AccuracyIncorrectChar>() {
+                new AccuracyIncorrectChar() {
+                    Expected='z',
+                    Found='y',
+                    Index=0
+                }
+            }));
+        }
+
+        [Test]
+        public void equality_fails_when_null()
+        {
+            AccuracyIncorrectChar obj1 = new AccuracyIncorrectChar()
+            {
+                Index=2,
+                Found='a',
+                Expected ='b'
+            };
+            AccuracyIncorrectChar obj2 = null;
+            Assert.That(obj1, Is.Not.EqualTo(obj2));
+        }
+
+        [Test]
+        public void equality_fails_when_wrong_obj_type()
+        {
+            AccuracyIncorrectChar obj1 = new AccuracyIncorrectChar() {
+                Index=2,
+                Found='a',
+                Expected ='b'
+            };
+            string obj2 = null;
+            Assert.That(obj1, Is.Not.EqualTo(obj2));
+        }
+
+        [Test]
+        public void equality_fails_when_one_property_incorrect()
+        {
+            AccuracyIncorrectChar obj1 = new AccuracyIncorrectChar() {
+                Index=2,
+                Found='a',
+                Expected ='b'
+            };
+            AccuracyIncorrectChar obj2 = new AccuracyIncorrectChar() {
+                Index=2,
+                Found='a',
+                Expected ='x'
+            };
+            Assert.That(obj1, Is.Not.EqualTo(obj2));
+        }
+
+        [Test]
+        public void equality_true_when_all_properties_same()
+        {
+            AccuracyIncorrectChar obj1 = new AccuracyIncorrectChar() {
+                Index=2,
+                Found='a',
+                Expected ='x'
+            };
+            AccuracyIncorrectChar obj2 = new AccuracyIncorrectChar() {
+                Index=2,
+                Found='a',
+                Expected ='x'
+            };
+            Assert.That(obj1, Is.EqualTo(obj2));
         }
     }
 }
