@@ -1,10 +1,13 @@
 ﻿using KeyCdr.UI.WPF.Util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace KeyCdr.UI.WPF.Models
 {
@@ -18,6 +21,8 @@ namespace KeyCdr.UI.WPF.Models
 
         private Analytics.Speed _analyticSpeed;
         private Analytics.Accuracy _analyticAccuracy;
+
+        private ObservableCollection<Inline> _inlines;
 
         private string _textShown;
         private string _textEntered;
@@ -36,6 +41,22 @@ namespace KeyCdr.UI.WPF.Models
             set {
                 _analyticAccuracy = value;
                 RaisePropertyChanged(nameof(this.AnalyticAccuracy));
+            }
+        }
+
+        public ObservableCollection<Inline> InlineValues
+        {
+            get
+            {
+                return new ObservableCollection<Inline>()
+                {
+                    new Run("qwer"){Foreground=Brushes.Green }
+                };
+            }
+            set
+            {
+                _inlines = value;
+                RaisePropertyChanged(nameof(this.InlineValues));
             }
         }
 

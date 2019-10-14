@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyCdr.UI.WPF.Windows"
+        xmlns:util="clr-namespace:KeyCdr.UI.WPF.Util"
         mc:Ignorable="d"
         Title="Key Commander: Input" Height="466.234" Width="644.444" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" PreviewKeyDown="Window_PreviewKeyDown">
     <Grid Margin="10">
@@ -48,7 +49,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="Text Sequence" Grid.Row="1">
-            <TextBlock Text="{Binding Model.TextShown}" Margin="10" FontSize="20" TextWrapping="Wrap" Name="txtExpected"/>
+            <util:BindableTextBlock InlineList="{Binding Model.InlineValues}" Text="{Binding Model.TextShown}" Margin="10" FontSize="20" TextWrapping="Wrap" x:Name="txtExpected" />
         </GroupBox>
         <GroupBox Header="Your Input" Grid.Row="2">
             <TextBox Text="{Binding Model.TextEntered, UpdateSourceTrigger=PropertyChanged}" Name="txtInput" TextWrapping="Wrap" MinHeight="100" Margin="10" FontSize="20" VerticalAlignment="Center" HorizontalContentAlignment="Center" AcceptsReturn="False"/>

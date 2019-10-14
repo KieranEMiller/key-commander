@@ -1,15 +1,18 @@
 ﻿using KeyCdr.Analytics;
 using KeyCdr.Data;
+using KeyCdr.Highlighting;
 using KeyCdr.TextSamples;
 using KeyCdr.UI.WPF.Models;
 using KeyCdr.UI.WPF.Util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -75,7 +78,9 @@ namespace KeyCdr.UI.WPF.ViewModels
         public void StopSequence()
         {
             _elapsedTimer.Stop();
-            _sessionMgr.Stop(_seqInputModel.TextEntered);
+            var analytics = _sessionMgr.Stop(_seqInputModel.TextEntered);
+
+            ShowResults(analytics.Select(a=>a.GetAnalyticType() == AnalyticType.Accuracy) as Accuracy);
         }
 
         public void DoInterval()
@@ -97,6 +102,33 @@ namespace KeyCdr.UI.WPF.ViewModels
                     _seqInputModel.AnalyticAccuracy = accuracy;
                 }
             }
+        }
+
+        public void ShowResults(Accuracy accuracy)
+        {
+            HighlightDeterminator highlighter = new HighlightDeterminator();
+            IList<HighlightDetail> details = highlighter.Compute(accuracy);
+
+            var inlines = ConvertHighlightsToInlines(_seqInputModel.TextShown, details);
+            _seqInputModel.InlineValues = new ObservableCollection<Inline>(inlines);
+        }
+
+        public IList<Inline> ConvertHighlightsToInlines(string origText, IList<HighlightDetail> details)
+        {
+            List<Inline> inlines = new List<Inline>();
+
+            int lastIndex = 0;
+            foreach(HighlightDetail highlight in details.OrderBy(d=>d.IndexStart))
+            {
+                Inline nextBlockUnformatted = new Run(origText.Substring(lastIndex, highlight.IndexStart));
+                inlines.Add(nextBlockUnformatted);
+
+                Inline formatted = new Run(origText.Substring(highlight.IndexStart, highlight.IndexEnd));
+                formatted.Foreground = new HighlightBrushFactory().HighlightToBrush(highlight.HighlightType);
+                inlines.Add(formatted);
+            }
+
+            return inlines;
         }
     }
 }
