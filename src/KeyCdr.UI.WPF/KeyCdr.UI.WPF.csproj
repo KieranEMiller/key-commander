@@ -65,6 +65,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\TextSequenceInputModel.cs" />
+    <Compile Include="Util\BindableTextBlock.cs" />
+    <Compile Include="Util\HighlightBrushFactory.cs" />
     <Compile Include="ViewModels\TextSequenceInputViewModel.cs" />
     <Compile Include="Windows\TextSequenceInputWindow.xaml.cs">
       <DependentUpon>TextSequenceInputWindow.xaml</DependentUpon>
