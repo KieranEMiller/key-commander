@@ -61,7 +61,7 @@ namespace KeyCdr.Highlighting
                 measurement.NumExtraChars 
                 : measurement.NumShortChars;
 
-            int indexStart = measurement.LengthMeasured - delta;
+            int indexStart = measurement.LengthMeasured - delta + measurement.IndexInLargerText;
             int indexEnd = indexStart + delta;
 
             details.Add(new HighlightDetail() {
