@@ -12,7 +12,7 @@
           <Property Name="AnalysisAccuracyId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="AnalysisTypeId" Type="int" Nullable="false" />
           <Property Name="KeySequenceAnalysisId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Accuracy" Type="decimal" Precision="4" Scale="4" Nullable="false" />
+          <Property Name="Accuracy" Type="decimal" Precision="5" Scale="4" Nullable="false" />
           <Property Name="NumWords" Type="int" Nullable="false" />
           <Property Name="NumChars" Type="int" Nullable="false" />
           <Property Name="NumCorrectChars" Type="int" Nullable="false" />
