@@ -44,8 +44,7 @@ namespace KeyCdr.Analytics
 
                 //add number of iterations + 1 to represent the spaces in the original string that
                 //the word was split on
-                if(i>0)
-                    charIndexCounter += (i+1);
+                charIndexCounter += 1;
             }
         }
 
