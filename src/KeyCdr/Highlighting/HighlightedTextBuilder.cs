@@ -20,7 +20,7 @@ namespace KeyCdr.Highlighting
                 if(lastIndex != highlight.IndexStart)
                 {
                     HighlightedText nextUnformattedBlock = new HighlightedText() {
-                        Text = origText.Substring(lastIndex, highlight.IndexStart),
+                        Text = origText.Substring(lastIndex, highlight.IndexStart - lastIndex),
                         HighlightType = HighlightType.Normal
                     };
                     textSections.Enqueue(nextUnformattedBlock);

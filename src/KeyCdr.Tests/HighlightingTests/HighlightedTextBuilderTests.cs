@@ -205,5 +205,18 @@ namespace KeyCdr.Tests.HighlightingTests
                 )
             ));
         }
+
+        [Test]
+        public void large_gap_in_incorrect_sections_does_not_throw_exception_for_out_of_bounds()
+        {
+            string orig = "Brett Rodwell (born 23 May 1970) is an Australian former professional rugby league footballer who played in the 1980s and 1990s";
+            var details = run_determinator(
+                orig,
+                "Brett Rodwell (born 23 May 197y0) is an Australian former professional ruby league footballer who played in the 190s and 1990s"
+            );
+
+            HighlightedTextBuilder builder = new HighlightedTextBuilder();
+            Assert.DoesNotThrow(() => builder.Compute(orig, details));
+        }
     }
 }
