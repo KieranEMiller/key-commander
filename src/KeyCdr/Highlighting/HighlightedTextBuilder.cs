@@ -15,10 +15,12 @@ namespace KeyCdr.Highlighting
             int lastIndex = 0;
             foreach (HighlightDetail highlight in details.OrderBy(d => d.IndexStart))
             {
-                string firstTextSection = origText.Substring(lastIndex, highlight.IndexStart);
-                if(!string.IsNullOrWhiteSpace(firstTextSection)) {
+                //if the lastIndex is equal to the index start then we don't need to add an 
+                //unformatted block because the highlight starts right away
+                if(lastIndex != highlight.IndexStart)
+                {
                     HighlightedText nextUnformattedBlock = new HighlightedText() {
-                        Text = firstTextSection,
+                        Text = origText.Substring(lastIndex, highlight.IndexStart),
                         HighlightType = HighlightType.Normal
                     };
                     textSections.Enqueue(nextUnformattedBlock);
@@ -30,17 +32,21 @@ namespace KeyCdr.Highlighting
                 };
                 textSections.Enqueue(formattedBlock);
 
-                lastIndex += highlight.IndexEnd - highlight.IndexStart;
-
-                if(!string.IsNullOrWhiteSpace(firstTextSection))
-                    lastIndex++;
+                //lastIndex += highlight.IndexEnd;
+                lastIndex = highlight.IndexEnd;
             }
 
-            HighlightedText lastUnformattedBlock = new HighlightedText() {
-                Text=origText.Substring(lastIndex, origText.Length - lastIndex),
-                HighlightType = HighlightType.Normal
-            };
-            textSections.Enqueue(lastUnformattedBlock);
+            //if the last index is greater or equal to the original texts length
+            //then the last formatted block went to the end of the string 
+            //or over in the case of extra chars
+            if(lastIndex < origText.Length)
+            {
+                HighlightedText lastUnformattedBlock = new HighlightedText() {
+                    Text=origText.Substring(lastIndex, origText.Length - lastIndex),
+                    HighlightType = HighlightType.Normal
+                };
+                textSections.Enqueue(lastUnformattedBlock);
+            }
 
             return textSections;
         }
