@@ -66,7 +66,7 @@ namespace KeyCdr.TextSamples
             return sentence;
         }
 
-        protected string GetParagraphFromTextBlock(string text)
+        public string GetParagraphFromTextBlock(string text)
         {
             return GetParagraphFromTextBlock(text, Constants.StringSplits.SEPARATOR_SENTENACE);
         }
@@ -84,7 +84,7 @@ namespace KeyCdr.TextSamples
             else
             {
                 int variability = sentences.Length - NUM_SENTENCES_IN_A_PARAGRAPH;
-                startIndex = _rnd.Next(0, variability);
+                startIndex = GetRandomIndex(variability);
                 endIndex = startIndex + NUM_SENTENCES_IN_A_PARAGRAPH;
             }
 
@@ -97,7 +97,7 @@ namespace KeyCdr.TextSamples
 
             //add a separator after the last sentence
             paragraph += DELIM;
-            return paragraph;
+            return paragraph.Trim();
         }
 
         protected int GetRandomIndex(string[] coll)
@@ -110,7 +110,7 @@ namespace KeyCdr.TextSamples
             return GetRandomIndex(coll.Count());
         }
 
-        protected int GetRandomIndex(int totalItems)
+        public virtual int GetRandomIndex(int totalItems)
         {
             return _rnd.Next(0, totalItems);
         }
