@@ -52,5 +52,27 @@ namespace KeyCdr.Tests.AnalyticsTests
             double val = -1;
             Assert.DoesNotThrow(()=>val = accuracy.AccuracyVal);
         }
+
+        [Test]
+        public void char_index_accounts_for_spaces_two_words()
+        {
+            var accuracy = new Accuracy(new AnalyticData { TextShown = "abc xyz", TextEntered = "abc xyz" });
+            accuracy.Compute();
+            Assert.That(accuracy.Measurements.Count, Is.EqualTo(2));
+            Assert.That(accuracy.Measurements[0].IndexInLargerText, Is.EqualTo(0));
+            Assert.That(accuracy.Measurements[1].IndexInLargerText, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void char_index_accounts_for_spaces_4_words()
+        {
+            var accuracy = new Accuracy(new AnalyticData { TextShown = "abc xyz qwer asdf", TextEntered = "abc xyz qwer asdf" });
+            accuracy.Compute();
+            Assert.That(accuracy.Measurements.Count, Is.EqualTo(4));
+            Assert.That(accuracy.Measurements[0].IndexInLargerText, Is.EqualTo(0));
+            Assert.That(accuracy.Measurements[1].IndexInLargerText, Is.EqualTo(4));
+            Assert.That(accuracy.Measurements[2].IndexInLargerText, Is.EqualTo(8));
+            Assert.That(accuracy.Measurements[3].IndexInLargerText, Is.EqualTo(13));
+        }
     }
 }
