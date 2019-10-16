@@ -12,7 +12,7 @@ namespace KeyCdr.UI.WPF.Util
         public Brush HighlightToBrush(Highlighting.HighlightType type)
         {
             if (type == Highlighting.HighlightType.ExtraChars)
-                return Brushes.Azure;
+                return Brushes.Green;
 
             else if (type == Highlighting.HighlightType.IncorrectChar)
                 return Brushes.Red;
@@ -21,7 +21,7 @@ namespace KeyCdr.UI.WPF.Util
                 return Brushes.Orange;
 
             else
-                throw new ArgumentException(string.Format("unknown highlight type {0}", type.ToString()));
+                return Brushes.Black;
         }
     }
 }
