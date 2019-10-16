@@ -26,14 +26,21 @@ namespace KeyCdr.Highlighting
                     textSections.Enqueue(nextUnformattedBlock);
                 }
 
+                //for extra characters 
                 HighlightedText formattedBlock = new HighlightedText() {
-                    Text = origText.Substring(highlight.IndexStart, highlight.IndexEnd - highlight.IndexStart),
                     HighlightType = highlight.HighlightType
                 };
-                textSections.Enqueue(formattedBlock);
 
-                //lastIndex += highlight.IndexEnd;
-                lastIndex = highlight.IndexEnd;
+                if (highlight.HighlightType == HighlightType.ExtraChars) {
+                    formattedBlock.Text = string.Empty.PadLeft(highlight.IndexEnd - highlight.IndexStart, '+');
+                    lastIndex = highlight.IndexStart;
+                }
+                else {
+                    formattedBlock.Text = origText.Substring(highlight.IndexStart, highlight.IndexEnd - highlight.IndexStart);
+                    lastIndex = highlight.IndexEnd;
+                }
+                
+                textSections.Enqueue(formattedBlock);
             }
 
             //if the last index is greater or equal to the original texts length
