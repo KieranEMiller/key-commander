@@ -34,9 +34,9 @@ namespace KeyCdr.UI.WPF.ViewModels
             _generator = gen;
             _sessionMgr = new UserSession(user, gen);
 
-            _elapsedTimer = new DispatcherTimer(DispatcherPriority.Normal, App.Current.Dispatcher);
-            _elapsedTimer.Interval = new TimeSpan(0, 0, 0, 0, UPDATE_INTERVAL_IN_MS);
-            _elapsedTimer.Tick += (_, a) => {
+            _updateTimer = new DispatcherTimer(DispatcherPriority.Normal, App.Current.Dispatcher);
+            _updateTimer.Interval = new TimeSpan(0, 0, 0, 0, UPDATE_INTERVAL_IN_MS);
+            _updateTimer.Tick += (_, a) => {
                  DoInterval();
             };
         }
@@ -47,7 +47,7 @@ namespace KeyCdr.UI.WPF.ViewModels
         private ITextSampleGenerator _generator;
         private UserSession _sessionMgr;
 
-        private DispatcherTimer _elapsedTimer;
+        private DispatcherTimer _updateTimer;
 
         public TextSequenceInputModel Model { get { return _seqInputModel; } }
 
@@ -66,28 +66,31 @@ namespace KeyCdr.UI.WPF.ViewModels
 
         public void StartSequence()
         {
+            _seqInputModel.TextShown = string.Empty;
+            _seqInputModel.TextEntered = string.Empty;
+            _seqInputModel.InlineList = new ObservableCollection<Inline>();
+
             ITextSample sample = _sessionMgr.GetSentence();
             _seqInputModel.TextShown = sample.GetText();
+
             _sessionMgr.StartNewSequence(sample);
-
-            _seqInputModel.TextEntered = string.Empty;
-
-            _elapsedTimer.Start();
+            _updateTimer.Start();
         }
 
         public void StopSequence()
         {
-            _elapsedTimer.Stop();
+            _updateTimer.Stop();
             var analytics = _sessionMgr.Stop(_seqInputModel.TextEntered);
 
-            ShowResults(analytics.Select(a=>a.GetAnalyticType() == AnalyticType.Accuracy) as Accuracy);
+            IAnalytic accuracy = analytics
+                .Where(a => a.GetAnalyticType() == AnalyticType.Accuracy)
+                .FirstOrDefault();
+
+            ShowResults(accuracy as Accuracy);
         }
 
         public void DoInterval()
         {
-            if (string.IsNullOrWhiteSpace(_seqInputModel.TextEntered))
-                return;
-
             IList<IAnalytic> analyses = _sessionMgr.Peek(_seqInputModel.TextEntered);
             foreach(IAnalytic analytic in analyses)
             {
@@ -106,28 +109,29 @@ namespace KeyCdr.UI.WPF.ViewModels
 
         public void ShowResults(Accuracy accuracy)
         {
+            var inlines = ConvertHighlightsToInlines(_seqInputModel.TextShown, accuracy);
+            _seqInputModel.InlineList = new ObservableCollection<Inline>(inlines);
+        }
+
+        public IList<Inline> ConvertHighlightsToInlines(string origText, Accuracy accuracy)
+        {
             HighlightDeterminator highlighter = new HighlightDeterminator();
             IList<HighlightDetail> details = highlighter.Compute(accuracy);
 
-            var inlines = ConvertHighlightsToInlines(_seqInputModel.TextShown, details);
-            _seqInputModel.InlineValues = new ObservableCollection<Inline>(inlines);
-        }
+            HighlightedTextBuilder highlightBuilder = new HighlightedTextBuilder();
+            Queue<HighlightedText> highlightedSections = highlightBuilder.Compute(_seqInputModel.TextShown, details);
 
-        public IList<Inline> ConvertHighlightsToInlines(string origText, IList<HighlightDetail> details)
-        {
-            List<Inline> inlines = new List<Inline>();
-
-            int lastIndex = 0;
-            foreach(HighlightDetail highlight in details.OrderBy(d=>d.IndexStart))
+            IList<Inline> inlines = new List<Inline>();
+            while(highlightedSections.Count > 0)
             {
-                Inline nextBlockUnformatted = new Run(origText.Substring(lastIndex, highlight.IndexStart));
-                inlines.Add(nextBlockUnformatted);
+                var section = highlightedSections.Dequeue();
+                Inline newSection = new Run(section.Text);
+                newSection.Foreground = new Util.HighlightBrushFactory().HighlightToBrush(section.HighlightType);
+                if (section.HighlightType != HighlightType.Normal)
+                    newSection.FontWeight = System.Windows.FontWeights.Bold;
 
-                Inline formatted = new Run(origText.Substring(highlight.IndexStart, highlight.IndexEnd));
-                formatted.Foreground = new HighlightBrushFactory().HighlightToBrush(highlight.HighlightType);
-                inlines.Add(formatted);
+                inlines.Add(newSection);
             }
-
             return inlines;
         }
     }

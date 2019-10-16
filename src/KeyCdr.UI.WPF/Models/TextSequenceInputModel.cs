@@ -17,6 +17,7 @@ namespace KeyCdr.UI.WPF.Models
         {
             _analyticSpeed = new Analytics.Speed();
             _analyticAccuracy = new Analytics.Accuracy();
+            _inlines = new ObservableCollection<Inline>();
         }
 
         private Analytics.Speed _analyticSpeed;
@@ -44,19 +45,12 @@ namespace KeyCdr.UI.WPF.Models
             }
         }
 
-        public ObservableCollection<Inline> InlineValues
+        public ObservableCollection<Inline> InlineList
         {
-            get
-            {
-                return new ObservableCollection<Inline>()
-                {
-                    new Run("qwer"){Foreground=Brushes.Green }
-                };
-            }
-            set
-            {
+            get { return _inlines; }
+            set {
                 _inlines = value;
-                RaisePropertyChanged(nameof(this.InlineValues));
+                RaisePropertyChanged(nameof(this.InlineList));
             }
         }
 
