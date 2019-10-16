@@ -93,7 +93,7 @@ namespace KeyCdr.TextSamples
             string section = baseMethod(text);
             return new TextSample()
             {
-                Text = section,
+                Text = base.NormalizeText(section),
                 SourceType = TextSampleSourceType.Wikipedia,
                 SourceKey = _wikiText.Url
             };
