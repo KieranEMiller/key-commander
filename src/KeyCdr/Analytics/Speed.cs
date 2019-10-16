@@ -57,12 +57,18 @@ namespace KeyCdr.Analytics
 
         private double ComputeWordsPerMinute(string allWords, double minutes)
         {
+            if (allWords == null || string.IsNullOrWhiteSpace(allWords))
+                return 0;
+
             int wordCount = allWords.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
             return wordCount / minutes;
         }
 
         private double ComputeCharsPerSecond(string allText, double seconds)
         {
+            if (allText == null || string.IsNullOrWhiteSpace(allText))
+                return 0;
+
             return allText.Length / seconds;
         }
 

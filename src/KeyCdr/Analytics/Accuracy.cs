@@ -29,6 +29,9 @@ namespace KeyCdr.Analytics
 
         public void Compute()
         {
+            if (string.IsNullOrWhiteSpace(this._analyticData.TextShown) || string.IsNullOrWhiteSpace(this._analyticData.TextEntered))
+                return;
+
             string[] shownWords = this._analyticData.TextShown.Split(Constants.StringSplits.SEPARATOR_WORD);
             string[] enteredWords = this._analyticData.TextEntered.Split(Constants.StringSplits.SEPARATOR_WORD);
 
