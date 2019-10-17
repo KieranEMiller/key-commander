@@ -68,12 +68,13 @@
                     </GroupStyle>
                 </DataGrid.GroupStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding UserId}" Header="UserId" Width="70"/>
-                    <DataGridTextColumn Binding="{Binding SessionId}" Header="SessionId" Width="70"/>
+                    <DataGridTextColumn Binding="{Binding UserId}" Header="UserId" Width="50"/>
+                    <DataGridTextColumn Binding="{Binding SessionId}" Header="SessionId" Width="50"/>
                     <DataGridTextColumn Binding="{Binding SessionCreated}" Header="Session Created On" Width="130"/>
-                    <DataGridTextColumn Binding="{Binding SequenceCount}" Header="# Sequences" Width="80" />
+                    <DataGridTextColumn Binding="{Binding SequenceCount}" Header="# Sequences" Width="50" />
                     <DataGridTextColumn Binding="{Binding SequenceCreated}" Header="Sequence Created On" Width="130"/>
-                    <DataGridTextColumn Binding="{Binding SequenceSource}" Header="Source" />
+                    <DataGridTextColumn Binding="{Binding SequenceSource}" Header="Source" Width="85"/>
+                    <DataGridTextColumn Binding="{Binding SequenceSourceKey}" Header="SourceKey" Width="100"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
