@@ -61,6 +61,7 @@ namespace KeyCdr.UI.WPF.Models
                         SessionCreated = seq.Created,
                         SequenceCount = seq.KeySequences.Count,
                         SequenceSource = (TextSampleSourceType)Enum.Parse(typeof(TextSampleSourceType), r.SourceType.SourceTypeId.ToString(), true),
+                        SequenceSourceKey = r.SourceKey,
                         SequenceCreated = r.Created,
                         SessionId = seq.SessionId,
                         UserId = seq.UserId

@@ -8,9 +8,12 @@ namespace KeyCdr.UI.WPF.Models
         public Guid UserId { get; set; }
         public Guid SessionId { get; set; }
         public DateTime SessionCreated { get; set; }
+
         public int SequenceCount { get; set; }
         public TextSampleSourceType SequenceSource { get; set; }
         public DateTime SequenceCreated { get; set; }
+
+        public string SequenceSourceKey { get; set; }
 
         public string SessionDisplayName {
             get {
