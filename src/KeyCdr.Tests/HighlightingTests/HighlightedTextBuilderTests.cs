@@ -207,12 +207,69 @@ namespace KeyCdr.Tests.HighlightingTests
         }
 
         [Test]
+        public void multi_word_extra_chars_in_middle_of_text()
+        {
+            var details = run_determinator("abc xyz zxcv", "abc wyzbbbbbbbbbb zxzv");
+
+            HighlightedTextBuilder builder = new HighlightedTextBuilder();
+            Queue<HighlightedText> result = builder.Compute("abc xyz zxcv", details);
+
+            Assert.That(result, Is.EquivalentTo(
+                new Queue<HighlightedText>(
+                    new List<HighlightedText>(){
+                        new HighlightedText() {
+                            HighlightType = HighlightType.Normal,
+                            Text = "abc ",
+                        },
+                        new HighlightedText() {
+                            HighlightType = HighlightType.IncorrectChar,
+                            Text="x"
+                        },
+                        new HighlightedText() {
+                            HighlightType = HighlightType.Normal,
+                            Text="yz"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.ExtraChars,
+                            Text = "++++++++++"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.Normal,
+                            Text = " zx"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.IncorrectChar,
+                            Text = "c"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.Normal,
+                            Text = "v"
+                        }
+                    }
+                )
+            ));
+        }
+
+        [Test]
         public void large_gap_in_incorrect_sections_does_not_throw_exception_for_out_of_bounds()
         {
             string orig = "Brett Rodwell (born 23 May 1970) is an Australian former professional rugby league footballer who played in the 1980s and 1990s";
             var details = run_determinator(
                 orig,
                 "Brett Rodwell (born 23 May 197y0) is an Australian former professional ruby league footballer who played in the 190s and 1990s"
+            );
+
+            HighlightedTextBuilder builder = new HighlightedTextBuilder();
+            Assert.DoesNotThrow(() => builder.Compute(orig, details));
+        }
+
+        [Test]
+        public void large_word_with_extra_characters_in_middle_ofparagraph_does_not_throw_out_of_bounds()
+        {
+            string orig = "This is a list of listed buildings in the parish of Kirkcaldy and Dysart in Fife, Scotland";
+            var details = run_determinator(
+                orig,
+                "This is a list of lisadfa buildingss in the parish of Kirkcaldy and the Dysart in Fife, Scotland"
             );
 
             HighlightedTextBuilder builder = new HighlightedTextBuilder();
