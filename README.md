@@ -23,11 +23,11 @@ currently limited; base prototype is in place but would like to add features suc
 - [ ] analyze cross session/sequence performance
 
 ## Windows Thick Client Screenshots
-The login screen (just takes a name)
+##### The login screen (just takes a name)
 ![Login](/external_resources/ui_wpf_login.png)
 
-Main screen showing recent sessions
+##### Main screen showing recent sessions
 ![Main](/external_resources/ui_wpf_main.png)
 
-Main input screen
+##### Main input screen
 ![Input Screen](/external_resources/ui_wpf_input.png)
