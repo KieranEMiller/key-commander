@@ -45,6 +45,7 @@ Param(
     [switch]$ShowDescription,
     [Alias("WhatIf", "Noop")]
     [switch]$DryRun,
+    [bool]$TeeToFile = 1,
     [switch]$SkipToolPackageRestore,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$ScriptArgs
@@ -252,7 +253,10 @@ if ($ShowDescription) { $cakeArguments += "-showdescription" }
 if ($DryRun) { $cakeArguments += "-dryrun" }
 $cakeArguments += $ScriptArgs
 
+if ($TeeToFile) {$cakeArguments += " | Tee-Object -FilePath build.log" }
+
 # Start Cake
-Write-Host "Running build script..."
-Invoke-Expression "& $CAKE_EXE_INVOCATION $($cakeArguments -join " ")"
+Write-Host "Running build script: "
+Write-Host "With Arguments: " + $cakeArguments
+Invoke-Expression "& $CAKE_EXE_INVOCATION $($cakeArguments -join " ") "
 exit $LASTEXITCODE
