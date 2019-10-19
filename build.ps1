@@ -45,7 +45,6 @@ Param(
     [switch]$ShowDescription,
     [Alias("WhatIf", "Noop")]
     [switch]$DryRun,
-    [bool]$TeeToFile = 1,
     [switch]$SkipToolPackageRestore,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$ScriptArgs
@@ -252,8 +251,6 @@ if ($Verbosity) { $cakeArguments += "-verbosity=$Verbosity" }
 if ($ShowDescription) { $cakeArguments += "-showdescription" }
 if ($DryRun) { $cakeArguments += "-dryrun" }
 $cakeArguments += $ScriptArgs
-
-if ($TeeToFile) {$cakeArguments += " | Tee-Object -FilePath build.log" }
 
 # Start Cake
 Write-Host "Running build script: "
