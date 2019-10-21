@@ -32,7 +32,12 @@ Task("Build")
  .Does(() =>
 {
 	Information("building solution: " + pathSln);
-	MSBuild(pathSln, settings => settings.SetConfiguration(configuration));
+	MSBuild(pathSln, new MSBuildSettings(){
+			ArgumentCustomization = args=>args.Append("/consoleloggerparameters:ErrorsOnly") 
+		}
+		.SetConfiguration(configuration)
+		.SetVerbosity(Verbosity.Minimal)
+	);
 });
 
 Task("Publish_Console")
