@@ -6,14 +6,19 @@ var configuration = Argument("configuration", "Debug");
 var pathBin = Argument("pathBin", "./bin");
 var pathSln = Argument("pathSln", "./src/KeyCdr.sln");
 
-Task("Init")
- .IsDependentOn("Clean")
- .IsDependentOn("NuGet")
+Task("BuildLogHeader")
  .Does(() => {
 	Information("cake build started: {0}", DateTime.Now.ToString());
 });
 
+Task("Init")
+ .IsDependentOn("BuildLogHeader")
+ .IsDependentOn("Clean")
+ .IsDependentOn("NuGet")
+ .Does(() => { });
+
 Task("Clean")
+ .IsDependentOn("BuildLogHeader")
  .Does(() => {
 	Information(string.Format("cleaning directory: {0}", pathBin));
 	EnsureDirectoryExists(pathBin);
@@ -21,6 +26,7 @@ Task("Clean")
 });
 
 Task("NuGet")
+ .IsDependentOn("BuildLogHeader")
  .Does(() =>
 {
 	Information("restoring NuGet packages...");
