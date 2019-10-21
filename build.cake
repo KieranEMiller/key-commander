@@ -62,6 +62,17 @@ Task("Publish_WPF")
  .Does(() =>
 {
 	Information("publishing WPF UI");
+	var pathDest = Argument("pathWPF", pathBin + "/wpf");
+	var pathSource = "./src/KeyCdr.UI.WPF/bin/" + configuration + "/";
+
+	EnsureDirectoryExists(pathDest);
+	CleanDirectory(pathDest);
+
+	Information("publishing console UI from {0} to {1}", pathSource, pathDest);
+	CopyFiles(pathSource + "*.dll", pathDest);
+	CopyFiles(pathSource + "*.xml", pathDest);
+	CopyFiles(pathSource + "*.exe", pathDest);
+	CopyFiles(pathSource + "*.exe.config", pathDest);
 
 });
 
