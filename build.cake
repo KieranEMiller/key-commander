@@ -1,4 +1,7 @@
 #tool "nuget:?package=NUnit.Runners&version=2.6.4"
+#tool "nuget:?package=OpenCover"
+#tool "nuget:?package=Codecov&version=1.0.3"
+#addin "nuget:?package=Cake.Codecov"
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Debug");
@@ -101,11 +104,32 @@ Task("Tests_KeyCdr")
 	});
 });
 
+Task("Tests_Coverage")
+ .IsDependentOn("Build")
+ .Does(() => 
+{
+	/*
+	this example currently does not work...
+	OpenCover(tool => {
+	  tool.XUnit2("./src/KeyCdr.Tests/bin/" + configuration + "/*.Tests.dll",
+	    new XUnit2Settings {
+	      ShadowCopy = false
+	    });
+	  },
+	  new FilePath("./result.xml"),
+	  new OpenCoverSettings()
+	    .WithFilter("+[KeyCdr]*")
+	    .WithFilter("-[App.Tests]*")
+	);
+	*/
+});
+
 Task("Default")
  .IsDependentOn("Init")
  .IsDependentOn("Build")
  .IsDependentOn("Publish")
  .IsDependentOn("Tests_KeyCdr")
+ .IsDependentOn("Tests_Coverage")
  .Does(() => {
 	Information("running default task");
 });
