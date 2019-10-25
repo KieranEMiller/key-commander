@@ -1,0 +1,17 @@
+#page_wrapper #content_wrapper
+{
+	margin:10px 10px;
+}
+
+#page_wrapper #content_wrapper #content 
+{
+	padding:10px;
+	width:500px;
+}
+
+#page_wrapper #header .title_container
+{
+	padding:3px 3px 3px 10px;
+	width:auto;
+	margin:0px;
+}
