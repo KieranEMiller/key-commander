@@ -1,0 +1,29 @@
+$COLOR_PRIMARY: #333333;
+$COLOR_PRIMARY_TEXT: #333333;
+
+$COLOR_BACKGROUND: #f8f8ff;
+
+$SCREEN_SIZE_SMALL: 500px;
+$SCREEN_SIZE_MEDIUM: 500px;
+$SCREEN_SIZE_LARGE: 700px;
+
+body, #page_wrapper {
+	background-color: $COLOR_BACKGROUND;
+}
+
+.center {
+	margin:0px auto;
+}
+
+.error {
+	color:red;
+}
+
+.clear_both { 
+	clear:both; height:1px; 
+}
+
+.hidden { 
+	display:none; 
+}
+

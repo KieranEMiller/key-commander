@@ -1,0 +1,112 @@
+
+#header {
+	border-bottom:solid $COLOR_PRIMARY 1px;
+
+	.top_bar {
+		height:20px;
+		background-color:$COLOR_PRIMARY;
+	}
+
+	#header_contents {
+		width:95%;
+		margin:0px auto;
+
+		@media screen and (max-width: $SCREEN_SIZE_SMALL) {
+			max-width: $SCREEN_SIZE_SMALL;
+			padding:0px;
+		}
+		@media screen and (min-width: $SCREEN_SIZE_MEDIUM) {
+			max-width: $SCREEN_SIZE_MEDIUM;
+			padding:3px;
+		}
+		@media screen and (min-width: $SCREEN_SIZE_LARGE) {
+			max-width: $SCREEN_SIZE_LARGE;
+			padding:5px;
+		}
+	}
+
+	#title_block {
+		font-size:1.5em;
+		padding:3px;
+		float:left;
+		@media screen and (max-width: $SCREEN_SIZE_SMALL) {
+			float:none;
+			padding:0px;
+			margin:0px auto;
+			width:250px;
+			text-align:center;
+		}
+	
+		.title, .title_sub {
+			float:left;
+			@media screen and (max-width: $SCREEN_SIZE_SMALL) {
+				float:none;
+				text-align:center;
+			}
+			text-decoration:none;
+			color: $COLOR_PRIMARY_TEXT;
+		}
+		
+		.title {
+			font-size:.9em;
+			font-weight:bold;
+		}
+
+		.title_sub {
+			clear:both;
+			font-size: .7em;
+			@media screen and (max-width: $SCREEN_SIZE_SMALL) {
+				display:none;
+			}
+		}
+	}
+}
+	
+#nav_container {
+	margin:10px 0px 0px 0px;
+	color:black;
+	font-size:1em;
+	float:right;
+
+	@media screen and (max-width: $SCREEN_SIZE_SMALL) {
+		float:none;
+		clear:both;
+		margin:0px;
+		height:26px;
+	}
+
+	ul {
+		list-style-type: none; 
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:center;
+		width:300px;
+
+		@media screen and (max-width: $SCREEN_SIZE_SMALL) {
+			width:auto;
+		}
+
+		li {
+			display:inline;
+			list-style-type: none; 
+			padding:5px 5px 5px 35px;
+			text-align:center;
+
+			a {
+				text-decoration:none;
+				color:black;
+				text-align:center;
+				color:$COLOR_PRIMARY_TEXT;
+			}
+		}
+
+		li.current {
+			text-decoration:underline;
+		}
+
+		li:hover {
+			border-bottom:solid white 2px;
+		}
+	}
+}
+	
