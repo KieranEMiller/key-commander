@@ -79,4 +79,9 @@ input.button{
 	  transition-duration: 0.4s;
 }
 
+input.button-size-medium {
+	@extend .button;
+	width:250px;
+}
+
 
