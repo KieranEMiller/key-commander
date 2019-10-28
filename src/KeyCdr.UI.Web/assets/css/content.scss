@@ -25,9 +25,57 @@
 		h2 {
 			border-bottom: solid $COLOR_PRIMARY 5px;
 			margin-bottom: 10px;
+			font-size:1.3em;
+		}
+
+		.content_row {
+
+			padding:5px;
+			margin-bottom:25px;
+			clear:both;
+
+			img {
+				float:left;
+				margin-right:25px;
+			}
+
+			ul {
+				font-size: 1.1em;
+				
+				li {
+					font-weight:bold;
+					margin-bottom:15px;
+					color: #7d0303;
+				}
+			}
+
+			input.button {
+				float:right;
+				margin:0px auto;
+			}
+
 		}
 	}
 
+}
+
+input.button {
+	background-color: #106fbf; 
+	border: solid #FFFFFF 2px;
+	color: white;
+	padding: 15px 32px;
+	font-size: 16px;			
+	cursor:pointer;
+}
+
+input.button:hover {
+	background-color: white; 
+	color: black;
+}
+
+input.button{
+	 -webkit-transition-duration: 0.4s; /* Safari */
+	  transition-duration: 0.4s;
 }
 
 
