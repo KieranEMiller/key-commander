@@ -1,14 +1,38 @@
 ﻿<!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+
+    <meta name="robots" content="index,follow" />
+    <meta name="keywords" content="key-cdr, key cdr, key commander, typing speed, typing accuracy, measure typing speed, measure typing accuracy">
+    <meta name="description" content="Key Commander: a project to measure, improve and analyze typing speed and accuracy">
+    <meta name="author" content="Kieran E. Miller">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link href="~/assets/css/master.min.css" rel="Stylesheet" type="text/css" />
+
+    <link rel="icon" type="image/png" href="./img/favicon.png" />
 </head>
+
 <body>
-    <div> 
-        <h1>This is the main layout</h1>
+    <div id="page_wrapper">
         @RenderBody()
     </div>
+
+    <script src="~/assets/js/react/dist/bundle.js"></script>
+
 </body>
+
+<!--
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    });
+</script>
+
+
+-->
+
 </html>
+
+
