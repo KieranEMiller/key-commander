@@ -1,13 +1,15 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
+import ContentContainer from './content.jsx';
+
 class About extends React.Component {
     render() {
         return (
-            <React.Fragment>
-                <h2>ABOUT...!</h2>
+            <ContentContainer>
+                <h2>About Key Commander</h2>
                 <div className="clear_both"></div>
-            </React.Fragment>
+            </ContentContainer>
         );
     }
 }
