@@ -18,19 +18,10 @@ class Header extends React.Component {
                     <div className="top_bar"></div>
                     <div id="header_contents">
                         <div id="title_block">
-                            <a href="test.com" className="title">Key Commander</a> 
+                            <Link to="/" className="title">Key Commander</Link>
                             <div className="title_sub">measure, improve and analyze typing speed and accuracy {this.props.loc}</div>
                         </div>
                         <HeaderNavBar />
-                        {/*
-                        <div id="nav_container">
-                            <ul>
-                                <HeaderNavBarLink to="/Index" >Home</HeaderNavBarLink>
-                                <HeaderNavBarLink to="/Index" >My Account</HeaderNavBarLink>
-                                <HeaderNavBarLink to="/About" >About</HeaderNavBarLink>
-                            </ul>
-                        </div>
-                        */}
                         <div className="clear_both"></div>
                     </div>
 
