@@ -39,7 +39,11 @@
 				margin-right:25px;
 			}
 
-			ul {
+            ul, ul.prominent_list {
+                margin-left:20px;
+            }
+
+			ul.prominent_list {
 				font-size: 1.1em;
 				
 				li {
