@@ -5,6 +5,9 @@ import Header from      './header.jsx';
 import ContentContainer from './content.jsx';
 
 class Index extends React.Component {
+    navTo(path) {
+        this.props.history.push(path);
+    };
     render() {
         return (
             <ContentContainer>
@@ -24,7 +27,10 @@ class Index extends React.Component {
                 <div className="content_row">
                     <h2>Already Have an Account?</h2>
                     Login and continue where you left off
-                    <input className="button-size-medium" type="button" value="Login to Your Account" />
+                    <input className="button-size-medium" type="button"
+                        value="Login to Your Account"
+                        onClick={() => this.navTo('/Login')}
+                    />
                 </div>
 
                 <div className="content_row">
