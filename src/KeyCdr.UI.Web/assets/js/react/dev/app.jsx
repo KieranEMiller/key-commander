@@ -2,24 +2,23 @@
 import ReactDOM from 'react-dom';
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 
-import Header from      './header.jsx';
-import Index from       './route_index.jsx';
-import About from       './route_about.jsx';
+import Routing from     './routing.jsx';
+import Header from './header.jsx';
 
-const routing = (
-    <Router>
-        <React.Fragment>
-            <Header />
-            <Switch>
-                <Route exact path="/" component={Index} />
-                <Route exact path="/about" component={About} />
-                <Route component={Index} />
-            </Switch>
-        </React.Fragment>
-    </Router>
-)
+import '../../../../assets/css/master.scss';
+
+class App extends React.Component {
+    render() {
+        return (
+            <Router>
+                <Header loc={this.props.location} /> 
+                <Routing />
+            </Router>
+        ); 
+    }
+};
 
 ReactDOM.render(
-    routing,
+    <App/>,
     document.getElementById('app')
 );

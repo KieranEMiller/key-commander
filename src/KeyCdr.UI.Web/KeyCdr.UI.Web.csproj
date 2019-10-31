@@ -300,9 +300,12 @@
     <Content Include="assets\img\favicon.png" />
     <Content Include="assets\img\main_banner.png" />
     <Content Include="assets\js\react\dev\app.jsx" />
+    <Content Include="assets\js\react\dev\content.jsx" />
+    <Content Include="assets\js\react\dev\header-nav-bar.jsx" />
     <Content Include="assets\js\react\dev\header.jsx" />
     <Content Include="assets\js\react\dev\route_about.jsx" />
     <Content Include="assets\js\react\dev\route_index.jsx" />
+    <Content Include="assets\js\react\dev\routing.jsx" />
     <Content Include="assets\js\react\dist\bundle.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
