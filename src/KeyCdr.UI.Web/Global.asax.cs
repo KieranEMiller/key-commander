@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Http;
 
 namespace KeyCdr.UI.Web
 {
@@ -12,6 +13,7 @@ namespace KeyCdr.UI.Web
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            GlobalConfiguration.Configure(WebApiConfig.Register); 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }
