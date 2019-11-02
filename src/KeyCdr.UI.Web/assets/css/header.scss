@@ -80,7 +80,6 @@
 		display:flex;
 		flex-wrap:wrap;
 		justify-content:center;
-		width:300px;
 
 		@media screen and (max-width: $SCREEN_SIZE_SMALL) {
 			width:auto;
