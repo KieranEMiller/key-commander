@@ -11,7 +11,6 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <Header loc={this.props.location} /> 
                 <Routing />
             </Router>
         ); 
