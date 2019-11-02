@@ -13,12 +13,6 @@ namespace KeyCdr.UI.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            /* default 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Nav", action = "Index", id = UrlParameter.Optional }
-            );*/
             routes.MapRoute(
                 "Default", 
                 "{*anything}", 
