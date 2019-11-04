@@ -1,15 +1,12 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-    Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import HeaderNavBar from './header-nav-bar.jsx';
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
-
     };
     render() {
         return (
