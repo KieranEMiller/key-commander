@@ -18,7 +18,7 @@ class Login extends React.Component {
         var logindata = { username: this.state.username, password: this.state.password }; 
         console.log("submitting", logindata);
 
-        this.AuthService.Login(logindata)
+        this.AuthService.login(logindata)
             .then(data => {
                 if (data.isvalid)
                     this.props.history.push('/secure/MyAccount');
