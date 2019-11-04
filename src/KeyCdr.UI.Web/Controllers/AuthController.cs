@@ -29,7 +29,7 @@ namespace KeyCdr.UI.Web.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpGet]
+        [HttpPost]
         public HttpResponseMessage Validate(JWTResult token)
         {
             JWTResult result = new JWTResult() { isvalid = false };
