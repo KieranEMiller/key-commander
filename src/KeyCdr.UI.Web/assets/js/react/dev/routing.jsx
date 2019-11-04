@@ -12,12 +12,12 @@ import MyAccount from   './route_my_acct.jsx';
 
 class Routing extends React.Component {
     render() {
-        console.log("routing props", this.props);
         return (
             <div>
-                <Header loc={this.props.location} /> 
+                <Header /> 
                 <Switch>
                     <Route exact path="/" component={Index} />
+                    <Route exact path="/Logout" component={Index} />
                     <Route exact path="/About" component={About} />
                     <Route exact path="/Login" component={Login} />
                     <SecureRoute exact path="/secure/MyAccount" component={MyAccount} />
