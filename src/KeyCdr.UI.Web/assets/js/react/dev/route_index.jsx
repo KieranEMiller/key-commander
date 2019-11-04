@@ -4,11 +4,24 @@ import ReactDOM from 'react-dom';
 import Header from      './header.jsx';
 import ContentContainer from './content.jsx';
 
+import Auth from './auth.jsx';
+
 class Index extends React.Component {
     navTo(path) {
         this.props.history.push(path);
     };
     render() {
+
+        var auth = new Auth();
+
+        var isLoggingOut = this.props.location.pathname === '/Logout';
+
+        //logout uses the same view as the home page, just process the 
+        //actual logout part before you render it
+        if (isLoggingOut) {
+            auth.logout();
+        }
+
         return (
             <ContentContainer>
                 <div className="content_row">
