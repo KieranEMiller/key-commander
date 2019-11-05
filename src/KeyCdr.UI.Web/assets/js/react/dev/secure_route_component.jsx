@@ -2,7 +2,6 @@
 import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom'
 
-import Header from './header.jsx';
 import ContentContainer from './content.jsx';
 import Auth from './auth.jsx';
 

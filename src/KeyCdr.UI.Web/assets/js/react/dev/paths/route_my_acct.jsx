@@ -2,8 +2,8 @@
 import ReactDOM from 'react-dom';
 import { Redirect} from 'react-router-dom'
 
-import ContentContainer from './content.jsx';
-import SecureRouteComponent from './secure_route_component.jsx';
+import ContentContainer from '../content.jsx';
+import SecureRouteComponent from '../secure_route_component.jsx';
 
 class MyAccount extends SecureRouteComponent {
     constructor(props) {

@@ -1,8 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Header from      './header.jsx';
-import ContentContainer from './content.jsx';
+import ContentContainer from '../content.jsx';
 
 class About extends React.Component {
     render() {

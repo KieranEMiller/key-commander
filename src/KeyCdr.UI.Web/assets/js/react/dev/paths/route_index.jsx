@@ -1,10 +1,8 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Header from      './header.jsx';
-import ContentContainer from './content.jsx';
-
-import Auth from './auth.jsx';
+import ContentContainer from '../content.jsx';
+import Auth from '../auth.jsx';
 
 class Index extends React.Component {
     navTo(path) {

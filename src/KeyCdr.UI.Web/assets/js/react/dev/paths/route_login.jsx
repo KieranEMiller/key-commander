@@ -1,8 +1,8 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ContentContainer from './content.jsx';
-import Auth from './auth.jsx';
+import ContentContainer from '../content.jsx';
+import Auth from '../auth.jsx';
 
 class Login extends React.Component {
     constructor(params) {
