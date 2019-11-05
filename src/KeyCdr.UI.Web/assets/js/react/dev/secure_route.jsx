@@ -9,13 +9,13 @@ const SecureRoute = ({ component: Component, ...props }) => {
         <Route
             {...props}
             render={innerProps =>
-                auth.IsAuthenticated() ?
-                    <Component {...innerProps} />
-                    :
-                    <Redirect to="/Login" />
-            }
+                auth.isAuthenticated() ?
+                    <Component {...props} />
+                    : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />   
+                }
         />
     );
+
 };
 
 export default SecureRoute;
