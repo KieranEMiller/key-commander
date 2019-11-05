@@ -1,10 +1,15 @@
-﻿class Auth {
+﻿
+const AuthStatus = {
+    isAuthenticated: false
+}
+
+class Auth {
     constructor(params) {
         this.DEBUG = true;
         this.URL_BASE = "http://localhost:8080/api/auth";
         this.LOCAL_STORAGE_KEY = "key-cdr-jwt";
 
-        //this.Login = this.Login.bind(this);
+        this.loggedIn = false;
     }
 
     getCurrentToken() {
@@ -29,22 +34,37 @@
         localStorage.setItem(this.LOCAL_STORAGE_KEY, tokenstring);
     }
 
+    /*synchronous auth*/
+    /*
     isAuthenticated() {
-        if (this.DEBUG) console.log("auth: isauthenticated: started");
         var token = this.getCurrentToken();
-        if (!token) {
-            if (this.DEBUG) console.log("auth: isauthenticated: no token found");
+        if (!token || !token.jwt)
             return false;
-        }
 
-        this.isValidToken(token)
-            .then(ret => {
-                if (this.DEBUG) console.log("auth: isauthenticated: server check was ", ret);
-                return ret.isvalid;
-            });
+        return (token && !this.isTokenExpired(token));
+    }*/
 
-        //this is wrong, we dont really know if the token is valid yet
-        return true;
+    /*asynchronous auth*/
+    isAuthenticated() {
+        var that = this;
+        return new Promise(function (resolve) {
+            var token = that.getCurrentToken();
+            if (!token) {
+                resolve(false);
+            }
+
+            try {
+                that.isValidToken(token)
+                    .then(ret => {
+                        if (that.DEBUG) console.log("auth: isauthenticated: server check was ", ret);
+                        resolve(ret);
+                    });
+            }
+            catch (err) {
+                console.log("auth: isauthenticated: validity error ", err);
+                resolve(false);
+            }
+        });
     }
 
     logout() {
@@ -84,7 +104,7 @@
 
     isValidToken() {
         var token = this.getCurrentToken();
-        if (!token || !token.jwt) return false;
+        if (!token || !token.jwt) return Promise.resolve(false);
 
         return fetch(this.URL_BASE + "/validate", {
             method: "POST",
@@ -98,7 +118,7 @@
             if (!data.isvalid) {
                 this.clearToken();
             }
-            return Promise.resolve(data);
+            return Promise.resolve(data.isvalid);
         })
     }
 };
