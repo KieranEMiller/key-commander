@@ -357,11 +357,13 @@
     <Content Include="assets\js\react\dev\content.jsx" />
     <Content Include="assets\js\react\dev\header-nav-bar.jsx" />
     <Content Include="assets\js\react\dev\header.jsx" />
+    <Content Include="assets\js\react\dev\secure_route_component.jsx" />
     <Content Include="assets\js\react\dev\route_my_acct.jsx" />
     <Content Include="assets\js\react\dev\route_login.jsx" />
     <Content Include="assets\js\react\dev\route_about.jsx" />
     <Content Include="assets\js\react\dev\route_index.jsx" />
     <Content Include="assets\js\react\dev\routing.jsx" />
+    <Content Include="assets\js\react\dev\secure_route.jsx" />
     <Content Include="assets\js\react\dist\bundle.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
