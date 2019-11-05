@@ -1,14 +1,27 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import Auth from './auth.jsx'
+
+const LOGOUT = { Path: "/Logout", Display: "Logout" };
+const LOGIN = { Path: "/Login", Display: "Login" };
+
+//the boolean key represents the current logged in status
+//ex: if true, it means the user is logged in so show logout
+const loginLogoutToggle = {
+    false: { route: LOGIN.Path, display: LOGIN.Display, active: false},
+    true: { route: LOGOUT.Path, display: LOGOUT.Display, active: true }
+};
 
 class HeaderNavBar extends React.Component {
     constructor(props) {
         super(props);
-        console.log("nav bar props", props);
+
+        console.log("nav bar ", props);
         this.state = {
+            currentRoute: this.props.location.pathname,
+            isAuthenticated: props.authed,
             routes: [
                 { route: "/Index", display: "Home", active: false },
                 { route: "/secure/MyAccount", display: "My Account", active: false },
@@ -16,23 +29,49 @@ class HeaderNavBar extends React.Component {
             ]
         };
     };
-    logout() {
-        console.log('logging out');
-        var auth = new Auth();
-        auth.Logout();
 
-        this.context.history.push('/');
-    };
     clickHandler(route) {
-        this.setState(state => {
-            const list = state.routes.map((item, j) => {
+        this.setState(prevState => {
+            const list = prevState.routes.map((item, j) => {
                 item.active = (item.route === route);
+
+                //only if the user is logging out do we want to switch up 
+                //the header text immediately.  if the user clicks the login
+                //link they are not immediately logged in, so don't switch
+                //if (route === LOGOUT.Path) {
+                //    item = loginLogoutToggle[false];
+                //}
+
                 return item;
             });
-            return {list};
+
+            return { list };
         });
     };
+
+    updateAuthState(authResult) {
+        this.setState(prevState => {
+            const list = prevState.routes.map((item, j) => {
+                if (item.Route === LOGOUT.Path || item.Route === LOGIN.Path) {
+                    item = loginLogoutToggle[authResult];
+                }
+            });
+            return { list };
+        });
+    };
+
     render() {
+
+        
+        const isLoggedIn = this.state.isAuthenticated;
+        let link;
+
+        if (isLoggedIn) {
+            link = <Link to='/Logout' onClick={() => this.clickHandler('/Logout')}>Logout</Link>;
+        } else {
+            link = <Link to='/Login' onClick={() => this.clickHandler('/Login')}>Login</Link>;
+        }
+
         return (
             <React.Fragment>
                 <div id="nav_container">
@@ -45,9 +84,7 @@ class HeaderNavBar extends React.Component {
                                 </li>
                             )   
                         })}
-                        <li>
-                            <a href='#' onClick={this.logout}>Logout</a>
-                        </li>
+                        <li>{link}</li>
                     </ul>
                 </div>
             </React.Fragment>
@@ -55,4 +92,4 @@ class HeaderNavBar extends React.Component {
     }
 }
 
-export default HeaderNavBar;
+export default withRouter(HeaderNavBar);

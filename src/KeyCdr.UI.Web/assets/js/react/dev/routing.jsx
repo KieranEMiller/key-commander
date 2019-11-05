@@ -14,7 +14,6 @@ class Routing extends React.Component {
     render() {
         return (
             <div>
-                <Header /> 
                 <Switch>
                     <Route exact path="/" component={Index} />
                     <Route exact path="/Logout" component={Index} />
