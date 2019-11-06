@@ -5,9 +5,11 @@ import ContentContainer from '../content.jsx';
 import Auth from '../auth.jsx';
 
 class Index extends React.Component {
+
     navTo(path) {
         this.props.history.push(path);
-    };
+    }
+
     render() {
 
         var auth = new Auth();
