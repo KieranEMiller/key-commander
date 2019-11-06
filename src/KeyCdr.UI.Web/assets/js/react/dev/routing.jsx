@@ -5,21 +5,26 @@ import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 import SecureRoute from './secure_route.jsx';
 import Header from      './header.jsx';
 
-import Index from       './route_index.jsx';
-import About from       './route_about.jsx';
-import Login from       './route_login.jsx';
-import MyAccount from   './route_my_acct.jsx';
+import Index from       './paths/index.jsx';
+import About from       './paths/about.jsx';
+import Login from       './paths/login.jsx';
+import MyAccount from   './paths/myaccount.jsx';
+import History from     './paths/history.jsx';
 
 class Routing extends React.Component {
     render() {
         return (
             <div>
+                <Header /> 
                 <Switch>
                     <Route exact path="/" component={Index} />
                     <Route exact path="/Logout" component={Index} />
                     <Route exact path="/About" component={About} />
                     <Route exact path="/Login" component={Login} />
-                    <SecureRoute exact path="/secure/MyAccount" component={MyAccount} />
+
+                    <Route exact path="/secure/MyAccount" component={MyAccount} />
+                    <Route exact path="/secure/History" component={History} />
+
                     <Route component={Index} />
                 </Switch>
             </div>
