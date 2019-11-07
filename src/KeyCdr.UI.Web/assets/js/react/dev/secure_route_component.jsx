@@ -2,6 +2,7 @@
 import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom'
 
+import Loading from './loading.jsx';
 import ContentContainer from './content.jsx';
 import Auth from './auth.jsx';
 
@@ -43,9 +44,10 @@ class SecureRouteComponent extends React.Component {
             else {
                 return (
                     <ContentContainer>
-                    <div className="content_row">
-                        <h2>Authenticating...</h2>
-                    </div>
+                        <div className="content_row">
+                        <Loading />
+                            <h2>Authenticating...</h2>
+                        </div>
                     </ContentContainer>
                 )
             }
