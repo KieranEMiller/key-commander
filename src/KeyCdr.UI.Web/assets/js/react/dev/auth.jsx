@@ -102,16 +102,34 @@ class Auth {
         }
     }
 
+    makeRequestWithToken(url, data) {
+        var token = this.getCurrentToken();
+        if (!token || !token.jwt) return Promise.reject();
+
+        return fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+                , body: JSON.stringify(data)
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                return Promise.resolve(data);
+            });
+    }
+
     isValidToken() {
+        var url = this.URL_BASE + "/validate";
         var token = this.getCurrentToken();
         if (!token || !token.jwt) return Promise.resolve(false);
 
-        return fetch(this.URL_BASE + "/validate", {
+        return fetch(url, {
             method: "POST",
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json'
-                //'Authorization': `Bearer ${token}`
-            }
-            ,body: JSON.stringify(token)
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
+            , body: JSON.stringify(token)
         })
         .then(resp => resp.json())
         .then(data => {
@@ -119,7 +137,7 @@ class Auth {
                 this.clearToken();
             }
             return Promise.resolve(data.isvalid);
-        })
+        });
     }
 };
 
