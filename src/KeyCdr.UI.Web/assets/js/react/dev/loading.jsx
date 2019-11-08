@@ -6,12 +6,12 @@ class Loading extends React.Component {
         super(props);
 
         this.state = {
-            showLoading: true
+            showLoading: props.showLoading
         }
     }
 
     render() {
-        if (this.state.showLoading) {
+        if (this.props.showLoading) {
             return (
                 <React.Fragment>
                     <div className="loading_mask">
@@ -19,6 +19,9 @@ class Loading extends React.Component {
                     </div>
                 </React.Fragment>
             )
+        }
+        else {
+            return (<React.Fragment></React.Fragment>)
         }
     }
 }
