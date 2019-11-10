@@ -75,9 +75,8 @@ class Login extends React.Component {
                                 type="password"
                                 onChange={this.handleChange} />
 
-                            {(this.state.errorMsg == '')
-                                ? ''
-                                : <p className="form_error">{this.state.errorMsg}</p>
+                            {(this.state.errorMsg != '') &&
+                                <p className="form_error">{this.state.errorMsg}</p>
                             }
 
                             <input onClick={this.handleSubmit} className="button-size-medium" type="submit" value="Login" />
