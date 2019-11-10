@@ -81,7 +81,7 @@ class Auth {
         .then(resp => resp.json())
         .then(data => {
             if(this.DEBUG) console.log("login return: ", data);
-            if (data.isvalid) {
+            if (data.IsValid) {
                 this.setToken(data);
             } 
             return Promise.resolve(data);
@@ -104,7 +104,7 @@ class Auth {
 
     makeRequestWithToken(url, data) {
         var token = this.getCurrentToken();
-        if (!token || !token.jwt) return Promise.reject();
+        if (!token || !token.JWTValue) return Promise.reject();
 
         return fetch(url, {
                 method: "POST",
@@ -124,7 +124,7 @@ class Auth {
     isValidToken() {
         var url = this.URL_BASE + "/validate";
         var token = this.getCurrentToken();
-        if (!token || !token.jwt) return Promise.resolve(false);
+        if (!token || !token.JWTValue) return Promise.resolve(false);
 
         return fetch(url, {
             method: "POST",
@@ -133,10 +133,10 @@ class Auth {
         })
         .then(resp => resp.json())
         .then(data => {
-            if (!data.isvalid) {
+            if (!data.IsValid) {
                 this.clearToken();
             }
-            return Promise.resolve(data.isvalid);
+            return Promise.resolve(data.IsValid);
         });
     }
 };

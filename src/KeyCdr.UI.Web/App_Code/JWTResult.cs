@@ -5,10 +5,13 @@ using System.Web;
 
 namespace KeyCdr.UI.Web
 {
-    public class JWTResult
+    public class JWTToken
     {
-        public bool isvalid { get; set; }
-        public string username { get; set; }
-        public string jwt { get; set; }
+        public string UserName { get; set; }
+        public string UserId { get; set; }
+
+        public bool IsValid { get; set; }
+
+        public string JWTValue { get; set; }
     }
 }

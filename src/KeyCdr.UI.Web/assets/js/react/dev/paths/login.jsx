@@ -29,7 +29,7 @@ class Login extends React.Component {
                 setTimeout(function () {
                     that.showLoading(false);
 
-                    if (data.isvalid)
+                    if (data.IsValid)
                         that.props.history.push('/secure/MyAccount');
                     else
                         that.setState({ errorMsg: 'unable to login with the username and password provided' });

@@ -12,9 +12,9 @@ namespace KeyCdr.UI.Web.Controllers
         [HttpPost]
         public HttpResponseMessage Login(WebUser user)
         {
-            JWTResult result = new JWTResult() {
-                username = user.username,
-                isvalid = false
+            JWTToken result = new JWTToken() {
+                UserName = user.username,
+                IsValid = false
             };
 
             var dbUser = new Users.UserManager().GetByLoginName(user.username);
@@ -24,25 +24,26 @@ namespace KeyCdr.UI.Web.Controllers
             if(user.password.Equals("asdfasdf") == false)
                 return Request.CreateResponse(HttpStatusCode.Forbidden, result);
 
-            result.jwt = new JWTManager().GenerateToken(user.username);
-            result.isvalid = true;
+            result.JWTValue = new JWTManager().GenerateToken(user.username);
+            result.IsValid = true;
+            result.UserId = dbUser.UserId.ToString();
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
-        public HttpResponseMessage Validate(JWTResult token)
+        public HttpResponseMessage Validate(JWTToken token)
         {
-            JWTResult result = new JWTResult() { isvalid = false };
+            JWTToken result = new JWTToken() { IsValid = false };
 
             KeyCdr.Users.UserManager userMgr = new Users.UserManager();
-            var dbUser = userMgr.GetByLoginName(token.username);
+            var dbUser = userMgr.GetByLoginName(token.UserName);
             if (dbUser == null)
                 return Request.CreateResponse(HttpStatusCode.Forbidden, result);
 
-            string tokenUsername = new JWTManager().ValidateToken(token.jwt);
-            result.username = tokenUsername;
-            if (token.username.Equals(tokenUsername)) {
-                result.isvalid = true;
+            string tokenUsername = new JWTManager().ValidateToken(token.JWTValue);
+            result.UserName = tokenUsername;
+            if (token.UserName.Equals(tokenUsername)) {
+                result.IsValid = true;
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
