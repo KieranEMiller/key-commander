@@ -19,11 +19,34 @@ class SecureRouteComponent extends React.Component {
         var that = this;
         this.auth.isAuthenticated()
             .then(ret => {
-                that.setState(() => ({
-                    isAuthenticated: ret,
-                    authFailed: !ret
-                }));
+                setTimeout(function () {
+                    that.setState(() => ({
+                        isAuthenticated: ret,
+                        authFailed: !ret
+                    }));
+                }, 1000);
             });
+    }
+
+    loadScript(src) {
+        return new Promise(resolve => {
+            var tag = document.createElement('script');
+            tag.async = false;
+            tag.src = src;
+            tag.onload = () => { resolve(); };
+            document.body.appendChild(tag);
+        });
+    }
+
+    loadCss(src) {
+        return new Promise(resolve => {
+            var tag = document.createElement('link');
+            tag.href = src;
+            tag.type = "text/css";
+            tag.rel = "stylesheet";
+            tag.onload = () => { resolve(); };
+            document.head.appendChild(tag);
+        });
     }
 
     authenticationComplete() {
@@ -44,9 +67,9 @@ class SecureRouteComponent extends React.Component {
             else {
                 return (
                     <ContentContainer>
+                        <h2>Authenticating...</h2>
                         <div className="content_row">
-                        <Loading />
-                            <h2>Authenticating...</h2>
+                            <Loading showLoading={true}/>
                         </div>
                     </ContentContainer>
                 )
