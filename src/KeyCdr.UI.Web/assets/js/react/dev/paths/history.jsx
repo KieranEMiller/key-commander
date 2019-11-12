@@ -15,49 +15,57 @@ class History extends SecureRouteComponent {
             data: null
         }
 
+        this.loadDependencies();
+    }
+
+    loadDependencies() {
         /* there has to be a better way to do this, but I don't
         want to load these files for every page, just the handful
         that need a grid */
-        this.loadCss('https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css')
+        this.loadCss('https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css')
             .then(() => {
-                this.loadCss('https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css');
+                this.loadCss('https://cdn.datatables.net/rowgroup/1.1.1/css/rowGroup.dataTables.min.css');
             });
 
         this.loadScript('https://code.jquery.com/jquery-3.4.1.min.js')
             .then(() => {
-                this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js')
+                this.loadScript('https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js')
                     .then(() => {
-                        this.getUserHistory()
-                            .then(resp => {
-                                this.setState({ isLoading: false, data: resp });
-                                this.initGrid();
-                            }); 
+                        this.loadScript('https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js')
+                            .then(() => {
+                                this.getUserHistory()
+                                    .then(resp => {
+                                        this.setState({ isLoading: false, data: resp });
+                                    });
+                            });
                     });
             });
     }
 
     initGrid() {
-        $("#grid").jsGrid({
-            width: "100%",
-            height: "400px",
 
-            inserting: false,
-            editing: false,
-            sorting: true,
-            paging: false,
-
+        $('#grid').DataTable({
             data: this.state.data,
+            /*
+            rowGroup: {
+                dataSrc: 'SessionId'
+            },*/
+            scrollY: 350,
+            order: [[0, "desc"]],
+            columns: [
+                { data: "CreateDate" },
+                { data: "SourceType" },
+                { data: "SourceKey" },
+                {
+                    "data": "KeySequenceId",
+                    "render": function (data, type, row, meta) {
+                        if (type === 'display') {
+                            data = '<a href=/secure/HistoryDetails/' + data + '>details</a>';
+                        }
 
-            rowClass: "grid_row",
-
-            fields: [
-                /*{ name: "UserId", type: "text", width: 50, validate: "required" },
-                { name: "SessionId", type: "text", width: 50 },*/
-
-                { name: "CreateDate", type: "text"},
-                { name: "SequenceCount", type: "number"},
-                { name: "SourceType", type: "text"},
-                { name: "SourceKey", type: "text"}
+                        return data;
+                    }
+                } 
             ]
         });
     }
@@ -75,40 +83,34 @@ class History extends SecureRouteComponent {
             });
     }
 
+    componentDidUpdate() {
+        if (this.state && this.state.data && this.state.data.length > 0) {
+            this.initGrid();
+        }
+    }
+
     render() {
         if (this.authenticationComplete()) {
-
-            let historyData = this.state && this.state.data && this.state.data.length > 0 ?
-                this.state.data.map(item => {
-                    return (
-                        <tr key={item.SessionId}>
-                            <td>{item.CreateDate}</td>
-                            <td>{item.SequenceCount}</td>
-                        </tr>
-                    )
-                })
-                : <tr><td>No history found...</td></tr>;
-
             return (
                 <ContentContainer authed={true}>
                     <h2>Session History</h2>
 
                     <div className="content_row">
                         <Loading showLoading={this.state.isLoading} />
-                        <div id="grid"></div>
-                        {/*
-                        <table>
+                        
+                        <table id="grid" className="display cell-border stripe hover">
                             <thead>
-                                <th>
-                                    <td>CreateDate</td>
-                                    <td>SequenceCount</td>
-                                </th>
+                                <tr>
+                                    <th>CreateDate</th>
+                                    <th>SourceType</th>
+                                    <th>SourceKey</th>
+                                    <th>Details</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                {historyData} 
                             </tbody>
                         </table>
-                        */}
+                        
                     </div>
                 </ContentContainer>
             );
