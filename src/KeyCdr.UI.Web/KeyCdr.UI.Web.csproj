@@ -358,6 +358,7 @@
     <Content Include="assets\js\react\dev\header-nav-bar.jsx" />
     <Content Include="assets\js\react\dev\header.jsx" />
     <Content Include="assets\js\react\dev\loading.jsx" />
+    <Content Include="assets\js\react\dev\paths\history_details.jsx" />
     <Content Include="assets\js\react\dev\paths\history.jsx" />
     <Content Include="assets\js\react\dev\secure_route_component.jsx" />
     <Content Include="assets\js\react\dev\paths\myaccount.jsx" />
@@ -381,9 +382,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\NavController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserHistoryItemModel.cs" />
+    <Compile Include="Models\UserHistoryKeySequenceItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +401,7 @@
     <Content Include="package.json" />
     <Content Include=".babelrc" />
     <Content Include="assets\css\forms.scss" />
+    <Content Include="assets\css\grid.scss" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -411,7 +416,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KeyCdr.Data\KeyCdr.Data.csproj">
