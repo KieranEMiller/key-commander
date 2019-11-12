@@ -16,10 +16,13 @@ namespace KeyCdr.UI.Web.Models
         public Guid UserId { get; set; }
         public DateTime CreateDate { get; set; }
 
+        public int SequenceCount { get; set; }
+
         /* for a heirarchal result set*/
         //public int SequenceCount { get { return this.KeySequences.Count; } }
         //public IList<UserHistoryKeySequenceItemModel> KeySequences { get; set; }
 
+        public Guid KeySequenceId { get; set; }
         public string SourceKey { get; set; }
         public string SourceType { get; set; }
     }

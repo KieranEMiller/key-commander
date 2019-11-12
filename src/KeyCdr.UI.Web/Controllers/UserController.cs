@@ -37,6 +37,8 @@ namespace KeyCdr.UI.Web.Controllers
                     CreateDate = h.Created,
                     UserId = h.UserId,
                     SessionId = h.SessionId,
+                    SequenceCount = h.KeySequences.Count,
+                    KeySequenceId = ks.KeySequenceId,
                     SourceKey = ks.SourceKey,
                     SourceType = ks.SourceType.Name
                 })).ToList();
