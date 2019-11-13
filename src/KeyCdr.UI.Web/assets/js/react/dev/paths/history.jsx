@@ -46,10 +46,10 @@ class History extends SecureRouteComponent {
 
         $('#grid').DataTable({
             data: this.state.data,
-            /*
-            rowGroup: {
-                dataSrc: 'SessionId'
-            },*/
+
+            /* to enable grouping...*/
+            /* rowGroup: { dataSrc: 'SessionId' },*/
+
             scrollY: 350,
             order: [[0, "desc"]],
             columns: [
@@ -60,13 +60,22 @@ class History extends SecureRouteComponent {
                     "data": "KeySequenceId",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a href=/secure/HistoryDetails/' + data + '>details</a>';
+                            data = '<a class="historyDetailsLink" href="/secure/HistoryDetails/' + data + '">details</a>';
                         }
 
                         return data;
                     }
                 } 
             ]
+        });
+
+        /* bind to the click events of the details column on the grid
+        this allows you to push history and keep the react router type of
+        navigation and avoids a full page refresh */
+        var that = this;
+        $("a.historyDetailsLink").click(function (e) {
+            e.preventDefault();
+            that.props.history.push($(this).attr('href'));
         });
     }
 
@@ -110,7 +119,6 @@ class History extends SecureRouteComponent {
                             <tbody>
                             </tbody>
                         </table>
-                        
                     </div>
                 </ContentContainer>
             );
