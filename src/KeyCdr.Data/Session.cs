@@ -17,15 +17,15 @@ namespace KeyCdr.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Session()
         {
-            this.KeySequences = new HashSet<KeySequence>();
+            this.KeySequence = new HashSet<KeySequence>();
         }
     
         public System.Guid SessionId { get; set; }
         public System.Guid UserId { get; set; }
         public System.DateTime Created { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KeySequence> KeySequences { get; set; }
         public virtual KCUser KCUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KeySequence> KeySequence { get; set; }
     }
 }

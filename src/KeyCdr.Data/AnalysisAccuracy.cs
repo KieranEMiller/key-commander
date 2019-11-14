@@ -14,9 +14,8 @@ namespace KeyCdr.Data
     
     public partial class AnalysisAccuracy
     {
-        public System.Guid AnalysisAccuracyId { get; set; }
-        public int AnalysisTypeId { get; set; }
         public System.Guid KeySequenceAnalysisId { get; set; }
+        public int AnalysisTypeId { get; set; }
         public decimal Accuracy { get; set; }
         public int NumWords { get; set; }
         public int NumChars { get; set; }
@@ -26,6 +25,6 @@ namespace KeyCdr.Data
         public int NumShortChars { get; set; }
     
         public virtual AnalysisType AnalysisType { get; set; }
-        public virtual KeySequenceAnalysis KeySequenceAnalysises { get; set; }
+        public virtual KeySequenceAnalysis KeySequenceAnalysis { get; set; }
     }
 }

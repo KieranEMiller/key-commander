@@ -7,11 +7,10 @@
     <Schema Namespace="KeyCommanderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisAccuracy">
           <Key>
-            <PropertyRef Name="AnalysisAccuracyId" />
+            <PropertyRef Name="KeySequenceAnalysisId" />
           </Key>
-          <Property Name="AnalysisAccuracyId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="AnalysisTypeId" Type="int" Nullable="false" />
           <Property Name="KeySequenceAnalysisId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AnalysisTypeId" Type="int" Nullable="false" />
           <Property Name="Accuracy" Type="decimal" Precision="5" Scale="4" Nullable="false" />
           <Property Name="NumWords" Type="int" Nullable="false" />
           <Property Name="NumChars" Type="int" Nullable="false" />
@@ -22,11 +21,10 @@
         </EntityType>
         <EntityType Name="AnalysisSpeed">
           <Key>
-            <PropertyRef Name="AnalysisSpeedId" />
+            <PropertyRef Name="KeySequenceAnalysisId" />
           </Key>
-          <Property Name="AnalysisSpeedId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="AnalysisTypeId" Type="int" Nullable="false" />
           <Property Name="KeySequenceAnalysisId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AnalysisTypeId" Type="int" Nullable="false" />
           <Property Name="TotalTimeInMilliSec" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="WordPerMin" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="CharsPerSec" Type="decimal" Precision="6" Scale="2" Nullable="false" />
@@ -97,7 +95,7 @@
         </Association>
         <Association Name="FK_AnalysisAccuracy_KeySequenceAnalysis">
           <End Role="KeySequenceAnalysis" Type="Self.KeySequenceAnalysis" Multiplicity="1" />
-          <End Role="AnalysisAccuracy" Type="Self.AnalysisAccuracy" Multiplicity="*" />
+          <End Role="AnalysisAccuracy" Type="Self.AnalysisAccuracy" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="KeySequenceAnalysis">
               <PropertyRef Name="KeySequenceAnalysisId" />
@@ -121,7 +119,7 @@
         </Association>
         <Association Name="FK_AnalysisSpeed_KeySequenceAnalysis">
           <End Role="KeySequenceAnalysis" Type="Self.KeySequenceAnalysis" Multiplicity="1" />
-          <End Role="AnalysisSpeed" Type="Self.AnalysisSpeed" Multiplicity="*" />
+          <End Role="AnalysisSpeed" Type="Self.AnalysisSpeed" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="KeySequenceAnalysis">
               <PropertyRef Name="KeySequenceAnalysisId" />
@@ -241,34 +239,78 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KeyCommanderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="KeyCommanderEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AnalysisAccuracy" EntityType="KeyCommanderModel.AnalysisAccuracy" />
+          <EntitySet Name="AnalysisSpeed" EntityType="KeyCommanderModel.AnalysisSpeed" />
+          <EntitySet Name="AnalysisType" EntityType="KeyCommanderModel.AnalysisType" />
+          <EntitySet Name="KCUser" EntityType="KeyCommanderModel.KCUser" />
+          <EntitySet Name="KeySequence" EntityType="KeyCommanderModel.KeySequence" />
+          <EntitySet Name="KeySequenceAnalysis" EntityType="KeyCommanderModel.KeySequenceAnalysis" />
+          <EntitySet Name="Session" EntityType="KeyCommanderModel.Session" />
+          <EntitySet Name="SourceType" EntityType="KeyCommanderModel.SourceType" />
+          <AssociationSet Name="FK_AnalysisAccuracy_AnalysisType" Association="KeyCommanderModel.FK_AnalysisAccuracy_AnalysisType">
+            <End Role="AnalysisType" EntitySet="AnalysisType" />
+            <End Role="AnalysisAccuracy" EntitySet="AnalysisAccuracy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnalysisAccuracy_KeySequenceAnalysis" Association="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis">
+            <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysis" />
+            <End Role="AnalysisAccuracy" EntitySet="AnalysisAccuracy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnalysisSpeed_AnalysisType" Association="KeyCommanderModel.FK_AnalysisSpeed_AnalysisType">
+            <End Role="AnalysisType" EntitySet="AnalysisType" />
+            <End Role="AnalysisSpeed" EntitySet="AnalysisSpeed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnalysisSpeed_KeySequenceAnalysis" Association="KeyCommanderModel.FK_AnalysisSpeed_KeySequenceAnalysis">
+            <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysis" />
+            <End Role="AnalysisSpeed" EntitySet="AnalysisSpeed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KeySequenceAnalysis_AnalysisType" Association="KeyCommanderModel.FK_KeySequenceAnalysis_AnalysisType">
+            <End Role="AnalysisType" EntitySet="AnalysisType" />
+            <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_KCUser" Association="KeyCommanderModel.FK_Session_KCUser">
+            <End Role="KCUser" EntitySet="KCUser" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KeySequence_Session" Association="KeyCommanderModel.FK_KeySequence_Session">
+            <End Role="Session" EntitySet="Session" />
+            <End Role="KeySequence" EntitySet="KeySequence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KeySequence_SourceType" Association="KeyCommanderModel.FK_KeySequence_SourceType">
+            <End Role="SourceType" EntitySet="SourceType" />
+            <End Role="KeySequence" EntitySet="KeySequence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KeySequenceAnalysis_KeySequence" Association="KeyCommanderModel.FK_KeySequenceAnalysis_KeySequence">
+            <End Role="KeySequence" EntitySet="KeySequence" />
+            <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysis" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="AnalysisAccuracy">
           <Key>
-            <PropertyRef Name="AnalysisAccuracyId" />
+            <PropertyRef Name="KeySequenceAnalysisId" />
           </Key>
-          <Property Name="AnalysisAccuracyId" Type="Guid" Nullable="false" />
-          <Property Name="AnalysisTypeId" Type="Int32" Nullable="false" />
           <Property Name="KeySequenceAnalysisId" Type="Guid" Nullable="false" />
-          <Property Name="Accuracy" Type="Decimal" Precision="5" Scale="4" Nullable="false" />
+          <Property Name="AnalysisTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Accuracy" Type="Decimal" Nullable="false" Precision="5" Scale="4" />
           <Property Name="NumWords" Type="Int32" Nullable="false" />
           <Property Name="NumChars" Type="Int32" Nullable="false" />
           <Property Name="NumCorrectChars" Type="Int32" Nullable="false" />
           <Property Name="NumIncorrectChars" Type="Int32" Nullable="false" />
           <Property Name="NumExtraChars" Type="Int32" Nullable="false" />
           <Property Name="NumShortChars" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AnalysisType" Relationship="Self.FK_AnalysisAccuracy_AnalysisType" FromRole="AnalysisAccuracy" ToRole="AnalysisType" />
-          <NavigationProperty Name="KeySequenceAnalysises" Relationship="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis" FromRole="AnalysisAccuracy" ToRole="KeySequenceAnalysis" />
+          <NavigationProperty Name="AnalysisType" Relationship="KeyCommanderModel.FK_AnalysisAccuracy_AnalysisType" FromRole="AnalysisAccuracy" ToRole="AnalysisType" />
+          <NavigationProperty Name="KeySequenceAnalysis" Relationship="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis" FromRole="AnalysisAccuracy" ToRole="KeySequenceAnalysis" />
         </EntityType>
         <EntityType Name="AnalysisSpeed">
           <Key>
-            <PropertyRef Name="AnalysisSpeedId" />
+            <PropertyRef Name="KeySequenceAnalysisId" />
           </Key>
-          <Property Name="AnalysisSpeedId" Type="Guid" Nullable="false" />
-          <Property Name="AnalysisTypeId" Type="Int32" Nullable="false" />
           <Property Name="KeySequenceAnalysisId" Type="Guid" Nullable="false" />
-          <Property Name="TotalTimeInMilliSec" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="WordPerMin" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="CharsPerSec" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
-          <NavigationProperty Name="AnalysisType" Relationship="Self.FK_AnalysisSpeed_AnalysisType" FromRole="AnalysisSpeed" ToRole="AnalysisType" />
+          <Property Name="AnalysisTypeId" Type="Int32" Nullable="false" />
+          <Property Name="TotalTimeInMilliSec" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="WordPerMin" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="CharsPerSec" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <NavigationProperty Name="AnalysisType" Relationship="KeyCommanderModel.FK_AnalysisSpeed_AnalysisType" FromRole="AnalysisSpeed" ToRole="AnalysisType" />
           <NavigationProperty Name="KeySequenceAnalysis" Relationship="KeyCommanderModel.FK_AnalysisSpeed_KeySequenceAnalysis" FromRole="AnalysisSpeed" ToRole="KeySequenceAnalysis" />
         </EntityType>
         <EntityType Name="AnalysisType">
@@ -276,20 +318,20 @@
             <PropertyRef Name="AnalysisTypeId" />
           </Key>
           <Property Name="AnalysisTypeId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AnalysisAccuracies" Relationship="Self.FK_AnalysisAccuracy_AnalysisType" FromRole="AnalysisType" ToRole="AnalysisAccuracy" />
-          <NavigationProperty Name="AnalysisSpeeds" Relationship="Self.FK_AnalysisSpeed_AnalysisType" FromRole="AnalysisType" ToRole="AnalysisSpeed" />
-          <NavigationProperty Name="KeySequenceAnalysis" Relationship="Self.FK_KeySequenceAnalysis_AnalysisType" FromRole="AnalysisType" ToRole="KeySequenceAnalysis" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AnalysisAccuracy" Relationship="KeyCommanderModel.FK_AnalysisAccuracy_AnalysisType" FromRole="AnalysisType" ToRole="AnalysisAccuracy" />
+          <NavigationProperty Name="AnalysisSpeed" Relationship="KeyCommanderModel.FK_AnalysisSpeed_AnalysisType" FromRole="AnalysisType" ToRole="AnalysisSpeed" />
+          <NavigationProperty Name="KeySequenceAnalysis" Relationship="KeyCommanderModel.FK_KeySequenceAnalysis_AnalysisType" FromRole="AnalysisType" ToRole="KeySequenceAnalysis" />
         </EntityType>
         <EntityType Name="KCUser">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoginName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Sessions" Relationship="KeyCommanderModel.FK_Session_KCUser" FromRole="KCUser" ToRole="Session" />
+          <NavigationProperty Name="Session" Relationship="KeyCommanderModel.FK_Session_KCUser" FromRole="KCUser" ToRole="Session" />
         </EntityType>
         <EntityType Name="KeySequence">
           <Key>
@@ -298,13 +340,13 @@
           <Property Name="KeySequenceId" Type="Guid" Nullable="false" />
           <Property Name="SessionId" Type="Guid" Nullable="false" />
           <Property Name="SourceTypeId" Type="Int32" Nullable="false" />
-          <Property Name="SourceKey" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TextShown" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SourceKey" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TextShown" Type="String" Nullable="false" MaxLength="2048" FixedLength="false" Unicode="true" />
           <Property Name="TextEntered" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Session" Relationship="Self.FK_KeySequence_Session" FromRole="KeySequence" ToRole="Session" />
-          <NavigationProperty Name="SourceType" Relationship="Self.FK_KeySequence_SourceType" FromRole="KeySequence" ToRole="SourceType" />
-          <NavigationProperty Name="KeySequenceAnalysis" Relationship="Self.FK_KeySequenceAnalysis_KeySequence" FromRole="KeySequence" ToRole="KeySequenceAnalysis" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Session" Relationship="KeyCommanderModel.FK_KeySequence_Session" FromRole="KeySequence" ToRole="Session" />
+          <NavigationProperty Name="SourceType" Relationship="KeyCommanderModel.FK_KeySequence_SourceType" FromRole="KeySequence" ToRole="SourceType" />
+          <NavigationProperty Name="KeySequenceAnalysis" Relationship="KeyCommanderModel.FK_KeySequenceAnalysis_KeySequence" FromRole="KeySequence" ToRole="KeySequenceAnalysis" />
         </EntityType>
         <EntityType Name="KeySequenceAnalysis">
           <Key>
@@ -313,33 +355,33 @@
           <Property Name="KeySequenceAnalysisId" Type="Guid" Nullable="false" />
           <Property Name="KeySequenceId" Type="Guid" Nullable="false" />
           <Property Name="AnalysisTypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AnalysisType" Relationship="Self.FK_KeySequenceAnalysis_AnalysisType" FromRole="KeySequenceAnalysis" ToRole="AnalysisType" />
-          <NavigationProperty Name="KeySequence" Relationship="Self.FK_KeySequenceAnalysis_KeySequence" FromRole="KeySequenceAnalysis" ToRole="KeySequence" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AnalysisAccuracy" Relationship="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis" FromRole="KeySequenceAnalysis" ToRole="AnalysisAccuracy" />
           <NavigationProperty Name="AnalysisSpeed" Relationship="KeyCommanderModel.FK_AnalysisSpeed_KeySequenceAnalysis" FromRole="KeySequenceAnalysis" ToRole="AnalysisSpeed" />
-          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AnalysisType" Relationship="KeyCommanderModel.FK_KeySequenceAnalysis_AnalysisType" FromRole="KeySequenceAnalysis" ToRole="AnalysisType" />
+          <NavigationProperty Name="KeySequence" Relationship="KeyCommanderModel.FK_KeySequenceAnalysis_KeySequence" FromRole="KeySequenceAnalysis" ToRole="KeySequence" />
         </EntityType>
         <EntityType Name="Session">
           <Key>
             <PropertyRef Name="SessionId" />
           </Key>
           <Property Name="SessionId" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="KeySequences" Relationship="Self.FK_KeySequence_Session" FromRole="Session" ToRole="KeySequence" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="KCUser" Relationship="KeyCommanderModel.FK_Session_KCUser" FromRole="Session" ToRole="KCUser" />
+          <NavigationProperty Name="KeySequence" Relationship="KeyCommanderModel.FK_KeySequence_Session" FromRole="Session" ToRole="KeySequence" />
         </EntityType>
         <EntityType Name="SourceType">
           <Key>
             <PropertyRef Name="SourceTypeId" />
           </Key>
           <Property Name="SourceTypeId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="KeySequences" Relationship="Self.FK_KeySequence_SourceType" FromRole="SourceType" ToRole="KeySequence" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KeySequence" Relationship="KeyCommanderModel.FK_KeySequence_SourceType" FromRole="SourceType" ToRole="KeySequence" />
         </EntityType>
         <Association Name="FK_AnalysisAccuracy_AnalysisType">
-          <End Role="AnalysisType" Type="Self.AnalysisType" Multiplicity="1" />
-          <End Role="AnalysisAccuracy" Type="Self.AnalysisAccuracy" Multiplicity="*" />
+          <End Type="KeyCommanderModel.AnalysisType" Role="AnalysisType" Multiplicity="1" />
+          <End Type="KeyCommanderModel.AnalysisAccuracy" Role="AnalysisAccuracy" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AnalysisType">
               <PropertyRef Name="AnalysisTypeId" />
@@ -349,133 +391,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AnalysisSpeed_AnalysisType">
-          <End Role="AnalysisType" Type="Self.AnalysisType" Multiplicity="1" />
-          <End Role="AnalysisSpeed" Type="Self.AnalysisSpeed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AnalysisType">
-              <PropertyRef Name="AnalysisTypeId" />
-            </Principal>
-            <Dependent Role="AnalysisSpeed">
-              <PropertyRef Name="AnalysisTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_KeySequenceAnalysis_AnalysisType">
-          <End Role="AnalysisType" Type="Self.AnalysisType" Multiplicity="1" />
-          <End Role="KeySequenceAnalysis" Type="KeyCommanderModel.KeySequenceAnalysis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AnalysisType">
-              <PropertyRef Name="AnalysisTypeId" />
-            </Principal>
-            <Dependent Role="KeySequenceAnalysis">
-              <PropertyRef Name="AnalysisTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_KeySequence_Session">
-          <End Role="Session" Type="Self.Session" Multiplicity="1" />
-          <End Role="KeySequence" Type="Self.KeySequence" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Session">
-              <PropertyRef Name="SessionId" />
-            </Principal>
-            <Dependent Role="KeySequence">
-              <PropertyRef Name="SessionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_KeySequence_SourceType">
-          <End Role="SourceType" Type="Self.SourceType" Multiplicity="1" />
-          <End Role="KeySequence" Type="Self.KeySequence" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SourceType">
-              <PropertyRef Name="SourceTypeId" />
-            </Principal>
-            <Dependent Role="KeySequence">
-              <PropertyRef Name="SourceTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_KeySequenceAnalysis_KeySequence">
-          <End Role="KeySequence" Type="Self.KeySequence" Multiplicity="1" />
-          <End Role="KeySequenceAnalysis" Type="KeyCommanderModel.KeySequenceAnalysis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="KeySequence">
-              <PropertyRef Name="KeySequenceId" />
-            </Principal>
-            <Dependent Role="KeySequenceAnalysis">
-              <PropertyRef Name="KeySequenceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="KeyCommanderEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AnalysisAccuracys" EntityType="Self.AnalysisAccuracy" />
-          <EntitySet Name="AnalysisSpeeds" EntityType="Self.AnalysisSpeed" />
-          <EntitySet Name="AnalysisTypes" EntityType="Self.AnalysisType" />
-          <EntitySet Name="KCUsers" EntityType="Self.KCUser" />
-          <EntitySet Name="KeySequences" EntityType="Self.KeySequence" />
-          <EntitySet Name="KeySequenceAnalysises" EntityType="KeyCommanderModel.KeySequenceAnalysis" />
-          <EntitySet Name="Sessions" EntityType="Self.Session" />
-          <EntitySet Name="SourceTypes" EntityType="Self.SourceType" />
-          <AssociationSet Name="FK_AnalysisAccuracy_AnalysisType" Association="Self.FK_AnalysisAccuracy_AnalysisType">
-            <End Role="AnalysisType" EntitySet="AnalysisTypes" />
-            <End Role="AnalysisAccuracy" EntitySet="AnalysisAccuracys" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AnalysisSpeed_AnalysisType" Association="Self.FK_AnalysisSpeed_AnalysisType">
-            <End Role="AnalysisType" EntitySet="AnalysisTypes" />
-            <End Role="AnalysisSpeed" EntitySet="AnalysisSpeeds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_KeySequenceAnalysis_AnalysisType" Association="Self.FK_KeySequenceAnalysis_AnalysisType">
-            <End Role="AnalysisType" EntitySet="AnalysisTypes" />
-            <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysises" />
-          </AssociationSet>
-          <AssociationSet Name="FK_KeySequence_Session" Association="Self.FK_KeySequence_Session">
-            <End Role="Session" EntitySet="Sessions" />
-            <End Role="KeySequence" EntitySet="KeySequences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_KeySequence_SourceType" Association="Self.FK_KeySequence_SourceType">
-            <End Role="SourceType" EntitySet="SourceTypes" />
-            <End Role="KeySequence" EntitySet="KeySequences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_KeySequenceAnalysis_KeySequence" Association="Self.FK_KeySequenceAnalysis_KeySequence">
-            <End Role="KeySequence" EntitySet="KeySequences" />
-            <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysises" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AnalysisAccuracy_KeySequenceAnalysis" Association="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis">
-            <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysises" />
-            <End Role="AnalysisAccuracy" EntitySet="AnalysisAccuracys" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AnalysisSpeed_KeySequenceAnalysis" Association="KeyCommanderModel.FK_AnalysisSpeed_KeySequenceAnalysis">
-            <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysises" />
-            <End Role="AnalysisSpeed" EntitySet="AnalysisSpeeds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Session_KCUser" Association="KeyCommanderModel.FK_Session_KCUser">
-            <End Role="KCUser" EntitySet="KCUsers" />
-            <End Role="Session" EntitySet="Sessions" />
-          </AssociationSet>
-        </EntityContainer>
         <Association Name="FK_AnalysisAccuracy_KeySequenceAnalysis">
           <End Type="KeyCommanderModel.KeySequenceAnalysis" Role="KeySequenceAnalysis" Multiplicity="1" />
-          <End Type="KeyCommanderModel.AnalysisAccuracy" Role="AnalysisAccuracy" Multiplicity="*" />
+          <End Type="KeyCommanderModel.AnalysisAccuracy" Role="AnalysisAccuracy" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="KeySequenceAnalysis">
               <PropertyRef Name="KeySequenceAnalysisId" />
             </Principal>
             <Dependent Role="AnalysisAccuracy">
               <PropertyRef Name="KeySequenceAnalysisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AnalysisSpeed_AnalysisType">
+          <End Type="KeyCommanderModel.AnalysisType" Role="AnalysisType" Multiplicity="1" />
+          <End Type="KeyCommanderModel.AnalysisSpeed" Role="AnalysisSpeed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnalysisType">
+              <PropertyRef Name="AnalysisTypeId" />
+            </Principal>
+            <Dependent Role="AnalysisSpeed">
+              <PropertyRef Name="AnalysisTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AnalysisSpeed_KeySequenceAnalysis">
           <End Type="KeyCommanderModel.KeySequenceAnalysis" Role="KeySequenceAnalysis" Multiplicity="1" />
-          <End Type="KeyCommanderModel.AnalysisSpeed" Role="AnalysisSpeed" Multiplicity="*" />
+          <End Type="KeyCommanderModel.AnalysisSpeed" Role="AnalysisSpeed" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="KeySequenceAnalysis">
               <PropertyRef Name="KeySequenceAnalysisId" />
             </Principal>
             <Dependent Role="AnalysisSpeed">
               <PropertyRef Name="KeySequenceAnalysisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KeySequenceAnalysis_AnalysisType">
+          <End Type="KeyCommanderModel.AnalysisType" Role="AnalysisType" Multiplicity="1" />
+          <End Type="KeyCommanderModel.KeySequenceAnalysis" Role="KeySequenceAnalysis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnalysisType">
+              <PropertyRef Name="AnalysisTypeId" />
+            </Principal>
+            <Dependent Role="KeySequenceAnalysis">
+              <PropertyRef Name="AnalysisTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -491,95 +451,129 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_KeySequence_Session">
+          <End Type="KeyCommanderModel.Session" Role="Session" Multiplicity="1" />
+          <End Type="KeyCommanderModel.KeySequence" Role="KeySequence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="SessionId" />
+            </Principal>
+            <Dependent Role="KeySequence">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KeySequence_SourceType">
+          <End Type="KeyCommanderModel.SourceType" Role="SourceType" Multiplicity="1" />
+          <End Type="KeyCommanderModel.KeySequence" Role="KeySequence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SourceType">
+              <PropertyRef Name="SourceTypeId" />
+            </Principal>
+            <Dependent Role="KeySequence">
+              <PropertyRef Name="SourceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KeySequenceAnalysis_KeySequence">
+          <End Type="KeyCommanderModel.KeySequence" Role="KeySequence" Multiplicity="1" />
+          <End Type="KeyCommanderModel.KeySequenceAnalysis" Role="KeySequenceAnalysis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KeySequence">
+              <PropertyRef Name="KeySequenceId" />
+            </Principal>
+            <Dependent Role="KeySequenceAnalysis">
+              <PropertyRef Name="KeySequenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="KeyCommanderModelStoreContainer" CdmEntityContainer="KeyCommanderEntities">
-          <EntitySetMapping Name="AnalysisAccuracys">
+          <EntitySetMapping Name="AnalysisAccuracy">
             <EntityTypeMapping TypeName="KeyCommanderModel.AnalysisAccuracy">
               <MappingFragment StoreEntitySet="AnalysisAccuracy">
-                <ScalarProperty Name="AnalysisAccuracyId" ColumnName="AnalysisAccuracyId" />
+                <ScalarProperty Name="NumShortChars" ColumnName="NumShortChars" />
+                <ScalarProperty Name="NumExtraChars" ColumnName="NumExtraChars" />
+                <ScalarProperty Name="NumIncorrectChars" ColumnName="NumIncorrectChars" />
+                <ScalarProperty Name="NumCorrectChars" ColumnName="NumCorrectChars" />
+                <ScalarProperty Name="NumChars" ColumnName="NumChars" />
+                <ScalarProperty Name="NumWords" ColumnName="NumWords" />
+                <ScalarProperty Name="Accuracy" ColumnName="Accuracy" />
                 <ScalarProperty Name="AnalysisTypeId" ColumnName="AnalysisTypeId" />
                 <ScalarProperty Name="KeySequenceAnalysisId" ColumnName="KeySequenceAnalysisId" />
-                <ScalarProperty Name="Accuracy" ColumnName="Accuracy" />
-                <ScalarProperty Name="NumWords" ColumnName="NumWords" />
-                <ScalarProperty Name="NumChars" ColumnName="NumChars" />
-                <ScalarProperty Name="NumCorrectChars" ColumnName="NumCorrectChars" />
-                <ScalarProperty Name="NumIncorrectChars" ColumnName="NumIncorrectChars" />
-                <ScalarProperty Name="NumExtraChars" ColumnName="NumExtraChars" />
-                <ScalarProperty Name="NumShortChars" ColumnName="NumShortChars" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AnalysisSpeeds">
+          <EntitySetMapping Name="AnalysisSpeed">
             <EntityTypeMapping TypeName="KeyCommanderModel.AnalysisSpeed">
               <MappingFragment StoreEntitySet="AnalysisSpeed">
-                <ScalarProperty Name="AnalysisSpeedId" ColumnName="AnalysisSpeedId" />
+                <ScalarProperty Name="CharsPerSec" ColumnName="CharsPerSec" />
+                <ScalarProperty Name="WordPerMin" ColumnName="WordPerMin" />
+                <ScalarProperty Name="TotalTimeInMilliSec" ColumnName="TotalTimeInMilliSec" />
                 <ScalarProperty Name="AnalysisTypeId" ColumnName="AnalysisTypeId" />
                 <ScalarProperty Name="KeySequenceAnalysisId" ColumnName="KeySequenceAnalysisId" />
-                <ScalarProperty Name="TotalTimeInMilliSec" ColumnName="TotalTimeInMilliSec" />
-                <ScalarProperty Name="WordPerMin" ColumnName="WordPerMin" />
-                <ScalarProperty Name="CharsPerSec" ColumnName="CharsPerSec" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AnalysisTypes">
+          <EntitySetMapping Name="AnalysisType">
             <EntityTypeMapping TypeName="KeyCommanderModel.AnalysisType">
               <MappingFragment StoreEntitySet="AnalysisType">
-                <ScalarProperty Name="AnalysisTypeId" ColumnName="AnalysisTypeId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AnalysisTypeId" ColumnName="AnalysisTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="KCUsers">
+          <EntitySetMapping Name="KCUser">
             <EntityTypeMapping TypeName="KeyCommanderModel.KCUser">
               <MappingFragment StoreEntitySet="KCUser">
                 <ScalarProperty Name="Created" ColumnName="Created" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="KeySequences">
+          <EntitySetMapping Name="KeySequence">
             <EntityTypeMapping TypeName="KeyCommanderModel.KeySequence">
               <MappingFragment StoreEntitySet="KeySequence">
                 <ScalarProperty Name="Created" ColumnName="Created" />
-                <ScalarProperty Name="KeySequenceId" ColumnName="KeySequenceId" />
-                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
-                <ScalarProperty Name="SourceTypeId" ColumnName="SourceTypeId" />
-                <ScalarProperty Name="SourceKey" ColumnName="SourceKey" />
-                <ScalarProperty Name="TextShown" ColumnName="TextShown" />
                 <ScalarProperty Name="TextEntered" ColumnName="TextEntered" />
+                <ScalarProperty Name="TextShown" ColumnName="TextShown" />
+                <ScalarProperty Name="SourceKey" ColumnName="SourceKey" />
+                <ScalarProperty Name="SourceTypeId" ColumnName="SourceTypeId" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="KeySequenceId" ColumnName="KeySequenceId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="KeySequenceAnalysises">
+          <EntitySetMapping Name="KeySequenceAnalysis">
             <EntityTypeMapping TypeName="KeyCommanderModel.KeySequenceAnalysis">
               <MappingFragment StoreEntitySet="KeySequenceAnalysis">
                 <ScalarProperty Name="Created" ColumnName="Created" />
-                <ScalarProperty Name="KeySequenceAnalysisId" ColumnName="KeySequenceAnalysisId" />
-                <ScalarProperty Name="KeySequenceId" ColumnName="KeySequenceId" />
                 <ScalarProperty Name="AnalysisTypeId" ColumnName="AnalysisTypeId" />
+                <ScalarProperty Name="KeySequenceId" ColumnName="KeySequenceId" />
+                <ScalarProperty Name="KeySequenceAnalysisId" ColumnName="KeySequenceAnalysisId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sessions">
+          <EntitySetMapping Name="Session">
             <EntityTypeMapping TypeName="KeyCommanderModel.Session">
               <MappingFragment StoreEntitySet="Session">
                 <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
-                </MappingFragment>
+              </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SourceTypes">
+          <EntitySetMapping Name="SourceType">
             <EntityTypeMapping TypeName="KeyCommanderModel.SourceType">
               <MappingFragment StoreEntitySet="SourceType">
-                <ScalarProperty Name="SourceTypeId" ColumnName="SourceTypeId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SourceTypeId" ColumnName="SourceTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

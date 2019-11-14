@@ -17,8 +17,8 @@ namespace KeyCdr.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AnalysisType()
         {
-            this.AnalysisAccuracies = new HashSet<AnalysisAccuracy>();
-            this.AnalysisSpeeds = new HashSet<AnalysisSpeed>();
+            this.AnalysisAccuracy = new HashSet<AnalysisAccuracy>();
+            this.AnalysisSpeed = new HashSet<AnalysisSpeed>();
             this.KeySequenceAnalysis = new HashSet<KeySequenceAnalysis>();
         }
     
@@ -26,9 +26,9 @@ namespace KeyCdr.Data
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AnalysisAccuracy> AnalysisAccuracies { get; set; }
+        public virtual ICollection<AnalysisAccuracy> AnalysisAccuracy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AnalysisSpeed> AnalysisSpeeds { get; set; }
+        public virtual ICollection<AnalysisSpeed> AnalysisSpeed { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KeySequenceAnalysis> KeySequenceAnalysis { get; set; }
     }

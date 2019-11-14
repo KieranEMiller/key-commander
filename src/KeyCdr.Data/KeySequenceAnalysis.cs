@@ -14,23 +14,14 @@ namespace KeyCdr.Data
     
     public partial class KeySequenceAnalysis
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public KeySequenceAnalysis()
-        {
-            this.AnalysisAccuracy = new HashSet<AnalysisAccuracy>();
-            this.AnalysisSpeed = new HashSet<AnalysisSpeed>();
-        }
-    
         public System.Guid KeySequenceAnalysisId { get; set; }
         public System.Guid KeySequenceId { get; set; }
         public int AnalysisTypeId { get; set; }
         public System.DateTime Created { get; set; }
     
+        public virtual AnalysisAccuracy AnalysisAccuracy { get; set; }
+        public virtual AnalysisSpeed AnalysisSpeed { get; set; }
         public virtual AnalysisType AnalysisType { get; set; }
         public virtual KeySequence KeySequence { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AnalysisAccuracy> AnalysisAccuracy { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AnalysisSpeed> AnalysisSpeed { get; set; }
     }
 }

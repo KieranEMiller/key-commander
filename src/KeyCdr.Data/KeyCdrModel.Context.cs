@@ -25,13 +25,13 @@ namespace KeyCdr.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AnalysisAccuracy> AnalysisAccuracys { get; set; }
-        public virtual DbSet<AnalysisSpeed> AnalysisSpeeds { get; set; }
-        public virtual DbSet<AnalysisType> AnalysisTypes { get; set; }
-        public virtual DbSet<KCUser> KCUsers { get; set; }
-        public virtual DbSet<KeySequence> KeySequences { get; set; }
-        public virtual DbSet<KeySequenceAnalysis> KeySequenceAnalysises { get; set; }
-        public virtual DbSet<Session> Sessions { get; set; }
-        public virtual DbSet<SourceType> SourceTypes { get; set; }
+        public virtual DbSet<AnalysisAccuracy> AnalysisAccuracy { get; set; }
+        public virtual DbSet<AnalysisSpeed> AnalysisSpeed { get; set; }
+        public virtual DbSet<AnalysisType> AnalysisType { get; set; }
+        public virtual DbSet<KCUser> KCUser { get; set; }
+        public virtual DbSet<KeySequence> KeySequence { get; set; }
+        public virtual DbSet<KeySequenceAnalysis> KeySequenceAnalysis { get; set; }
+        public virtual DbSet<Session> Session { get; set; }
+        public virtual DbSet<SourceType> SourceType { get; set; }
     }
 }

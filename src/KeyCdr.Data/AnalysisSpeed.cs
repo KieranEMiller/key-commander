@@ -14,9 +14,8 @@ namespace KeyCdr.Data
     
     public partial class AnalysisSpeed
     {
-        public System.Guid AnalysisSpeedId { get; set; }
-        public int AnalysisTypeId { get; set; }
         public System.Guid KeySequenceAnalysisId { get; set; }
+        public int AnalysisTypeId { get; set; }
         public decimal TotalTimeInMilliSec { get; set; }
         public decimal WordPerMin { get; set; }
         public decimal CharsPerSec { get; set; }
