@@ -17,13 +17,13 @@ namespace KeyCdr.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SourceType()
         {
-            this.KeySequence = new HashSet<KeySequence>();
+            this.KeySequence = new HashSet<KeySequences>();
         }
     
         public int SourceTypeId { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KeySequence> KeySequence { get; set; }
+        public virtual ICollection<KeySequences> KeySequence { get; set; }
     }
 }

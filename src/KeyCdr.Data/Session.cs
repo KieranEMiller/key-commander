@@ -17,7 +17,7 @@ namespace KeyCdr.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Session()
         {
-            this.KeySequence = new HashSet<KeySequence>();
+            this.KeySequences = new HashSet<KeySequences>();
         }
     
         public System.Guid SessionId { get; set; }
@@ -26,6 +26,6 @@ namespace KeyCdr.Data
     
         public virtual KCUser KCUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KeySequence> KeySequence { get; set; }
+        public virtual ICollection<KeySequences> KeySequences { get; set; }
     }
 }

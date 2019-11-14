@@ -13,10 +13,10 @@ namespace KeyCdr.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KeyCommanderEntities : DbContext
+    public partial class KeyCommanderEntities1 : DbContext
     {
-        public KeyCommanderEntities()
-            : base("name=KeyCommanderEntities")
+        public KeyCommanderEntities1()
+            : base("name=KeyCommanderEntities1")
         {
         }
     
@@ -29,7 +29,7 @@ namespace KeyCdr.Data
         public virtual DbSet<AnalysisSpeed> AnalysisSpeed { get; set; }
         public virtual DbSet<AnalysisType> AnalysisType { get; set; }
         public virtual DbSet<KCUser> KCUser { get; set; }
-        public virtual DbSet<KeySequence> KeySequence { get; set; }
+        public virtual DbSet<KeySequences> KeySequence { get; set; }
         public virtual DbSet<KeySequenceAnalysis> KeySequenceAnalysis { get; set; }
         public virtual DbSet<Session> Session { get; set; }
         public virtual DbSet<SourceType> SourceType { get; set; }
