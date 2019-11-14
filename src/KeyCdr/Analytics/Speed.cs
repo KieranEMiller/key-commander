@@ -72,17 +72,16 @@ namespace KeyCdr.Analytics
             return allText.Length / seconds;
         }
 
-        public void Record(KeyCommanderEntities db, KeySequenceAnalysis seqAnalysis)
+        public void Record(KeyCommanderEntities1 db, KeySequenceAnalysis seqAnalysis)
         {
             Data.AnalysisSpeed speed = new AnalysisSpeed();
-            speed.AnalysisSpeedId = Guid.NewGuid();
             speed.AnalysisTypeId = (int)this.GetAnalyticType();
             speed.KeySequenceAnalysisId = seqAnalysis.KeySequenceAnalysisId;
             speed.TotalTimeInMilliSec = (decimal)base._analyticData.Elapsed.TotalMilliseconds;
             speed.CharsPerSec = (decimal) _charsPerSec;
             speed.WordPerMin = (decimal) _wpm;
             
-            db.AnalysisSpeeds.Add(speed);
+            db.AnalysisSpeed.Add(speed);
         }
     }
 }

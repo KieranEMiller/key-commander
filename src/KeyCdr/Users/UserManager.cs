@@ -15,7 +15,7 @@ namespace KeyCdr.Users
 
         public KCUser GetByLoginName(string loginName)
         {
-            KCUser user = _db.KCUsers
+            KCUser user = _db.KCUser
                 .Where(u => u.LoginName.Equals(loginName))
                 .FirstOrDefault();
 
@@ -32,7 +32,7 @@ namespace KeyCdr.Users
             user.LoginName = guestname;
             user.Created = DateTime.Now;
 
-            _db.KCUsers.Add(user);
+            _db.KCUser.Add(user);
             _db.SaveChanges();
 
             return user;

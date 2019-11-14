@@ -122,10 +122,9 @@ namespace KeyCdr.Analytics
             );
         }
 
-        public void Record(KeyCommanderEntities db, KeySequenceAnalysis seqAnalysis)
+        public void Record(KeyCommanderEntities1 db, KeySequenceAnalysis seqAnalysis)
         {
             Data.AnalysisAccuracy accuracy = new AnalysisAccuracy();
-            accuracy.AnalysisAccuracyId = Guid.NewGuid();
             accuracy.AnalysisTypeId = (int)this.GetAnalyticType();
             accuracy.KeySequenceAnalysisId = seqAnalysis.KeySequenceAnalysisId;
             accuracy.NumWords = this.NumWordsEvaluated;
@@ -136,7 +135,7 @@ namespace KeyCdr.Analytics
             accuracy.NumShortChars = this.NumShortChars;
             accuracy.Accuracy = (decimal)this.AccuracyVal;
 
-            db.AnalysisAccuracys.Add(accuracy);
+            db.AnalysisAccuracy.Add(accuracy);
         }
 
         public IList<AccuracyMeasurement> Measurements

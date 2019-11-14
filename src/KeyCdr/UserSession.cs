@@ -31,7 +31,7 @@ namespace KeyCdr
 
         private Data.KCUser _user;
         private Data.Session _session;
-        private Data.KeySequence _dbSeq;
+        private Data.KeySequences _dbSeq;
 
         public void NewSession()
         {
@@ -39,14 +39,14 @@ namespace KeyCdr
             _session.SessionId = Guid.NewGuid();
             _session.UserId = _user.UserId;
             _session.Created = DateTime.Now;
-            _db.Sessions.Add(_session);
+            _db.Session.Add(_session);
         }
 
         public void StartNewSequence(ITextSample sample)
         {
             if (_session == null) NewSession();
 
-            _dbSeq = new KeySequence();
+            _dbSeq = new KeySequences();
             _dbSeq.KeySequenceId = Guid.NewGuid();
             _dbSeq.Session = _session;
             _dbSeq.SourceKey = sample.GetSourceKey();
@@ -55,7 +55,7 @@ namespace KeyCdr
             _dbSeq.Created = System.DateTime.Now;
             _dbSeq.TextEntered = null;
 
-            _db.KeySequences.Add(_dbSeq);
+            _db.KeySequence.Add(_dbSeq);
             _db.SaveChanges();
 
             _currentSeq = new MeasuredKeySequence(sample.GetText());
@@ -87,7 +87,7 @@ namespace KeyCdr
             analysis.KeySequenceId = _dbSeq.KeySequenceId;
             analysis.Created = DateTime.Now;
             analysis.AnalysisTypeId = (int)analytic.GetAnalyticType();
-            _db.KeySequenceAnalysises.Add(analysis);
+            _db.KeySequenceAnalysis.Add(analysis);
 
             if (analytic is IAnalyticRecordable)
                 ((IAnalyticRecordable)analytic).Record(_db, analysis);
