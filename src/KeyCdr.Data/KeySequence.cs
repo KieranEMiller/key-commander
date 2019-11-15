@@ -12,10 +12,10 @@ namespace KeyCdr.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class KeySequences
+    public partial class KeySequence
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public KeySequences()
+        public KeySequence()
         {
             this.KeySequenceAnalysis = new HashSet<KeySequenceAnalysis>();
         }

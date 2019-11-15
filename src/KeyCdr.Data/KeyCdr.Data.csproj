@@ -75,54 +75,54 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalysisAccuracy.cs">
-      <DependentUpon>KeyCdrModel.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AnalysisSpeed.cs">
-      <DependentUpon>KeyCdrModel.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AnalysisType.cs">
-      <DependentUpon>KeyCdrModel.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="KCUser.cs">
-      <DependentUpon>KeyCdrModel.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="KeyCdrModel.Context.cs">
+    <Compile Include="KeyCdrDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KeyCdrModel.Context.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="KeyCdrModel.cs">
+    <Compile Include="KeyCdrDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KeyCdrModel.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="KeyCdrModel.Designer.cs">
+    <Compile Include="KeyCdrDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KeyCdrModel.edmx</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="KeySequence.cs">
-      <DependentUpon>KeyCdrModel.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="KeySequenceAnalysis.cs">
-      <DependentUpon>KeyCdrModel.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs">
-      <DependentUpon>KeyCdrModel.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SourceType.cs">
-      <DependentUpon>KeyCdrModel.tt</DependentUpon>
+      <DependentUpon>KeyCdrDataModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="KeyCdrModel.edmx">
+    <EntityDeploy Include="KeyCdrDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>KeyCdrModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>KeyCdrDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="KeyCdrModel.edmx.diagram">
-      <DependentUpon>KeyCdrModel.edmx</DependentUpon>
+    <None Include="KeyCdrDataModel.edmx.diagram">
+      <DependentUpon>KeyCdrDataModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -130,15 +130,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="KeyCdrModel.Context.tt">
+    <Content Include="KeyCdrDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KeyCdrModel.edmx</DependentUpon>
-      <LastGenOutput>KeyCdrModel.Context.cs</LastGenOutput>
+      <DependentUpon>KeyCdrDataModel.edmx</DependentUpon>
+      <LastGenOutput>KeyCdrDataModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="KeyCdrModel.tt">
+    <Content Include="KeyCdrDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KeyCdrModel.edmx</DependentUpon>
-      <LastGenOutput>KeyCdrModel.cs</LastGenOutput>
+      <DependentUpon>KeyCdrDataModel.edmx</DependentUpon>
+      <LastGenOutput>KeyCdrDataModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

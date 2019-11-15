@@ -22,6 +22,6 @@ namespace KeyCdr.Data
         public virtual AnalysisAccuracy AnalysisAccuracy { get; set; }
         public virtual AnalysisSpeed AnalysisSpeed { get; set; }
         public virtual AnalysisType AnalysisType { get; set; }
-        public virtual KeySequences KeySequence { get; set; }
+        public virtual KeySequence KeySequence { get; set; }
     }
 }

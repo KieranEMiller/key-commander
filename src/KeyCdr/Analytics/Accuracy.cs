@@ -122,7 +122,7 @@ namespace KeyCdr.Analytics
             );
         }
 
-        public void Record(KeyCommanderEntities1 db, KeySequenceAnalysis seqAnalysis)
+        public void Record(KeyCdrDataEntities db, KeySequenceAnalysis seqAnalysis)
         {
             Data.AnalysisAccuracy accuracy = new AnalysisAccuracy();
             accuracy.AnalysisTypeId = (int)this.GetAnalyticType();

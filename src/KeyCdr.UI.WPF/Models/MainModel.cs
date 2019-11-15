@@ -55,11 +55,11 @@ namespace KeyCdr.UI.WPF.Models
         {
             get {
                 var collection = this.RecentSessions
-                    .SelectMany(seq => seq.KeySequences
+                    .SelectMany(seq => seq.KeySequence
                     .Select(r => new MainModelSessionView
                     {
                         SessionCreated = seq.Created,
-                        SequenceCount = seq.KeySequences.Count,
+                        SequenceCount = seq.KeySequence.Count,
                         SequenceSource = (TextSampleSourceType)Enum.Parse(typeof(TextSampleSourceType), r.SourceType.SourceTypeId.ToString(), true),
                         SequenceSourceKey = r.SourceKey,
                         SequenceCreated = r.Created,

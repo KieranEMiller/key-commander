@@ -72,7 +72,7 @@ namespace KeyCdr.Analytics
             return allText.Length / seconds;
         }
 
-        public void Record(KeyCommanderEntities1 db, KeySequenceAnalysis seqAnalysis)
+        public void Record(KeyCdrDataEntities db, KeySequenceAnalysis seqAnalysis)
         {
             Data.AnalysisSpeed speed = new AnalysisSpeed();
             speed.AnalysisTypeId = (int)this.GetAnalyticType();

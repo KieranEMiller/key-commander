@@ -31,7 +31,7 @@ namespace KeyCdr
 
         private Data.KCUser _user;
         private Data.Session _session;
-        private Data.KeySequences _dbSeq;
+        private Data.KeySequence _dbSeq;
 
         public void NewSession()
         {
@@ -46,7 +46,7 @@ namespace KeyCdr
         {
             if (_session == null) NewSession();
 
-            _dbSeq = new KeySequences();
+            _dbSeq = new KeySequence();
             _dbSeq.KeySequenceId = Guid.NewGuid();
             _dbSeq.Session = _session;
             _dbSeq.SourceKey = sample.GetSourceKey();

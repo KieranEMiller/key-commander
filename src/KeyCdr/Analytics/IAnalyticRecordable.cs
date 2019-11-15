@@ -8,6 +8,6 @@ namespace KeyCdr.Analytics
 {
     public interface IAnalyticRecordable
     {
-        void Record(KeyCdr.Data.KeyCommanderEntities1 db, KeyCdr.Data.KeySequenceAnalysis seqAnalysis);
+        void Record(KeyCdr.Data.KeyCdrDataEntities db, KeyCdr.Data.KeySequenceAnalysis seqAnalysis);
     }
 }

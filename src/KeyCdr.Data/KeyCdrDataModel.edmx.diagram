@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="14e075b342314509a2e01b67848d257d" Name="Diagram1">
+        <EntityTypeShape EntityType="KeyCommanderModel.AnalysisAccuracy" Width="1.5" PointX="8.25" PointY="4.625" />
+        <EntityTypeShape EntityType="KeyCommanderModel.AnalysisSpeed" Width="1.5" PointX="5.25" PointY="5" />
+        <EntityTypeShape EntityType="KeyCommanderModel.AnalysisType" Width="1.5" PointX="0.75" PointY="5.25" />
+        <EntityTypeShape EntityType="KeyCommanderModel.KCUser" Width="1.5" PointX="1.5" PointY="12" />
+        <EntityTypeShape EntityType="KeyCommanderModel.KeySequence" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KeyCommanderModel.KeySequenceAnalysis" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="KeyCommanderModel.Session" Width="1.5" PointX="1.5" PointY="9" />
+        <EntityTypeShape EntityType="KeyCommanderModel.SourceType" Width="1.5" PointX="1.5" PointY="14.625" />
+        <AssociationConnector Association="KeyCommanderModel.FK_AnalysisAccuracy_AnalysisType" />
+        <AssociationConnector Association="KeyCommanderModel.FK_AnalysisAccuracy_KeySequenceAnalysis" />
+        <AssociationConnector Association="KeyCommanderModel.FK_AnalysisSpeed_AnalysisType" />
+        <AssociationConnector Association="KeyCommanderModel.FK_AnalysisSpeed_KeySequenceAnalysis" />
+        <AssociationConnector Association="KeyCommanderModel.FK_KeySequenceAnalysis_AnalysisType" />
+        <AssociationConnector Association="KeyCommanderModel.FK_Session_KCUser" />
+        <AssociationConnector Association="KeyCommanderModel.FK_KeySequence_Session" />
+        <AssociationConnector Association="KeyCommanderModel.FK_KeySequence_SourceType" />
+        <AssociationConnector Association="KeyCommanderModel.FK_KeySequenceAnalysis_KeySequence" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

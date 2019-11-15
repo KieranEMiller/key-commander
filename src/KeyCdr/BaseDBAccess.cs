@@ -11,7 +11,7 @@ namespace KeyCdr
     {
         public BaseDBAccess()
         {
-            _db = new KeyCommanderEntities1();
+            _db = new KeyCdrDataEntities();
             #if DEBUG
                 _db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
             #endif
@@ -23,6 +23,6 @@ namespace KeyCdr
                 _db.Dispose();
         }
 
-        protected KeyCommanderEntities1 _db;
+        protected KeyCdrDataEntities _db;
     }
 }

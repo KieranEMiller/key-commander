@@ -386,6 +386,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserHistoryDetails.cs" />
     <Compile Include="Models\UserHistoryItemModel.cs" />
     <Compile Include="Models\UserHistoryKeySequenceItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -419,7 +420,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KeyCdr.Data\KeyCdr.Data.csproj">
-      <Project>{D026DBEE-87AB-4F82-B6BF-D825FE417490}</Project>
+      <Project>{d026dbee-87ab-4f82-b6bf-d825fe417490}</Project>
       <Name>KeyCdr.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\KeyCdr\KeyCdr.csproj">
