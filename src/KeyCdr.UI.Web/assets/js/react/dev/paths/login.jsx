@@ -6,15 +6,29 @@ import Auth from '../auth.jsx';
 import Loading from '../loading.jsx';
 
 class Login extends React.Component {
-    constructor(params) {
-        super(params);
+    constructor(props) {
+        super(props);
+
         this.state = {
             username: '',
             password: '',
             showLoading: false,
-            errorMsg: ''
+            errorMsg: '',
+            redirectToOnLogin: this.getPathToRedirectAfterLogin()
         };
+
         this.AuthService = new Auth();
+    }
+
+    getPathToRedirectAfterLogin() {
+        var path = '/secure/MyAccount';
+        if (this.props &&
+            this.props.location &&
+            this.props.location.state &&
+            this.props.location.state.from) {
+                path = this.props.location.state.from;
+        }
+        return path;
     }
 
     handleSubmit = (e) => {
@@ -30,7 +44,7 @@ class Login extends React.Component {
                     that.showLoading(false);
 
                     if (data.IsValid)
-                        that.props.history.push('/secure/MyAccount');
+                        that.props.history.push(that.state.redirectToOnLogin);
                     else
                         that.setState({ errorMsg: 'unable to login with the username and password provided' });
 

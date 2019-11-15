@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from "react-router-dom";
 
 import Loading from './loading.jsx';
 import ContentContainer from './content.jsx';
@@ -61,7 +61,7 @@ class SecureRouteComponent extends React.Component {
         if (!this.state.isAuthenticated) {
             if (this.state.authFailed) {
                 return (
-                    <Redirect to={{ pathname: '/login', state: { from: '/secure/MyAccount' } }} />
+                    <Redirect to={{ pathname: '/login', state: { from: this.props.location.pathname } }} />
                 )
             }
             else {
