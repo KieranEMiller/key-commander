@@ -12,14 +12,21 @@
         margin-bottom: 12px;
     }
 
-    input[type=text], input[type=password] {
+    input[type=text], input[type=password], textarea {
         width: 100%;
         clear: both;
-        height: 45px;
         padding: 10px 20px;
         font-size: large;
         border-radius: 4px;
         box-sizing: border-box;
+    }
+
+    textarea.presented_text, textarea.entered_text {
+        min-height:150px;
+    }
+
+    input[type=text], input[type=password] {
+        height:45px;
     }
 
     input[type=button], input[type=submit] {
