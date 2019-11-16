@@ -386,7 +386,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserHistoryDetails.cs" />
+    <Compile Include="Models\UserHistoryDetailsModel.cs" />
     <Compile Include="Models\UserHistoryItemModel.cs" />
     <Compile Include="Models\UserHistoryKeySequenceItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
