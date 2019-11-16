@@ -15,12 +15,38 @@ namespace KeyCdr.History
 
         public IList<Data.Session> GetSessionsByUser(Data.KCUser currentUser)
         {
-            var results = _db.Sessions
+            var results = _db.Session
                 .Where(sess => sess.UserId.Equals(currentUser.UserId))
-                .Include(sess =>sess.KeySequences)
-                .Include(sess=>sess.KeySequences.Select(b=>b.SourceType))
-                //.Include(sess=>sess.KeySequences.Select(b=>b.KeySequenceAnalysis))
-                //.Include(sess=>sess.KeySequences.Select(b=>b.KeySequenceAnalysis.Select(c=>c.AnalysisType)))
+                .Include(sess =>sess.KeySequence)
+                .Include(sess=>sess.KeySequence.Select(b=>b.SourceType))
+                .OrderByDescending(s => s.Created);
+
+            return results.ToList();
+        }
+
+        public Data.KeySequence GetHistoryDetailsByKeySequence(Data.KCUser currentUser, Guid keySequenceId)
+        {
+            var result = _db.KeySequence
+                .Where(ks => ks.KeySequenceId.Equals(keySequenceId))
+                .Include(ks => ks.SourceType)
+                .Include(ksa => ksa.KeySequenceAnalysis)
+                .Include(ksa => ksa.KeySequenceAnalysis.Select(a => a.AnalysisType))
+                .Include(ksa => ksa.KeySequenceAnalysis.Select(a => a.AnalysisAccuracy))
+                .Include(ksa => ksa.KeySequenceAnalysis.Select(a => a.AnalysisSpeed))
+                .FirstOrDefault();
+
+            return result;
+        }
+
+        public IList<Data.Session> GetHistoryDetailsAllTime(Data.KCUser currentUser)
+        {
+            var results = _db.Session
+                .Where(sess => sess.UserId.Equals(currentUser.UserId))
+                .Include(sess =>sess.KeySequence)
+                .Include(sess=>sess.KeySequence.Select(b=>b.SourceType))
+                .Include(sess=>sess.KeySequence.Select(b=>b.KeySequenceAnalysis))
+                .Include(sess=>sess.KeySequence.Select(b=>b.KeySequenceAnalysis.Select(c=>c.AnalysisSpeed)))
+                .Include(sess=>sess.KeySequence.Select(b=>b.KeySequenceAnalysis.Select(c=>c.AnalysisAccuracy)))
                 .OrderByDescending(s => s.Created);
 
             return results.ToList();

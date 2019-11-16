@@ -29,28 +29,31 @@ class HistoryDetails extends SecureRouteComponent {
                     .then(() => {
                         this.loadScript('https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js')
                             .then(() => {
-                                this.setState({ isLoading: false});
-                                /*this.getUserHistory()
+                                this.getHistoryDetails()
                                     .then(resp => {
-                                        this.setState({ isLoading: false, data: resp });
-                                        this.initGrid();
-                                    });
-                                */
+                                        this.setState({ isLoading: false, data: resp});
+                                    })
                             });
                     });
             });
     }
 
     initGrid() {
-
     }
 
-    getUserHistory() {
+    componentDidUpdate() {
+        if (this.state && this.state.data && this.state.data.length > 0) {
+            this.initGrid();
+        }
+    }
+
+    getHistoryDetails() {
         var token = this.auth.getCurrentToken();
-        return fetch('/api/User/History', {
+        var data = { token: token, sequenceId: this.props.match.params.sequenceId };
+        return fetch('/api/User/HistoryDetails', {
                 method: "Post",
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-                , body: JSON.stringify(token)
+                , body: JSON.stringify(data)
             })
             .then(resp => resp.json())
             .then(data => {
@@ -65,8 +68,40 @@ class HistoryDetails extends SecureRouteComponent {
                 <ContentContainer authed={true}>
                     <h2>History Details</h2>
 
-                    <div className="content_row">
+                    <div className="content_row_sm">
                         <Loading showLoading={this.state.isLoading} />
+                        <h3>Text Presented to You</h3>
+
+                        <form>
+                            <textarea name="textShown"
+                                value={
+                                    (this.state.data != null) ?
+                                    this.state.data.TextShown : ""
+                                }
+                                readOnly
+                            />
+                        </form>
+                        
+                    </div>
+
+                    <div className="content_row_sm">
+                        <Loading showLoading={this.state.isLoading} />
+                        <h3>Text You Entered</h3>
+
+                        <form>
+                            <textarea name="textEntered"
+                                value={
+                                    (this.state.data != null) ? 
+                                        this.state.data.TextEntered : ""
+                                }
+                                readOnly
+                            />
+                        </form>
+                    </div>
+
+                    <div className="content_row_sm">
+                        <Loading showLoading={this.state.isLoading} />
+                        <h3>Text You Entered</h3>
                         
                     </div>
                 </ContentContainer>

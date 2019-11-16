@@ -1,4 +1,8 @@
-﻿using KeyCdr.UI.Web.Models;
+﻿using KeyCdr.Analytics;
+using KeyCdr.History;
+using KeyCdr.UI.Web.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,18 +36,36 @@ namespace KeyCdr.UI.Web.Controllers
             });*/
 
             var historyItems = history
-                .SelectMany(h => h.KeySequences
+                .SelectMany(h => h.KeySequence
                 .Select(ks => new UserHistoryItemModel() {
                     CreateDate = h.Created,
                     UserId = h.UserId,
                     SessionId = h.SessionId,
-                    SequenceCount = h.KeySequences.Count,
+                    SequenceCount = h.KeySequence.Count,
                     KeySequenceId = ks.KeySequenceId,
                     SourceKey = ks.SourceKey,
                     SourceType = ks.SourceType.Name
                 })).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, historyItems);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage HistoryDetails([FromBody]JObject data)
+        {
+            JWTToken token = data["token"].ToObject<JWTToken>();
+            string seqId = data["sequenceId"].ToString();
+
+            Data.KCUser user = new Data.KCUser() { UserId = Guid.Parse(token.UserId) };
+            var userMgr = new KeyCdr.History.UserSessionHistory();
+            Data.KeySequence detail = userMgr.GetHistoryDetailsByKeySequence(user, Guid.Parse(seqId));
+
+            AllTimeStatsCalculator allTimeStats = new AllTimeStatsCalculator(user);
+            UserHistoryDetailsModel result = UserHistoryDetailsModel.Create(detail);
+            result.AnalysisSpeedAllTime = allTimeStats.GetSpeedAllTime();
+            result.AnalysisAccuracyAllTime = allTimeStats.GetAccuracyAllTime();
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }
 }
