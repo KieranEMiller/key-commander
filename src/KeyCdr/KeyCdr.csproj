@@ -98,9 +98,12 @@
     <Compile Include="Highlighting\HighlightedText.cs" />
     <Compile Include="Highlighting\HighlightedTextBuilder.cs" />
     <Compile Include="Highlighting\HighlightType.cs" />
+    <Compile Include="History\AllTimeStatsCalculator.cs" />
     <Compile Include="History\UserSessionHistory.cs" />
     <Compile Include="MeasuredKeySequence.cs" />
     <Compile Include="Highlighting\HighlightDeterminator.cs" />
+    <Compile Include="Models\AccuracyModel.cs" />
+    <Compile Include="Models\SpeedModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextSamples\WikipediaTextGeneratorWithLocalCache.cs" />
     <Compile Include="TextSamples\ITextSample.cs" />
