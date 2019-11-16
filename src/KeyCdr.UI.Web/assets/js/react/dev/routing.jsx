@@ -26,7 +26,7 @@ class Routing extends React.Component {
                     <Route exact path="/secure/MyAccount" component={MyAccount} />
 
                     <Route exact path="/secure/History" component={History} />
-                    <Route path="/secure/HistoryDetails" component={HistoryDetails} />
+                    <Route path="/secure/HistoryDetails/:sequenceId" component={HistoryDetails} />
 
                     <Route component={Index} />
                 </Switch>
