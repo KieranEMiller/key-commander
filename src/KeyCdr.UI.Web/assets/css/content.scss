@@ -74,7 +74,7 @@
 
         .content_row_sm {
             @extend .content_row;
-            margin-bottom: 35px;
+            margin-bottom: 5px;
             position: relative;
             padding: 5px;
             border: solid $COLOR_BACKGROUND 7px;
@@ -89,7 +89,7 @@
             }
         }
 
-        .content_row_sm:hover {
+        .block_hover_highlight:hover {
             border: solid #4D5D6D 7px;
             background:#FFFFFF;
         }

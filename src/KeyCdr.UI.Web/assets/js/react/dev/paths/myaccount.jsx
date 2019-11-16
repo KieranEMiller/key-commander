@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Redirect} from 'react-router-dom'
 
 import ContentContainer from '../content.jsx';
+import Loading from '../loading.jsx';
 import SecureRouteComponent from '../secure_route_component.jsx';
 
 class MyAccount extends SecureRouteComponent {
@@ -20,7 +21,7 @@ class MyAccount extends SecureRouteComponent {
                 <ContentContainer authed={true}>
                     <h2>My Account</h2>
 
-                    <div className="content_row_sm" onClick={()=>this.navTo('/secure/NewSession')} >
+                    <div className="content_row_sm block_hover_highlight" onClick={()=>this.navTo('/secure/NewSession')} >
                         <h3>Start a new Session</h3>
                         <img className="thumb" src="/assets/img/new_session_thumb.png" />
 
@@ -33,7 +34,7 @@ class MyAccount extends SecureRouteComponent {
                         <div className="clear_both"></div>
                     </div>
 
-                    <div className="content_row_sm">
+                    <div className="content_row_sm block_hover_highlight">
                         <h3>Your Session History</h3>
                         <img className="thumb" src="/assets/img/graph_thumbnail.png" />
                         <ul className="">
@@ -45,7 +46,6 @@ class MyAccount extends SecureRouteComponent {
                         <input onClick={() => this.navTo('/secure/History')} className="button-size-medium" type="button" value="View Session History" />
                         <div className="clear_both"></div>
                     </div>
-
 
                 </ContentContainer>
             );
