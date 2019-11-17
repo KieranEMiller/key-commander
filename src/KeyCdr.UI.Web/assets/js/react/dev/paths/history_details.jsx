@@ -5,6 +5,8 @@ import { Redirect} from 'react-router-dom'
 import ContentContainer from '../content.jsx';
 import Loading from '../loading.jsx';
 import SecureRouteComponent from '../secure_route_component.jsx';
+import SpeedAnalysis from '../components/speed_analysis.jsx';
+import AccuracyAnalysis from '../components/accuracy_analysis.jsx';
 
 class HistoryDetails extends SecureRouteComponent {
     constructor(props) {
@@ -36,9 +38,6 @@ class HistoryDetails extends SecureRouteComponent {
                             });
                     });
             });
-    }
-
-    initGrid() {
     }
 
     componentDidUpdate() {
@@ -101,8 +100,26 @@ class HistoryDetails extends SecureRouteComponent {
 
                     <div className="content_row_sm">
                         <Loading showLoading={this.state.isLoading} />
-                        <h3>Text You Entered</h3>
-                        
+                        <h3>Speed Analysis</h3>
+
+                        {this.state.isLoading == false && 
+                            <SpeedAnalysis
+                                AnalysisSpeed={this.state.data.AnalysisSpeed}
+                                AnalysisSpeedAllTime={this.state.data.AnalysisSpeedAllTime}
+                            />
+                        }
+                    </div>
+
+                    <div className="content_row_sm">
+                        <Loading showLoading={this.state.isLoading} />
+                        <h3>Accuracy Analysis</h3>
+
+                        {this.state.isLoading == false && 
+                            <AccuracyAnalysis
+                                AnalysisAccuracy={this.state.data.AnalysisAccuracy}
+                                AnalysisAccuracyAllTime={this.state.data.AnalysisAccuracyAllTime}
+                            />
+                        }
                     </div>
                 </ContentContainer>
             );
