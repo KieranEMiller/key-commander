@@ -50,7 +50,7 @@ class History extends SecureRouteComponent {
             /* to enable grouping...*/
             /* rowGroup: { dataSrc: 'SessionId' },*/
 
-            scrollY: 350,
+            scrollY: 250,
             order: [[0, "desc"]],
             columns: [
                 { data: "CreateDate" },
