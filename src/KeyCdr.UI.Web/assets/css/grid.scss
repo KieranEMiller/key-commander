@@ -1,4 +1,80 @@
-﻿
-.grid_row {
-    font-size:small;
+﻿$GRID_CELL_BORDER: #ddd;
+$GRID_ALT_ROW: #f9f9f9;
+$GRID_HEADER: #333;
+$GRID_CELL_PADDING:8px;
+
+.dataTable, .static_grid {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout:fixed;
+
+    thead {
+        th {
+            border-top: solid #000 1px;
+            border-bottom: solid #000 1px;
+            border-left: solid #000 1px;
+        }
+
+        th:first-child {
+            border-left: solid #000 1px;
+        }
+
+        th:last-child {
+            border-right: solid #000 1px;
+        }
+    }
+
+    th, td {
+        padding-top: 8px;
+        padding-bottom: $GRID_CELL_PADDING;
+        font-size: small;
+    }
+
+    th {
+        background-color: $GRID_HEADER;
+        color: #FFF;
+        font-weight: bold;
+    }
+
+    td {
+        border: 1px solid $GRID_CELL_BORDER;
+        padding-left: $GRID_CELL_PADDING;
+    }
+}
+
+.static_grid {
+    tr {
+        background-color:#FFF;
+    }
+    tr:nth-child(even) {
+        background-color: $GRID_ALT_ROW;
+    }
+
+    tr:hover {
+        background-color: $GRID_CELL_BORDER;
+    }
+}
+
+/* add some space in between the grid filter and the table*/
+#grid_length, #grid_filter {
+    margin-bottom:5px;
+}
+
+span.delta {
+
+    float: none;
+    font-weight: bold;
+
+    .delta_label {
+        width:50px;
+        display:inline-block;
+    }
+
+    img {
+        float: none;
+        margin-right: 5px;
+        height: 16px;
+        width: 16px;
+        vertical-align:bottom;
+    }
 }
