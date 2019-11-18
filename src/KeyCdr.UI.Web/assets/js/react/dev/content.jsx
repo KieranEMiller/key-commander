@@ -1,10 +1,9 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Header from      './header.jsx';
+import Header from './header.jsx';
 
 function ContentContainer(props) {
-    console.log("content container firing ", props);
     return(
         <React.Fragment>
             <div id="content_wrapper">
