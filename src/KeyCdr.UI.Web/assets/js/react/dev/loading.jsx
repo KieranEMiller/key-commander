@@ -4,10 +4,6 @@ import ReactDOM from 'react-dom';
 class Loading extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            showLoading: props.showLoading
-        }
     }
 
     render() {
