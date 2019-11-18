@@ -21,7 +21,7 @@ class MyAccount extends SecureRouteComponent {
                 <ContentContainer authed={true}>
                     <h2>My Account</h2>
 
-                    <div className="content_row_sm block_hover_highlight" onClick={()=>this.navTo('/secure/NewSession')} >
+                    <div className="content_row_sm block_hover_highlight" onClick={()=>this.navTo('/NewSequence')} >
                         <h3>Start a new Session</h3>
                         <img className="thumb" src="/assets/img/new_session_thumb.png" />
 
@@ -30,7 +30,7 @@ class MyAccount extends SecureRouteComponent {
                             <li>Configure your sample source </li>
                         </ul>
 
-                        <input className="button-size-medium" type="button" value="Start New Session" />
+                        <input onClick={() => this.navTo('/NewSequence')} className="button-size-medium" type="button" value="Start New Session" />
                         <div className="clear_both"></div>
                     </div>
 
