@@ -4,13 +4,13 @@ import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 
 import SecureRoute from     './secure_route.jsx';
 import Header from          './header.jsx';
-
 import Index from           './paths/index.jsx';
 import About from           './paths/about.jsx';
 import Login from           './paths/login.jsx';
 import MyAccount from       './paths/myaccount.jsx';
 import History from         './paths/history.jsx';
 import HistoryDetails from  './paths/history_details.jsx';
+import NewSequence from     './paths/new_sequence.jsx';
 
 class Routing extends React.Component {
     render() {
@@ -22,6 +22,8 @@ class Routing extends React.Component {
                     <Route exact path="/Logout" component={Index} />
                     <Route exact path="/About" component={About} />
                     <Route exact path="/Login" component={Login} />
+
+                    <Route exact path="/NewSequence" component={NewSequence} />
 
                     <Route exact path="/secure/MyAccount" component={MyAccount} />
 
