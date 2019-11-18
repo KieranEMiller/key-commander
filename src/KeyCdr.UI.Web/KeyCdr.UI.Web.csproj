@@ -351,15 +351,26 @@
     <Content Include="assets\css\master.min.css" />
     <Content Include="assets\img\favicon.ico" />
     <Content Include="assets\img\favicon.png" />
+    <Content Include="assets\img\graph_thumbnail.png" />
     <Content Include="assets\img\main_banner.png" />
+    <Content Include="assets\img\new_session_thumb.png" />
+    <Content Include="assets\img\triangle_down.png" />
+    <Content Include="assets\img\triangle_up.png" />
     <Content Include="assets\js\react\dev\app.jsx" />
     <Content Include="assets\js\react\dev\auth.jsx" />
+    <Content Include="assets\js\react\dev\components\delta_indicator.jsx" />
+    <Content Include="assets\js\react\dev\components\accuracy_analysis.jsx" />
+    <Content Include="assets\js\react\dev\components\hideable_screen_mask.jsx" />
+    <Content Include="assets\js\react\dev\components\speed_analysis.jsx" />
+    <Content Include="assets\js\react\dev\components\stopwatch.jsx" />
+    <Content Include="assets\js\react\dev\components\toolbar_new_sequence.jsx" />
     <Content Include="assets\js\react\dev\content.jsx" />
     <Content Include="assets\js\react\dev\header-nav-bar.jsx" />
     <Content Include="assets\js\react\dev\header.jsx" />
     <Content Include="assets\js\react\dev\loading.jsx" />
     <Content Include="assets\js\react\dev\paths\history_details.jsx" />
     <Content Include="assets\js\react\dev\paths\history.jsx" />
+    <Content Include="assets\js\react\dev\paths\new_sequence.jsx" />
     <Content Include="assets\js\react\dev\secure_route_component.jsx" />
     <Content Include="assets\js\react\dev\paths\myaccount.jsx" />
     <Content Include="assets\js\react\dev\paths\login.jsx" />
@@ -382,10 +393,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\NavController.cs" />
+    <Compile Include="Controllers\SequenceController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\NewSequenceModel.cs" />
     <Compile Include="Models\UserHistoryDetailsModel.cs" />
     <Compile Include="Models\UserHistoryItemModel.cs" />
     <Compile Include="Models\UserHistoryKeySequenceItemModel.cs" />
@@ -403,6 +416,8 @@
     <Content Include=".babelrc" />
     <Content Include="assets\css\forms.scss" />
     <Content Include="assets\css\grid.scss" />
+    <Content Include="assets\css\loading_and_mask.scss" />
+    <Content Include="assets\css\toolbars.scss" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
