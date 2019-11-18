@@ -1,0 +1,26 @@
+﻿
+.toolbar_top_center {
+    width: 310px;
+    background: $COLOR_BACKGROUND;
+    z-index: 11;
+    margin: 0px auto;
+    position: absolute;
+    top: 105px;
+    left: 0px;
+    right: 0px;
+    border-top: solid $COLOR_PRIMARY 5px;
+    border-left: solid $COLOR_PRIMARY 5px;
+    border-right: solid $COLOR_PRIMARY 5px;
+    text-align: center;
+    transition: opacity 0.7s;
+    opacity: 1;
+    height:auto;
+    padding:7px;
+}
+
+.toolbar_top_center_hide {
+    @extend .toolbar_top_center;
+    opacity: 0;
+    pointer-events: none;
+}
+
