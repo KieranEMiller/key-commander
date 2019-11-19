@@ -62,7 +62,7 @@
 	}
 }
 	
-#nav_container {
+.nav_container {
 	margin:10px 0px 0px 0px;
 	color:black;
 	font-size:1em;
@@ -90,6 +90,7 @@
 			list-style-type: none; 
 			padding:5px 17px 5px 17px;
 			text-align:center;
+            border-bottom: solid $COLOR_BACKGROUND 2px;
 
 			a {
 				text-decoration:none;
@@ -107,5 +108,15 @@
 			border-bottom:solid $COLOR_PRIMARY 2px;
 		}
 	}
+}
+
+.nav_container_sm {
+    @extend .nav_container;
+    font-size:small;
+    margin:0px 55px 0px 0px;
+
+    li {
+        padding:4px;
+    }
 }
 	
