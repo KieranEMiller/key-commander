@@ -1,10 +1,11 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
+import BaseComponent from './base_component.jsx';
 import ContentContainer from '../content.jsx';
 import Auth from '../auth.jsx';
 
-class Index extends React.Component {
+class Index extends BaseComponent {
 
     navTo(path) {
         this.props.history.push(path);

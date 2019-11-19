@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
+import BaseComponent from './base_component.jsx';
 import ContentContainer from '../content.jsx';
 import Loading from '../loading.jsx';
 import HideableScreenMask from '../components/hideable_screen_mask.jsx';
@@ -11,7 +12,7 @@ const ERROR_COUNTER_TEXT = [
     "PRESS ENTER TWICE TO BEGIN (1 REMAINING)...GET READY"
 ];
 
-class NewSequence extends React.Component {
+class NewSequence extends BaseComponent {
     constructor(props) {
         super(props);
 

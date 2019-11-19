@@ -4,11 +4,11 @@ import { Redirect} from 'react-router-dom'
 
 import ContentContainer from '../content.jsx';
 import Loading from '../loading.jsx';
-import SecureRouteComponent from '../secure_route_component.jsx';
+import SecureComponent from './secure_component.jsx';
 import SpeedAnalysis from '../components/speed_analysis.jsx';
 import AccuracyAnalysis from '../components/accuracy_analysis.jsx';
 
-class HistoryDetails extends SecureRouteComponent {
+class HistoryDetails extends SecureComponent {
     constructor(props) {
         super(props);
 

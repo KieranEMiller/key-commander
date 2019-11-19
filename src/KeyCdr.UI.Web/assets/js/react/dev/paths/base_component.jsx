@@ -2,6 +2,10 @@
 import ReactDOM from 'react-dom';
 
 class BaseComponent extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     loadScript(src) {
         return new Promise(resolve => {
             var tag = document.createElement('script');

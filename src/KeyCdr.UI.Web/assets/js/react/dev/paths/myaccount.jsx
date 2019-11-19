@@ -4,9 +4,9 @@ import { Redirect} from 'react-router-dom'
 
 import ContentContainer from '../content.jsx';
 import Loading from '../loading.jsx';
-import SecureRouteComponent from '../secure_route_component.jsx';
+import SecureComponent from './secure_component.jsx';
 
-class MyAccount extends SecureRouteComponent {
+class MyAccount extends SecureComponent {
     constructor(props) {
         super(props);
     }

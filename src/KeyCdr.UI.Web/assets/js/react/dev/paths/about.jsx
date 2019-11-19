@@ -1,9 +1,10 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
+import BaseComponent from './base_component.jsx';
 import ContentContainer from '../content.jsx';
 
-class About extends React.Component {
+class About extends BaseComponent {
     render() {
         return (
             <ContentContainer>
