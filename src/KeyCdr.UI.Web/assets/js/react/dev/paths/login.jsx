@@ -5,6 +5,7 @@ import BaseComponent from './base_component.jsx';
 import ContentContainer from '../content.jsx';
 import Auth from '../auth.jsx';
 import Loading from '../loading.jsx';
+import { Routes, ErrorMsgs } from '../constants.jsx';
 
 class Login extends BaseComponent {
     constructor(props) {
@@ -22,7 +23,7 @@ class Login extends BaseComponent {
     }
 
     getPathToRedirectAfterLogin() {
-        var path = '/secure/MyAccount';
+        var path = Routes.MY_ACCT;
         if (this.props &&
             this.props.location &&
             this.props.location.state &&
@@ -49,7 +50,7 @@ class Login extends BaseComponent {
                         that.props.history.push(that.state.redirectToOnLogin);
                     }
                     else
-                        that.setState({ errorMsg: 'unable to login with the username and password provided' });
+                        that.setState({ errorMsg: ErrorMsgs.AUTH_FAILURE });
 
                 }, 1000);
             })

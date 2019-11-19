@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import BaseComponent from './base_component.jsx';
 import ContentContainer from '../content.jsx';
-import Auth from '../auth.jsx';
+import { Routes } from '../constants.jsx';
 
 class Index extends BaseComponent {
 
@@ -12,17 +12,6 @@ class Index extends BaseComponent {
     }
 
     render() {
-
-        var auth = new Auth();
-
-        var isLoggingOut = this.props.location.pathname === '/Logout';
-
-        //logout uses the same view as the home page, just process the 
-        //actual logout part before you render it
-        if (isLoggingOut) {
-            auth.logout();
-        }
-
         return (
             <ContentContainer>
                 <div className="content_row">
@@ -43,7 +32,7 @@ class Index extends BaseComponent {
                     Login and continue where you left off
                     <input className="button-size-medium" type="button"
                         value="Login to Your Account"
-                        onClick={() => this.navTo('/Login')}
+                        onClick={() => this.navTo(Routes.LOGIN)}
                     />
                 </div>
 

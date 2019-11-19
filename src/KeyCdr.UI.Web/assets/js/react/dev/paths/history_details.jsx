@@ -2,11 +2,12 @@
 import ReactDOM from 'react-dom';
 import { Redirect} from 'react-router-dom'
 
-import ContentContainer from '../content.jsx';
-import Loading from '../loading.jsx';
-import SecureComponent from './secure_component.jsx';
-import SpeedAnalysis from '../components/speed_analysis.jsx';
-import AccuracyAnalysis from '../components/accuracy_analysis.jsx';
+import ContentContainer from    '../content.jsx';
+import Loading from             '../loading.jsx';
+import SecureComponent from     './secure_component.jsx';
+import SpeedAnalysis from       '../components/speed_analysis.jsx';
+import AccuracyAnalysis from    '../components/accuracy_analysis.jsx';
+import { Urls } from            '../constants.jsx';
 
 class HistoryDetails extends SecureComponent {
     constructor(props) {
@@ -16,27 +17,12 @@ class HistoryDetails extends SecureComponent {
             isLoading: true,
             data: null
         }
+    }
 
-        /* there has to be a better way to do this, but I don't
-        want to load these files for every page, just the handful
-        that need a grid */
-        this.loadCss('https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css')
-            .then(() => {
-                this.loadCss('https://cdn.datatables.net/rowgroup/1.1.1/css/rowGroup.dataTables.min.css');
-            });
-
-        this.loadScript('https://code.jquery.com/jquery-3.4.1.min.js')
-            .then(() => {
-                this.loadScript('https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js')
-                    .then(() => {
-                        this.loadScript('https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js')
-                            .then(() => {
-                                this.getHistoryDetails()
-                                    .then(resp => {
-                                        this.setState({ isLoading: false, data: resp});
-                                    })
-                            });
-                    });
+    componentDidMount() {
+        this.getHistoryDetails()
+            .then(resp => {
+                this.setState({ isLoading: false, data: resp });
             });
     }
 
@@ -49,7 +35,7 @@ class HistoryDetails extends SecureComponent {
     getHistoryDetails() {
         var token = this.auth.getCurrentToken();
         var data = { token: token, sequenceId: this.props.match.params.sequenceId };
-        return fetch('/api/User/HistoryDetails', {
+        return fetch(Urls.API_HISTORY_DETAILS, {
                 method: "Post",
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
                 , body: JSON.stringify(data)

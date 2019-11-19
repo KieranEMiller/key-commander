@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 
 import Routing from     './routing.jsx';
-import Header from './header.jsx';
-import Auth from './auth.jsx';
+import Header from      './header.jsx';
+import Auth from        './auth.jsx';
 
 import '../../../../assets/css/master.scss';
 
@@ -18,12 +18,10 @@ class App extends React.Component {
     }
 
     appLogin = () => {
-        console.log("app login");
         this.setState({ IsAuthed: true });
     }
 
     appLogout = () => {
-        console.log("app logout");
         var auth = new Auth();
         auth.logout();
 
@@ -35,12 +33,14 @@ class App extends React.Component {
             <Router>
                 <Header
                     IsAuthed={this.state.IsAuthed}
-                    appLogin={this.appLogin} appLogout={this.appLogout}
+                    appLogin={this.appLogin}
+                    appLogout={this.appLogout}
                 />
 
                 <Routing
                     IsAuthed={this.state.IsAuthed}
-                    appLogin={this.appLogin} appLogout={this.appLogout}
+                    appLogin={this.appLogin}
+                    appLogout={this.appLogout}
                 />
             </Router>
         ); 

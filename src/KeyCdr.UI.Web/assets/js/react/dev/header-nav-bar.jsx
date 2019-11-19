@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link, withRouter } from "react-router-dom";
 
 import Auth from './auth.jsx'
-
-const LOGOUT = { Path: "/Logout", Display: "Logout" };
-const LOGIN = { Path: "/Login", Display: "Login" };
+import { Routes } from './constants.jsx';
 
 class HeaderNavBar extends React.Component {
     constructor(props) {
@@ -14,8 +12,8 @@ class HeaderNavBar extends React.Component {
         this.state = {
             currentRoute: this.props.location.pathname,
             routes: [
-                { route: "/Index", display: "Home", active: false },
-                { route: "/secure/MyAccount", display: "My Account", active: false }
+                { route: Routes.INDEX, display: "Home", active: false },
+                { route: Routes.MY_ACCT, display: "My Account", active: false }
             ]
         };
     };
@@ -35,13 +33,12 @@ class HeaderNavBar extends React.Component {
 
         let link;
         if (this.props.IsAuthed === true) {
-            link = <Link to='/Logout' onClick={this.props.appLogout}>Logout</Link>;
+            link = <Link to={Routes.LOGOUT} onClick={this.props.appLogout}>Logout</Link>;
         } else {
-            link = <Link to='/Login' onClick={() => this.clickHandler('/Login')}>Login</Link>;
+            link = <Link to={Routes.LOGIN} onClick={() => this.clickHandler(Routes.LOGIN)}>Login</Link>;
         }
 
-        let showSubMenu = (this.props.location.pathname == '/secure/MyAccount');
-
+        let showSubMenu = (this.props.location.pathname === Routes.MY_ACCT);
         return (
             <React.Fragment>
                 <div id="nav_container" className="nav_container">
@@ -63,10 +60,10 @@ class HeaderNavBar extends React.Component {
                     <div id="sub_nav_container" className="nav_container_sm">
                         <ul>
                             <li>
-                                <Link to='/NewSequence' onClick={() => this.clickHandler('/NewSequence')}>New Sequence</Link>
+                                <Link to={Routes.NEW_SEQUENCE} onClick={() => this.clickHandler(Routes.NEW_SEQUENCE)}>New Sequence</Link>
                             </li>
-                            <li>
-                                <Link to='/secure/History' onClick={() => this.clickHandler('/secure/History')}>History</Link>
+                            <li> 
+                                <Link to={Routes.HISTORY} onClick={() => this.clickHandler(Routes.HISTORY)}>History</Link>
                             </li>
                         </ul>
                     </div>

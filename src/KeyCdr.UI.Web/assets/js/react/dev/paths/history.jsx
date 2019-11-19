@@ -2,9 +2,10 @@
 import ReactDOM from 'react-dom';
 import { Redirect} from 'react-router-dom'
 
-import ContentContainer from '../content.jsx';
-import Loading from '../loading.jsx';
-import SecureComponent from './secure_component.jsx';
+import ContentContainer from    '../content.jsx';
+import Loading from             '../loading.jsx';
+import SecureComponent from     './secure_component.jsx';
+import { Urls } from            '../constants.jsx';
 
 class History extends SecureComponent {
     constructor(props) {
@@ -22,16 +23,16 @@ class History extends SecureComponent {
         /* there has to be a better way to do this, but I don't
         want to load these files for every page, just the handful
         that need a grid */
-        this.loadCss('https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css')
+        this.loadCss(Urls.External.CSS.DATATABLES_CORE)
             .then(() => {
-                this.loadCss('https://cdn.datatables.net/rowgroup/1.1.1/css/rowGroup.dataTables.min.css');
+                this.loadCss(Urls.External.CSS.DATATABLES_ALT);
             });
 
-        this.loadScript('https://code.jquery.com/jquery-3.4.1.min.js')
+        this.loadScript(Urls.External.JS.JQUERY)
             .then(() => {
-                this.loadScript('https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js')
+                this.loadScript(Urls.External.JS.DATATABLES_CORE)
                     .then(() => {
-                        this.loadScript('https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js')
+                        this.loadScript(Urls.External.JS.DATATABLES_ROWGROUP)
                             .then(() => {
                                 this.getUserHistory()
                                     .then(resp => {
@@ -81,7 +82,7 @@ class History extends SecureComponent {
 
     getUserHistory() {
         var token = this.auth.getCurrentToken();
-        return fetch('/api/User/History', {
+        return fetch(Urls.API_HISTORY, {
                 method: "Post",
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
                 , body: JSON.stringify(token)

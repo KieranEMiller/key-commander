@@ -5,6 +5,7 @@ import { Redirect} from 'react-router-dom'
 import ContentContainer from '../content.jsx';
 import Loading from '../loading.jsx';
 import SecureComponent from './secure_component.jsx';
+import { Routes } from '../constants.jsx';
 
 class MyAccount extends SecureComponent {
     constructor(props) {
@@ -21,7 +22,7 @@ class MyAccount extends SecureComponent {
                 <ContentContainer authed={true}>
                     <h2>My Account</h2>
 
-                    <div className="content_row_sm block_hover_highlight" onClick={()=>this.navTo('/NewSequence')} >
+                    <div className="content_row_sm block_hover_highlight" onClick={()=>this.navTo(Routes.NEW_SEQUENCE)} >
                         <h3>Start a new Session</h3>
                         <img className="thumb" src="/assets/img/new_session_thumb.png" />
 
@@ -30,11 +31,11 @@ class MyAccount extends SecureComponent {
                             <li>Configure your sample source </li>
                         </ul>
 
-                        <input onClick={() => this.navTo('/NewSequence')} className="button-size-medium" type="button" value="Start New Session" />
+                        <input onClick={() => this.navTo(Routes.NEW_SEQUENCE)} className="button-size-medium position_bottom_right" type="button" value="Start New Session" />
                         <div className="clear_both"></div>
                     </div>
 
-                    <div className="content_row_sm block_hover_highlight">
+                    <div className="content_row_sm block_hover_highlight" onClick={() => this.navTo(Routes.HISTORY)} >
                         <h3>Your Session History</h3>
                         <img className="thumb" src="/assets/img/graph_thumbnail.png" />
                         <ul className="">
@@ -43,7 +44,7 @@ class MyAccount extends SecureComponent {
                             <li>Measure performance over time </li>
                         </ul>
 
-                        <input onClick={() => this.navTo('/secure/History')} className="button-size-medium" type="button" value="View Session History" />
+                        <input onClick={() => this.navTo(Routes.HISTORY)} className="button-size-medium position_bottom_right" type="button" value="View Session History" />
                         <div className="clear_both"></div>
                     </div>
 

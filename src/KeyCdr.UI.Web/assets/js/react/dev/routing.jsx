@@ -10,19 +10,19 @@ import MyAccount from       './paths/myaccount.jsx';
 import History from         './paths/history.jsx';
 import HistoryDetails from  './paths/history_details.jsx';
 import NewSequence from     './paths/new_sequence.jsx';
+import { Routes } from      './constants.jsx';
 
 class Routing extends React.Component {
     render() {
         return (
             <div>
                 <Switch>
-                    <Route exact path="/" component={Index} />
-                    <Route exact path="/Logout" component={Index} />
-                    <Route exact path="/About" component={About} />
-                    <Route exact path="/NewSequence" component={NewSequence} />
+                    <Route exact path={Routes.DEFAULT} component={Index} />
+                    <Route exact path={Routes.INDEX} component={Index} />
+                    <Route exact path={Routes.NEW_SEQUENCE} component={NewSequence} />
 
                     <Route
-                        exact path="/Login"
+                        exact path={Routes.LOGIN}
                         render={
                             (props) =>
                                 <Login {...props}
@@ -34,7 +34,7 @@ class Routing extends React.Component {
                     />
 
                     <Route
-                        exact path="/secure/MyAccount"
+                        exact path={Routes.MY_ACCT}
                         render={
                             (props) =>
                                 <MyAccount {...props}
@@ -46,7 +46,7 @@ class Routing extends React.Component {
                     />
 
                     <Route
-                        exact path="/secure/History"
+                        exact path={Routes.HISTORY}
                         render={
                             (props) =>
                                 <History {...props}
@@ -58,7 +58,7 @@ class Routing extends React.Component {
                     />
 
                     <Route
-                        exact path="/secure/HistoryDetails/:sequenceId"
+                        exact path={Routes.HISTORY_DETAILS_WITHID}
                         render={
                             (props) =>
                                 <HistoryDetails {...props}

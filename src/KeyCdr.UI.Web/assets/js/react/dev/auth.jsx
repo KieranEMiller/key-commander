@@ -1,19 +1,13 @@
 ﻿
-const AuthStatus = {
-    isAuthenticated: false
-}
+import { LocalStorage, Urls, Runtime } from './constants.jsx';
 
 class Auth {
     constructor(params) {
-        this.DEBUG = true;
-        this.URL_BASE = "http://localhost:8080/api/auth";
-        this.LOCAL_STORAGE_KEY = "key-cdr-jwt";
-
         this.loggedIn = false;
     }
 
     getCurrentToken() {
-        var token = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+        var token = localStorage.getItem(LocalStorage.JWT_KEY_NAME);
         try {
             if (token)
                 return JSON.parse(token);
@@ -26,12 +20,12 @@ class Auth {
     }
 
     clearToken() {
-        localStorage.removeItem(this.LOCAL_STORAGE_KEY);
+        localStorage.removeItem(LocalStorage.JWT_KEY_NAME);
     }
 
     setToken(token) {
         var tokenstring = JSON.stringify(token);
-        localStorage.setItem(this.LOCAL_STORAGE_KEY, tokenstring);
+        localStorage.setItem(LocalStorage.JWT_KEY_NAME, tokenstring);
     }
 
     /*synchronous auth*/
@@ -56,7 +50,7 @@ class Auth {
             try {
                 that.isValidToken(token)
                     .then(ret => {
-                        if (that.DEBUG) console.log("auth: isauthenticated: server check was ", ret);
+                        if (Runtime.IS_DEBUG) console.log("auth: isauthenticated: server check was ", ret);
                         resolve(ret);
                     });
             }
@@ -68,19 +62,19 @@ class Auth {
     }
 
     logout() {
-        if (this.DEBUG) console.log("auth: logging out");
+        if (Runtime.IS_DEBUG) console.log("auth: logging out");
         this.clearToken();
     }
 
     login(user) {
-        return fetch(this.URL_BASE + "/login", {
+        return fetch(Urls.API_AUTH_LOGIN, {
             method: "POST",
             headers: { 'Content-Type': 'application/json', Accept: 'application/json'},
             body: JSON.stringify(user)
         })
         .then(resp => resp.json())
         .then(data => {
-            if(this.DEBUG) console.log("login return: ", data);
+            if(Runtime.IS_DEBUG) console.log("login return: ", data);
             if (data.IsValid) {
                 this.setToken(data);
             } 
@@ -122,7 +116,7 @@ class Auth {
     }
 
     isValidToken() {
-        var url = this.URL_BASE + "/validate";
+        var url = Urls.API_AUTH_VALIDATE;
         var token = this.getCurrentToken();
         if (!token || !token.JWTValue) return Promise.resolve(false);
 
