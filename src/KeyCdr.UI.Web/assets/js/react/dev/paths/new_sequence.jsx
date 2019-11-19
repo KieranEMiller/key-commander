@@ -7,22 +7,21 @@ import Loading from '../loading.jsx';
 import HideableScreenMask from '../components/hideable_screen_mask.jsx';
 import ToolbarNewSequence from '../components/toolbar_new_sequence.jsx';
 
-const ERROR_COUNTER_TEXT = [
-    "PRESS ENTER TWICE TO BEGIN (2 REMAINING)",
-    "PRESS ENTER TWICE TO BEGIN (1 REMAINING)...GET READY"
-];
+const INSTRUCTIONS = "PRESS SHIFT+ENTER OR PRESS START TO BEGIN";
+const DEFAULT_INPUT_SEQ_HEIGHT = 75;
 
 class NewSequence extends BaseComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            EnterCounter: 0,
-            TextShown: ERROR_COUNTER_TEXT[0],
+            TextShown: INSTRUCTIONS,
             IsRunning: false,
             IsLoading: false,
+            IsFinalizingSequence: false,
             UseTheatreMode: false,
-            CurrentSequence: null
+            CurrentSequence: null,
+            height: DEFAULT_INPUT_SEQ_HEIGHT
         }
     }
 
@@ -34,10 +33,17 @@ class NewSequence extends BaseComponent {
         this.inputSequenceField.focus();
     }
 
+    autoresize() {
+        this.setFilledTextareaHeight();
+    }
+
     inputKeyDown = (e) => {
-        if (e.keyCode == 13) {
+        if (e.shiftKey == true && e.keyCode == 13) {
             e.preventDefault();
             this.handleKeyEnter();
+        }
+        else if (e.keyCode == 13) {
+            e.preventDefault();
         }
     }
 
@@ -45,18 +51,17 @@ class NewSequence extends BaseComponent {
         if (this.state.IsRunning == true) {
             this.stopSequence();
         }
-        else if (this.state.EnterCounter == 1) {
+        else {
             this.startSequence();
-        }
-        else if (this.state.EnterCounter == 0) {
-            this.setState({
-                EnterCounter: 1,
-                TextShown: ERROR_COUNTER_TEXT[1]
-            });
         }
     }
 
     startSequence() {
+        /* abort start request if its already loading or running */
+        if (this.state.IsLoading == true
+            || this.state.IsRunning == true)
+            return;
+
         this.setState({ IsLoading: true });
 
         fetch('/api/Sequence/GetNewSequence', {
@@ -65,23 +70,28 @@ class NewSequence extends BaseComponent {
         })
         .then(resp => resp.json())
         .then(data => {
-            console.log("new seq data", data);
-
             this.setState({
                 CurrentSequence: data,
-                EnterCounter: 0,
                 TextShown: data.Text,
                 IsRunning: true,
                 IsLoading: false,
                 UseTheatreMode: true
             });
+            this.setFilledTextareaHeight();
         });
     }
 
     stopSequence = () => {
         this.setState({
             IsRunning: false,
-            UseTheatreMode: false
+            UseTheatreMode: false,
+            IsFinalizingSequence: true
+        });
+    }
+
+    setFilledTextareaHeight() {
+        this.setState({
+            height: this.sizeref.clientHeight + 10,
         });
     }
 
@@ -98,30 +108,55 @@ class NewSequence extends BaseComponent {
                 />
 
                 <ContentContainer>
-                <h2>New Sequence</h2>
+                    <Loading showLoading={this.state.IsFinalizingSequence} />
+                    <h2>New Sequence</h2>
                 
-                <div className="content_row_sm show_above_mask">
-                    <Loading showLoading={this.state.IsLoading} />
-                    <h3>Text to Type</h3>
+                    <div className="content_row_sm show_above_mask">
+                        <Loading showLoading={this.state.IsLoading} />
+                        <h3>Text to Type</h3>
                         
-                    <form>
-                        <textarea name="textShown"
-                            value={this.state.TextShown}
-                            readOnly
-                        />
-                    </form>
-                </div>
+                        <form>
+                            <textarea name="textShown"
+                                className="presented_text"
+                                value={this.state.TextShown}
+                                style={{
+                                    height: this.state.height,
+                                    resize: this.state.height <= DEFAULT_INPUT_SEQ_HEIGHT ? "none" : null
+                                }}
+                                readOnly
+                            />
+                        </form>
+                    </div>
 
-                <div className="content_row_sm show_above_mask">
-                    <h3>Your Text</h3>
+                    <div className="content_row_sm show_above_mask">
+                        <h3>Your Text</h3>
 
-                    <form>
-                        <textarea name="textEntered"
+                        <form>
+                            <textarea name="textEntered"
+                                className="entered_text" 
                                 ref={(input) => { this.inputSequenceField = input; }} 
                                 onKeyDown={this.inputKeyDown}
-                        />
-                    </form>
-                </div>
+                                style={{
+                                    height: this.state.height,
+                                    resize: this.state.height <= DEFAULT_INPUT_SEQ_HEIGHT ? "none" : null
+                                }}
+                            />
+
+                            {(this.state.IsRunning === false
+                                && this.state.IsLoading === false
+                                && this.state.IsFinalizingSequence === false) &&
+                                <input onClick={() => this.startSequence()} className="button-size-medium position_center" type="button" value="Start Sequence...!" />
+                            }
+                        </form>
+                    </div>
+
+                    <div className="content_row_sm">
+                        <form>
+                            <div id="sizeComparison" className="presented_text_size_ref" ref={(c) => this.sizeref = c}>
+                                {this.state.TextShown}
+                        </div>
+                        </form>
+                    </div>
                 </ContentContainer>
                 </React.Fragment>
         );

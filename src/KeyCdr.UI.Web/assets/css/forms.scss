@@ -12,7 +12,7 @@
         margin-bottom: 12px;
     }
 
-    input[type=text], input[type=password], textarea {
+    input[type=text], input[type=password], textarea, .presented_text_size_ref {
         width: 100%;
         clear: both;
         padding: 10px 20px;
@@ -21,12 +21,17 @@
         box-sizing: border-box;
     }
 
-    textarea.presented_text, textarea.entered_text {
-        min-height:150px;
+    textarea.presented_text, textarea.entered_text, .presented_text_size_ref {
+        min-height: 75px;
+        font-family: monospace;
+    }
+
+    .presented_text_size_ref{
+        visibility:hidden;
     }
 
     input[type=text], input[type=password] {
-        height:45px;
+        height: 45px;
     }
 
     input[type=button], input[type=submit] {
@@ -38,11 +43,12 @@
         background-color: #c5e6f1;
     }
 
+
     .form_error {
-        color:red;
-        font-size:large;
-        font-weight:bold;
-        margin-bottom:10px;
+        color: red;
+        font-size: large;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
 }
 
