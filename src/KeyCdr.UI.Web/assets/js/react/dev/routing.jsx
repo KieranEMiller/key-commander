@@ -45,8 +45,29 @@ class Routing extends React.Component {
                         }
                     />
 
-                    <Route exact path="/secure/History" component={History} />
-                    <Route path="/secure/HistoryDetails/:sequenceId" component={HistoryDetails} />
+                    <Route
+                        exact path="/secure/History"
+                        render={
+                            (props) =>
+                                <History {...props}
+                                    IsAuthed={this.props.IsAuthed}
+                                    appLogin={this.props.appLogin}
+                                    appLogout={this.props.appLogout}
+                                />
+                        }
+                    />
+
+                    <Route
+                        exact path="/secure/HistoryDetails/:sequenceId"
+                        render={
+                            (props) =>
+                                <HistoryDetails {...props}
+                                    IsAuthed={this.props.IsAuthed}
+                                    appLogin={this.props.appLogin}
+                                    appLogout={this.props.appLogout}
+                                />
+                        }
+                    />
 
                     <Route component={Index} />
                 </Switch>
