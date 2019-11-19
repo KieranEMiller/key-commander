@@ -7,11 +7,6 @@ import HeaderNavBar from './header-nav-bar.jsx';
 class Header extends React.Component {
     constructor(props) {
         super(props);
-        console.log("header ", props);
-
-        this.state = {
-            authed: props.authed
-        }
     };
     render() {
         return (
@@ -23,7 +18,7 @@ class Header extends React.Component {
                             <Link to="/" className="title">Key Commander</Link>
                             <div className="title_sub">measure, improve and analyze typing speed and accuracy {this.props.loc}</div>
                         </div>
-                        <HeaderNavBar authed={this.state.authed} />
+                        <HeaderNavBar IsAuthed={this.props.IsAuthed} appLogin={this.props.appLogin} appLogout={this.props.appLogout}/>
                         <div className="clear_both"></div>
                     </div>
 

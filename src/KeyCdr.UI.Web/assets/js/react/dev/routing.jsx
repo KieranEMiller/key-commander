@@ -2,7 +2,6 @@
 import ReactDOM from 'react-dom';
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 
-import SecureRoute from     './secure_route.jsx';
 import Header from          './header.jsx';
 import Index from           './paths/index.jsx';
 import About from           './paths/about.jsx';
@@ -16,16 +15,35 @@ class Routing extends React.Component {
     render() {
         return (
             <div>
-                <Header /> 
                 <Switch>
                     <Route exact path="/" component={Index} />
                     <Route exact path="/Logout" component={Index} />
                     <Route exact path="/About" component={About} />
-                    <Route exact path="/Login" component={Login} />
-
                     <Route exact path="/NewSequence" component={NewSequence} />
 
-                    <Route exact path="/secure/MyAccount" component={MyAccount} />
+                    <Route
+                        exact path="/Login"
+                        render={
+                            (props) =>
+                                <Login {...props}
+                                    IsAuthed={this.props.IsAuthed}
+                                    appLogin={this.props.appLogin}
+                                    appLogout={this.props.appLogout}
+                                />
+                        } 
+                    />
+
+                    <Route
+                        exact path="/secure/MyAccount"
+                        render={
+                            (props) =>
+                                <MyAccount {...props}
+                                    IsAuthed={this.props.IsAuthed}
+                                    appLogin={this.props.appLogin}
+                                    appLogout={this.props.appLogout}
+                                />
+                        }
+                    />
 
                     <Route exact path="/secure/History" component={History} />
                     <Route path="/secure/HistoryDetails/:sequenceId" component={HistoryDetails} />

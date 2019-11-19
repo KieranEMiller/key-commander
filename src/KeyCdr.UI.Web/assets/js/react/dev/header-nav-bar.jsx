@@ -18,10 +18,8 @@ class HeaderNavBar extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log("nav bar ", props);
         this.state = {
             currentRoute: this.props.location.pathname,
-            isAuthenticated: props.authed,
             routes: [
                 { route: "/Index", display: "Home", active: false },
                 { route: "/secure/MyAccount", display: "My Account", active: false },
@@ -62,12 +60,11 @@ class HeaderNavBar extends React.Component {
 
     render() {
 
-        
-        const isLoggedIn = this.state.isAuthenticated;
+        const isLoggedIn = this.props.IsAuthed;
         let link;
 
         if (isLoggedIn) {
-            link = <Link to='/Logout' onClick={() => this.clickHandler('/Logout')}>Logout</Link>;
+            link = <Link to='/Logout' onClick={this.props.appLogout}>Logout</Link>;
         } else {
             link = <Link to='/Login' onClick={() => this.clickHandler('/Login')}>Login</Link>;
         }

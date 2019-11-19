@@ -1,11 +1,12 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
+import BaseComponent from './base_component.jsx';
 import ContentContainer from '../content.jsx';
 import Auth from '../auth.jsx';
 import Loading from '../loading.jsx';
 
-class Login extends React.Component {
+class Login extends BaseComponent {
     constructor(props) {
         super(props);
 
@@ -43,8 +44,10 @@ class Login extends React.Component {
                 setTimeout(function () {
                     that.showLoading(false);
 
-                    if (data.IsValid)
+                    if (data.IsValid) {
+                        that.props.appLogin();
                         that.props.history.push(that.state.redirectToOnLogin);
+                    }
                     else
                         that.setState({ errorMsg: 'unable to login with the username and password provided' });
 
@@ -54,7 +57,6 @@ class Login extends React.Component {
                 console.log(err);
             });
             
-
         e.preventDefault();
     }
 
