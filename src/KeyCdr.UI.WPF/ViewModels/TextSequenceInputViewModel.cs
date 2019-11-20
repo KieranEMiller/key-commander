@@ -80,7 +80,7 @@ namespace KeyCdr.UI.WPF.ViewModels
         public void StopSequence()
         {
             _updateTimer.Stop();
-            var analytics = _sessionMgr.Stop(_seqInputModel.TextEntered);
+            var analytics = _sessionMgr.StopSequence(_seqInputModel.TextEntered);
 
             IAnalytic accuracy = analytics
                 .Where(a => a.GetAnalyticType() == AnalyticType.Accuracy)

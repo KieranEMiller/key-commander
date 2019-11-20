@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using KeyCdr.Data;
 using KeyCdr.TextSamples;
 using KeyCdr.Analytics;
+using KeyCdr.KeySequences;
 
 namespace KeyCdr
 {
@@ -25,66 +26,78 @@ namespace KeyCdr
             _generator = generator;
         }
 
-        private ITextSampleGenerator _generator;
+        protected ITextSampleGenerator _generator;
+        protected IMeasuredKeySequence _currentSeq;
 
-        private MeasuredKeySequence _currentSeq;
+        protected KCUser _user;
+        protected Session _session;
+        protected KeySequence _dbSeq;
 
-        private Data.KCUser _user;
-        private Data.Session _session;
-        private Data.KeySequence _dbSeq;
-
-        public void NewSession()
+        public virtual Session StartNewSession()
         {
             _session = new Session();
             _session.SessionId = Guid.NewGuid();
             _session.UserId = _user.UserId;
             _session.Created = DateTime.Now;
+
             _db.Session.Add(_session);
+
+            return _session;
         }
 
-        public void StartNewSequence(ITextSample sample)
+        public KeySequence CreateNewSequence(Session session, ITextSample sample)
         {
-            if (_session == null) NewSession();
+            var seq  = new KeySequence();
+            seq.KeySequenceId = Guid.NewGuid();
+            seq.Session = session;
+            seq.SourceKey = sample.GetSourceKey();
+            seq.TextShown = sample.GetText();
+            seq.SourceTypeId = (int)sample.GetSourceType();
+            seq.Created = System.DateTime.Now;
+            seq.TextEntered = null;
 
-            _dbSeq = new KeySequence();
-            _dbSeq.KeySequenceId = Guid.NewGuid();
-            _dbSeq.Session = _session;
-            _dbSeq.SourceKey = sample.GetSourceKey();
-            _dbSeq.TextShown = sample.GetText();
-            _dbSeq.SourceTypeId = (int) sample.GetSourceType();
-            _dbSeq.Created = System.DateTime.Now;
-            _dbSeq.TextEntered = null;
-
-            _db.KeySequence.Add(_dbSeq);
+            _db.KeySequence.Add(seq);
             _db.SaveChanges();
 
-            _currentSeq = new MeasuredKeySequence(sample.GetText());
-            _currentSeq.Start();
+            return seq;
         }
 
-        public IList<IAnalytic> Peek(string entered)
+        public virtual KeySequence StartNewSequence(ITextSample sample)
         {
-            return _currentSeq.Peek(entered);
+            if (_session == null) StartNewSession();
+
+            _dbSeq = CreateNewSequence(_session, sample);
+
+            _currentSeq = new MeasuredKeySequence();
+            _currentSeq.Start(sample.GetText());
+
+            return _dbSeq;
         }
 
-        public IList<IAnalytic> Stop(string entered)
+        public virtual IList<IAnalytic> StopSequence(string entered)
         {
             IList<IAnalytic> results = _currentSeq.Stop(entered);
+           
             _dbSeq.TextEntered = entered;
 
             foreach(var analytic in results)
-                RecordAnalytic(analytic);
+                RecordAnalytic(_dbSeq, analytic);
 
             _db.SaveChanges();
 
             return results;
         }
 
-        public void RecordAnalytic(IAnalytic analytic)
+        public virtual IList<IAnalytic> Peek(string entered)
         {
-            Data.KeySequenceAnalysis analysis = new Data.KeySequenceAnalysis();
+            return _currentSeq.Peek(entered);
+        }
+
+        public void RecordAnalytic(KeySequence seq, IAnalytic analytic)
+        {
+            KeySequenceAnalysis analysis = new KeySequenceAnalysis();
             analysis.KeySequenceAnalysisId = Guid.NewGuid();
-            analysis.KeySequenceId = _dbSeq.KeySequenceId;
+            analysis.KeySequenceId = seq.KeySequenceId;
             analysis.Created = DateTime.Now;
             analysis.AnalysisTypeId = (int)analytic.GetAnalyticType();
             _db.KeySequenceAnalysis.Add(analysis);
