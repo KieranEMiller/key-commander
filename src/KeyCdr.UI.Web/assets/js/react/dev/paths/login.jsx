@@ -5,7 +5,7 @@ import BaseComponent from './base_component.jsx';
 import ContentContainer from '../content.jsx';
 import Auth from '../auth.jsx';
 import Loading from '../loading.jsx';
-import { Routes, ErrorMsgs } from '../constants.jsx';
+import { Routes, UserMsgs } from '../constants.jsx';
 
 class Login extends BaseComponent {
     constructor(props) {
@@ -50,7 +50,7 @@ class Login extends BaseComponent {
                         that.props.history.push(that.state.redirectToOnLogin);
                     }
                     else
-                        that.setState({ errorMsg: ErrorMsgs.AUTH_FAILURE });
+                        that.setState({ errorMsg: UserMsgs.AUTH_FAILURE });
 
                 }, 1000);
             })

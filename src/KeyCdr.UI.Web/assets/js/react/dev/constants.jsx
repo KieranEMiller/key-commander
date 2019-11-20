@@ -1,14 +1,12 @@
 ﻿
-export const Paths = {
-    CSS_MASTER: "../../../../assets/css/master.scss",
-    AUTH: './'
-}
-
 export const Urls = {
     API_AUTH_VALIDATE: "http://localhost:8080/api/auth/validate",
     API_AUTH_LOGIN: "http://localhost:8080/api/auth/login",
     API_HISTORY: "/api/User/History",
     API_HISTORY_DETAILS: "/api/User/HistoryDetails",
+
+    API_NEW_SESSION: "/api/Session/GetNewSession",
+    API_NEW_SEQUENCE: "/api/Sequence/GetNewSequence",
 
     External: {
         JS: {
@@ -39,13 +37,15 @@ export const Routes = {
 }
 
 export const LocalStorage = {
-    JWT_KEY_NAME: "key-cdr-jwt"
+    JWT_KEY_NAME: "key-cdr-jwt",
+    SESSION_KEY_NAME: "key-cdr-session"
 }
 
 export const Runtime = {
     IS_DEBUG: true
 }
 
-export const ErrorMsgs = {
-    AUTH_FAILURE: "unable to login with the username and password provided"
+export const UserMsgs = {
+    AUTH_FAILURE: "unable to login with the username and password provided",
+    NEW_SEQUENCE_INSTRUCTIONS: "PRESS SHIFT+ENTER OR PRESS START TO BEGIN"
 }
