@@ -364,6 +364,7 @@
     <Content Include="assets\js\react\dev\components\speed_analysis.jsx" />
     <Content Include="assets\js\react\dev\components\stopwatch.jsx" />
     <Content Include="assets\js\react\dev\components\toolbar_new_sequence.jsx" />
+    <Content Include="assets\js\react\dev\constants.jsx" />
     <Content Include="assets\js\react\dev\content.jsx" />
     <Content Include="assets\js\react\dev\header-nav-bar.jsx" />
     <Content Include="assets\js\react\dev\header.jsx" />
@@ -378,6 +379,7 @@
     <Content Include="assets\js\react\dev\paths\about.jsx" />
     <Content Include="assets\js\react\dev\paths\index.jsx" />
     <Content Include="assets\js\react\dev\routing.jsx" />
+    <Content Include="assets\js\react\dev\session_mgr.jsx" />
     <Content Include="assets\js\react\dist\bundle.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
@@ -394,11 +396,13 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\NavController.cs" />
     <Compile Include="Controllers\SequenceController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\NewSequenceModel.cs" />
+    <Compile Include="Models\SequenceModel.cs" />
+    <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Models\UserHistoryDetailsModel.cs" />
     <Compile Include="Models\UserHistoryItemModel.cs" />
     <Compile Include="Models\UserHistoryKeySequenceItemModel.cs" />

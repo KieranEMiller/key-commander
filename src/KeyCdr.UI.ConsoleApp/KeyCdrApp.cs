@@ -35,7 +35,7 @@ namespace KeyCdr.UI.ConsoleApp
 
                 _session.StartNewSequence(sample);
                 string userInput = Console.ReadLine();
-                var results = _session.Stop(userInput);
+                var results = _session.StopSequence(userInput);
 
                 ShowResults(results);
             }

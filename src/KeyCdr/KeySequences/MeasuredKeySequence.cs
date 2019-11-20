@@ -6,21 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using KeyCdr.Analytics;
 
-namespace KeyCdr
+namespace KeyCdr.KeySequences
 {
-    public class MeasuredKeySequence
+    public class MeasuredKeySequence : IMeasuredKeySequence
     {
-        public MeasuredKeySequence(string sequence)
-            : this(sequence, null)
+        public MeasuredKeySequence()
+            : this(null)
         { }
 
-        public MeasuredKeySequence(string sequence, AnalyticType analytic)
-            : this(sequence, new List<AnalyticType>() { analytic })
+        public MeasuredKeySequence(AnalyticType analytic)
+            : this(new List<AnalyticType>() { analytic })
         { }
 
-        public MeasuredKeySequence(string sequence, IList<AnalyticType> analysesToRun)
+        public MeasuredKeySequence(List<AnalyticType> analysesToRun)
         {
-            this.Sequence = sequence;
             this.Analysis = new List<IAnalytic>();
             _stopwatch = new Stopwatch();
 
@@ -31,47 +30,44 @@ namespace KeyCdr
                 _analysesToRun = analysesToRun;
         }
 
-        private Stopwatch _stopwatch;
-        private IList<AnalyticType> _analysesToRun;
+        protected Stopwatch _stopwatch;
+        protected IList<AnalyticType> _analysesToRun;
 
         public string Sequence { get; set; }
         public IList<IAnalytic> Analysis { get; private set; }
 
-        public void Start()
+        public virtual void Start(string sequence)
         {
+            this.Sequence = sequence;
+
             _stopwatch.Reset();
             _stopwatch.Start();
         }
 
         public IList<IAnalytic> Peek(string enteredText)
         {
-            IList<IAnalytic> analyses = new List<IAnalytic>();
-            AnalyticData data = new AnalyticData
-            {
-                TextShown = this.Sequence,
-                TextEntered = enteredText,
-                Elapsed = _stopwatch.Elapsed
-            };
-
-            foreach (var analyticType in _analysesToRun)
-            {
-                var analysis = BaseAnalytic.Create(analyticType, data);
-                analysis.Compute();
-                analyses.Add(analysis);
-            }
-
-            return analyses;
+            return Stop(enteredText, _stopwatch.Elapsed);
         }
 
-        public IList<IAnalytic> Stop(string enteredText)
+        public IList<IAnalytic> Peek(string enteredText, TimeSpan elapsed)
+        {
+            return Stop(enteredText, elapsed);
+        }
+
+        public virtual IList<IAnalytic> Stop(string enteredText)
         {
             _stopwatch.Stop();
 
+            return Stop(enteredText, _stopwatch.Elapsed);
+        }
+
+        public virtual IList<IAnalytic> Stop(string enteredText, TimeSpan elapsed)
+        {
             AnalyticData data = new AnalyticData
             {
                 TextShown = this.Sequence,
                 TextEntered = enteredText,
-                Elapsed = _stopwatch.Elapsed
+                Elapsed = elapsed
             };
 
             foreach (var analyticType in _analysesToRun)
