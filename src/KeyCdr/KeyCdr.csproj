@@ -100,7 +100,8 @@
     <Compile Include="Highlighting\HighlightType.cs" />
     <Compile Include="History\AllTimeStatsCalculator.cs" />
     <Compile Include="History\UserSessionHistory.cs" />
-    <Compile Include="MeasuredKeySequence.cs" />
+    <Compile Include="KeySequences\IMeasuredKeySequence.cs" />
+    <Compile Include="KeySequences\MeasuredKeySequence.cs" />
     <Compile Include="Highlighting\HighlightDeterminator.cs" />
     <Compile Include="Models\AccuracyModel.cs" />
     <Compile Include="Models\SpeedModel.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="TextSamples\ITextSample.cs" />
     <Compile Include="TextSamples\TextSample.cs" />
     <Compile Include="TextSamples\TextSampleSourceType.cs" />
+    <Compile Include="UserSessionStateless.cs" />
     <Compile Include="UserSession.cs" />
     <Compile Include="TextSamples\BaseTextSampleGenerator.cs" />
     <Compile Include="TextSamples\WikipediaTextGenerator.cs" />
