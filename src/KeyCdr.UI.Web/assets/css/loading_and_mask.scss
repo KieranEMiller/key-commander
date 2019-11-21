@@ -54,3 +54,8 @@ $ZINDEX_LOADING_LOCAL: 7;
     z-index: 99;
     background-color: $COLOR_BACKGROUND;
 }
+
+.spinner-border-position-top {
+    @extend .spinner-border;
+    top:20%;
+}

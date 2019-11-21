@@ -8,10 +8,11 @@ class Loading extends React.Component {
 
     render() {
         if (this.props.showLoading) {
+            var css = (this.props.position === 'top') ? "spinner-border-position-top" : "spinner-border";
             return (
                 <React.Fragment>
                     <div className="loading_mask">
-                        <div className="spinner-border"></div>
+                        <div className={css}></div>
                     </div>
                 </React.Fragment>
             )
