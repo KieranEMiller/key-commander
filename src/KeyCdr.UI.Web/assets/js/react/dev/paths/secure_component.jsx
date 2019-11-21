@@ -11,7 +11,6 @@ class SecureComponent extends BaseComponent {
     constructor(props) {
         super(props);
 
-        console.log("secure route props ", props);
         this.auth = new Auth();
         this.state = {
             isAuthenticated: false,
