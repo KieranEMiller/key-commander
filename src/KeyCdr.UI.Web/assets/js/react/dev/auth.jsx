@@ -13,7 +13,7 @@ class Auth {
                 return JSON.parse(token);
         }
         catch (err) {
-            console.log('token parse error: ', err);
+            console.log('auth: token parse error: ', err);
         }
 
         return null;
@@ -116,11 +116,10 @@ class Auth {
     }
 
     isValidToken() {
-        var url = Urls.API_AUTH_VALIDATE;
         var token = this.getCurrentToken();
         if (!token || !token.JWTValue) return Promise.resolve(false);
 
-        return fetch(url, {
+        return fetch(Urls.API_AUTH_VALIDATE, {
             method: "POST",
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
             , body: JSON.stringify(token)
