@@ -366,9 +366,9 @@
     <Content Include="assets\js\react\dev\components\toolbar_new_sequence.jsx" />
     <Content Include="assets\js\react\dev\constants.jsx" />
     <Content Include="assets\js\react\dev\content.jsx" />
-    <Content Include="assets\js\react\dev\header-nav-bar.jsx" />
+    <Content Include="assets\js\react\dev\components\header-nav-bar.jsx" />
     <Content Include="assets\js\react\dev\header.jsx" />
-    <Content Include="assets\js\react\dev\loading.jsx" />
+    <Content Include="assets\js\react\dev\components\loading.jsx" />
     <Content Include="assets\js\react\dev\paths\base_component.jsx" />
     <Content Include="assets\js\react\dev\paths\history_details.jsx" />
     <Content Include="assets\js\react\dev\paths\history.jsx" />
