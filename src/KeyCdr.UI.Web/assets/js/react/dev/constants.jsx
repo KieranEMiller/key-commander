@@ -7,6 +7,7 @@ export const Urls = {
 
     API_NEW_SESSION: "/api/Session/GetNewSession",
     API_NEW_SEQUENCE: "/api/Sequence/GetNewSequence",
+    API_END_SEQUENCE: "/api/Sequence/EndSequence",
 
     External: {
         JS: {
@@ -28,7 +29,7 @@ export const Routes = {
 
     LOGIN: "/Login",
     LOGOUT: "/Logout",
-    NEW_SEQUENCE: "/NewSequence",
+    NEW_SEQUENCE: "/secure/NewSequence",
 
     MY_ACCT: "/secure/MyAccount",
     HISTORY: "/secure/History",
@@ -42,7 +43,8 @@ export const LocalStorage = {
 }
 
 export const Runtime = {
-    IS_DEBUG: true
+    IS_DEBUG: true,
+    DEFAULT_NEW_SEQUENCE_INPUT_FIELD_HEIGHT: 75
 }
 
 export const UserMsgs = {

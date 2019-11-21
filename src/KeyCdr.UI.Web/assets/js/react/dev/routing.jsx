@@ -19,7 +19,18 @@ class Routing extends React.Component {
                 <Switch>
                     <Route exact path={Routes.DEFAULT} component={Index} />
                     <Route exact path={Routes.INDEX} component={Index} />
-                    <Route exact path={Routes.NEW_SEQUENCE} component={NewSequence} />
+
+                    <Route
+                        exact path={Routes.NEW_SEQUENCE}
+                        render={
+                            (props) =>
+                                <NewSequence {...props}
+                                    IsAuthed={this.props.IsAuthed}
+                                    appLogin={this.props.appLogin}
+                                    appLogout={this.props.appLogout}
+                                />
+                        }
+                    />
 
                     <Route
                         exact path={Routes.LOGIN}

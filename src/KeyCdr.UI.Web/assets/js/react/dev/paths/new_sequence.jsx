@@ -1,28 +1,29 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
-import BaseComponent from './base_component.jsx';
-import ContentContainer from '../content.jsx';
-import Loading from '../loading.jsx';
-import HideableScreenMask from '../components/hideable_screen_mask.jsx';
-import ToolbarNewSequence from '../components/toolbar_new_sequence.jsx';
+import SecureComponent from          './secure_component.jsx';
+import ContentContainer from         '../content.jsx';
+import Loading from                  '../loading.jsx';
+import HideableScreenMask from       '../components/hideable_screen_mask.jsx';
+import ToolbarNewSequence from       '../components/toolbar_new_sequence.jsx';
+import SessionManager from           '../session_mgr.jsx';
+import { Routes, Urls, UserMsgs, Runtime } from  '../constants.jsx';
 
-const INSTRUCTIONS = "PRESS SHIFT+ENTER OR PRESS START TO BEGIN";
-const DEFAULT_INPUT_SEQ_HEIGHT = 75;
-
-class NewSequence extends BaseComponent {
+class NewSequence extends SecureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            TextShown: INSTRUCTIONS,
+            TextShown: UserMsgs.NEW_SEQUENCE_INSTRUCTIONS,
+            TextEntered: "",
             IsRunning: false,
             IsLoading: false,
-            IsFinalizingSequence: false,
             UseTheatreMode: false,
             CurrentSequence: null,
-            height: DEFAULT_INPUT_SEQ_HEIGHT
-        }
+            height: Runtime.DEFAULT_NEW_SEQUENCE_INPUT_FIELD_HEIGHT
+        };
+
+        this.SessionManager = new SessionManager();
     }
 
     toggleTheatreMode = () => {
@@ -30,14 +31,19 @@ class NewSequence extends BaseComponent {
     }
 
     componentDidMount() {
-        this.inputSequenceField.focus();
+        if(this.inputSequenceField)
+            this.inputSequenceField.focus();
     }
 
     autoresize() {
         this.setFilledTextareaHeight();
     }
 
-    inputKeyDown = (e) => {
+    onTextEnteredChanged = (e) => {
+        this.setState({ TextEntered: e.target.value })
+    }
+
+    onTextEnteredKeyDown = (e) => {
         if (e.shiftKey == true && e.keyCode == 13) {
             e.preventDefault();
             this.handleKeyEnter();
@@ -47,7 +53,7 @@ class NewSequence extends BaseComponent {
         }
     }
 
-    handleKeyEnter() {
+    handleKeyEnter = () => {
         if (this.state.IsRunning == true) {
             this.stopSequence();
         }
@@ -56,37 +62,42 @@ class NewSequence extends BaseComponent {
         }
     }
 
-    startSequence() {
+    startSequence = () => {
         /* abort start request if its already loading or running */
         if (this.state.IsLoading == true
             || this.state.IsRunning == true)
             return;
 
         this.setState({ IsLoading: true });
+        this.SessionManager.getNewSequence()
+            .then(result => {
 
-        fetch('/api/Sequence/GetNewSequence', {
-            method: "Get",
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            this.setState({
-                CurrentSequence: data,
-                TextShown: data.Text,
-                IsRunning: true,
-                IsLoading: false,
-                UseTheatreMode: true
+                /*TODO if result is undefined here, there was a
+                problem and need to handle it accordingly */
+                this.setState({
+                    CurrentSequence: result,
+                    TextShown: result.Text,
+                    IsRunning: true,
+                    IsLoading: false,
+                    UseTheatreMode: true
+                });
+
+                this.setFilledTextareaHeight();
+                this.SessionManager.sequenceStarting();
             });
-            this.setFilledTextareaHeight();
-        });
     }
 
     stopSequence = () => {
         this.setState({
             IsRunning: false,
             UseTheatreMode: false,
-            IsFinalizingSequence: true
+            IsLoading: true
         });
+
+        this.SessionManager.stopCurrentSequence(this.state.TextEntered)
+            .then(data => {
+                this.props.history.push(Routes.HISTORY_DETAILS + "/" + data.SequenceId);
+            })
     }
 
     setFilledTextareaHeight() {
@@ -96,6 +107,7 @@ class NewSequence extends BaseComponent {
     }
 
     render() {
+        if (this.authenticationComplete()) {
         return (
             <React.Fragment>
                 <HideableScreenMask MaskIsVisible={this.state.UseTheatreMode} />
@@ -108,58 +120,67 @@ class NewSequence extends BaseComponent {
                 />
 
                 <ContentContainer>
-                    <Loading showLoading={this.state.IsFinalizingSequence} />
                     <h2>New Sequence</h2>
-                
-                    <div className="content_row_sm show_above_mask">
-                        <Loading showLoading={this.state.IsLoading} />
-                        <h3>Text to Type</h3>
-                        
-                        <form>
-                            <textarea name="textShown"
-                                className="presented_text"
-                                value={this.state.TextShown}
-                                style={{
-                                    height: this.state.height,
-                                    resize: this.state.height <= DEFAULT_INPUT_SEQ_HEIGHT ? "none" : null
-                                }}
-                                readOnly
-                            />
-                        </form>
-                    </div>
 
-                    <div className="content_row_sm show_above_mask">
-                        <h3>Your Text</h3>
+                    <div className="position_relative">
+                        <Loading showLoading={this.state.IsLoading} position="top" /> 
 
-                        <form>
-                            <textarea name="textEntered"
-                                className="entered_text" 
-                                ref={(input) => { this.inputSequenceField = input; }} 
-                                onKeyDown={this.inputKeyDown}
-                                style={{
-                                    height: this.state.height,
-                                    resize: this.state.height <= DEFAULT_INPUT_SEQ_HEIGHT ? "none" : null
-                                }}
-                            />
-
-                            {(this.state.IsRunning === false
-                                && this.state.IsLoading === false
-                                && this.state.IsFinalizingSequence === false) &&
-                                <input onClick={() => this.startSequence()} className="button-size-medium position_center" type="button" value="Start Sequence...!" />
-                            }
-                        </form>
-                    </div>
-
-                    <div className="content_row_sm">
-                        <form>
-                            <div id="sizeComparison" className="presented_text_size_ref" ref={(c) => this.sizeref = c}>
-                                {this.state.TextShown}
+                        <div className="content_row_sm show_above_mask">
+                            <h3>Text to Type</h3>
+                            <form>
+                                <textarea name="textShown"
+                                    className="presented_text"
+                                    value={this.state.TextShown}
+                                    style={{
+                                        height: this.state.height,
+                                        resize: this.state.height <= Runtime.DEFAULT_NEW_SEQUENCE_INPUT_FIELD_HEIGHT ? "none" : null
+                                    }}
+                                    readOnly
+                                />
+                            </form>
                         </div>
-                        </form>
+
+                        <div className="content_row_sm show_above_mask">
+                            <h3>Your Text</h3>
+
+                            <form>
+                                <textarea name="textEntered"
+                                    className="entered_text" 
+                                    ref={(input) => { this.inputSequenceField = input; }} 
+                                    onKeyDown={this.onTextEnteredKeyDown}
+                                    onChange={this.onTextEnteredChanged}
+                                    value={this.state.TextEntered} 
+                                    style={{
+                                        height: this.state.height,
+                                        resize: this.state.height <= Runtime.DEFAULT_NEW_SEQUENCE_INPUT_FIELD_HEIGHT ? "none" : null
+                                    }}
+                                />
+
+                                {(this.state.IsRunning === false
+                                    && this.state.IsLoading === false) &&
+                                    <input onClick={() => this.startSequence()} className="button-size-medium position_center" type="button" value="Start Sequence...!" />
+                                }
+                            </form>
+                        </div>
+
+                        <div className="content_row_sm">
+                            <form>
+                                <div id="sizeComparison" className="presented_text_size_ref" ref={(c) => this.sizeref = c}>
+                                    {this.state.TextShown}
+                            </div>
+                            </form>
+                        </div>
+
                     </div>
                 </ContentContainer>
                 </React.Fragment>
-        );
+            );
+        }
+        else {
+            return (
+                super.render()
+            )
+        }
     }
 }
 

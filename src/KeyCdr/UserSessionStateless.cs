@@ -30,16 +30,25 @@ namespace KeyCdr
             return _dbSeq;
         }
 
-        public virtual IList<IAnalytic> Stop(
-            IMeasuredKeySequence measuredSeq, Guid sequenceId, string entered)
+        public KeySequence GetById(Guid seqId)
         {
-            IList<IAnalytic> results = measuredSeq.Stop(entered);
-            KeySequence seq = new KeySequence();
-            seq.KeySequenceId = sequenceId;
-            seq.TextEntered = entered;
+            return _db.KeySequence
+                .Where(ks => ks.KeySequenceId.Equals(seqId))
+                .FirstOrDefault();
+        }
+
+        public virtual IList<IAnalytic> Stop(Guid seqId, string textEntered, TimeSpan timespan)
+        {
+            KeySequence keySeq = GetById(seqId);
+            keySeq.TextEntered = textEntered;
+
+            IMeasuredKeySequence measuredSequence = new MeasuredKeySequence();
+            measuredSequence.Start(keySeq.TextShown);
+
+            IList<IAnalytic> results = measuredSequence.Stop(keySeq.TextEntered, timespan);
 
             foreach (var analytic in results)
-                base.RecordAnalytic(seq, analytic);
+                base.RecordAnalytic(keySeq, analytic);
 
             _db.SaveChanges();
 
