@@ -2,8 +2,8 @@
 import ReactDOM from 'react-dom';
 import { Link, withRouter } from "react-router-dom";
 
-import Auth from './auth.jsx'
-import { Routes } from './constants.jsx';
+import Auth from '../auth.jsx'
+import { Routes } from '../constants.jsx';
 
 class HeaderNavBar extends React.Component {
     constructor(props) {

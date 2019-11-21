@@ -2,10 +2,10 @@
 import ReactDOM from 'react-dom';
 import { Redirect} from 'react-router-dom'
 
-import ContentContainer from '../content.jsx';
-import Loading from '../loading.jsx';
-import SecureComponent from './secure_component.jsx';
-import { Routes } from '../constants.jsx';
+import ContentContainer from    '../content.jsx';
+import Loading from             '../components/loading.jsx';
+import SecureComponent from     './secure_component.jsx';
+import { Routes } from          '../constants.jsx';
 
 class MyAccount extends SecureComponent {
     constructor(props) {

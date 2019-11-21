@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import SecureComponent from          './secure_component.jsx';
 import ContentContainer from         '../content.jsx';
-import Loading from                  '../loading.jsx';
+import Loading from                  '../components/loading.jsx';
 import HideableScreenMask from       '../components/hideable_screen_mask.jsx';
 import ToolbarNewSequence from       '../components/toolbar_new_sequence.jsx';
 import SessionManager from           '../session_mgr.jsx';

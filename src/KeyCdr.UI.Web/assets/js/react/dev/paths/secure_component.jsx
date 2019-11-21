@@ -2,10 +2,10 @@
 import ReactDOM from 'react-dom';
 import { Redirect, withRouter } from "react-router-dom";
 
-import BaseComponent from './base_component.jsx';
-import Loading from '../loading.jsx';
-import ContentContainer from '../content.jsx';
-import Auth from '../auth.jsx';
+import BaseComponent from       './base_component.jsx';
+import Loading from             '../components/loading.jsx';
+import ContentContainer from    '../content.jsx';
+import Auth from                '../auth.jsx';
 
 class SecureComponent extends BaseComponent {
     constructor(props) {
