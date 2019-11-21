@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import DeltaIndicator from '../components/delta_indicator.jsx';
+import DeltaIndicator from './delta_indicator.jsx';
 
 class SpeedAnalysis extends React.Component {
     constructor(props) {
