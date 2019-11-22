@@ -52,7 +52,7 @@
                 border: solid $COLOR_PRIMARY 2px;
             }
 
-            ul, ul.prominent_list {
+            > ul, ul.prominent_list {
                 margin-left: 20px;
             }
 
@@ -117,9 +117,20 @@ input.button-size-medium {
 .position_center {
     position: absolute;
     top: 48%;
-    left: 32%;
     bottom:auto;
     right:auto;
+
+}
+
+.position_center {
+    left:32%;
+}
+
+p.position_center {
+    @extend .position_center;
+    left:auto;
+    width:100%;
+    text-align:center;
 }
 
 .position_bottom_right {
