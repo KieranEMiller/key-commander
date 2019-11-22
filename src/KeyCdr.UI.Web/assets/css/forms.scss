@@ -1,4 +1,10 @@
-﻿form {
+﻿$COLOR_ERROR_HIGHLIGHT_INCORRECT:   #ef0000;
+$COLOR_ERROR_HIGHLIGHT_EXTRA:       #ff6c00;
+$COLOR_ERROR_HIGHLIGHT_SHORT:       #a200a2;
+$COLOR_ERROR_HIGHLIGHT_NORMAL:      #14b41e;
+$COLOR_ERROR_HIGHLIGHT_UNEVAL:      #8e8e90;
+
+form {
     margin: 0px auto;
     padding-top: 15px;
 
@@ -12,7 +18,7 @@
         margin-bottom: 12px;
     }
 
-    input[type=text], input[type=password], textarea, .presented_text_size_ref {
+    input[type=text], input[type=password], textarea, .presented_text_size_ref, .error_analysis {
         width: 100%;
         clear: both;
         padding: 10px 20px;
@@ -21,13 +27,13 @@
         box-sizing: border-box;
     }
 
-    textarea.presented_text, textarea.entered_text, .presented_text_size_ref {
+    textarea.presented_text, textarea.entered_text, .presented_text_size_ref, .error_analysis {
         min-height: 75px;
         font-family: monospace;
     }
 
-    .presented_text_size_ref{
-        visibility:hidden;
+    .presented_text_size_ref {
+        visibility: hidden;
     }
 
     input[type=text], input[type=password] {
@@ -43,12 +49,91 @@
         background-color: #c5e6f1;
     }
 
-
     .form_error {
         color: red;
         font-size: large;
         font-weight: bold;
         margin-bottom: 10px;
+    }
+
+    .error_analysis {
+        background-color: #FFF;
+        border-radius: 4px;
+        box-sizing: border-box;
+        border: solid #979797 2px;
+        font-weight: bold;
+    }
+
+    span.highlight-IncorrectChar {
+        color: $COLOR_ERROR_HIGHLIGHT_INCORRECT;
+        border-top: solid $COLOR_ERROR_HIGHLIGHT_INCORRECT 4px;
+    }
+
+    span.highlight-ExtraChars {
+        color: $COLOR_ERROR_HIGHLIGHT_EXTRA;
+        border-top: solid $COLOR_ERROR_HIGHLIGHT_EXTRA 4px;
+    }
+
+    span.highlight-ShortChars {
+        color: $COLOR_ERROR_HIGHLIGHT_SHORT;
+        border-top: solid $COLOR_ERROR_HIGHLIGHT_SHORT 4px;
+    }
+
+    span.highlight-Normal {
+        color: $COLOR_ERROR_HIGHLIGHT_NORMAL;
+    }
+
+    span.highlight-Unevaluated {
+        color: $COLOR_ERROR_HIGHLIGHT_UNEVAL;
+
+        //disable the top border as it is too busy when a large part
+        //of the text is unevaluated
+        //border-top: solid $COLOR_ERROR_HIGHLIGHT_UNEVAL 4px;
+    }
+        
+    .error_analysis_legend {
+        list-style-type: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 5px;
+
+        li {
+            display: inline;
+            list-style-type: none;
+            padding: 5px;
+            text-align: center;
+            margin-left: 15px;
+            font-size: large;
+        }
+
+        div {
+            border: none;
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        div.highlight-IncorrectChar {
+            background-color: $COLOR_ERROR_HIGHLIGHT_INCORRECT;
+        }
+
+        div.highlight-ExtraChars {
+            background-color: $COLOR_ERROR_HIGHLIGHT_EXTRA;
+        }
+
+        div.highlight-ShortChars {
+            background-color: $COLOR_ERROR_HIGHLIGHT_SHORT;
+        }
+
+        div.highlight-Normal {
+            background-color: $COLOR_ERROR_HIGHLIGHT_NORMAL;
+        }
+
+        div.highlight-Unevaluated {
+            background-color: $COLOR_ERROR_HIGHLIGHT_UNEVAL;
+        }
     }
 }
 
