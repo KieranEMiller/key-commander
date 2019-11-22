@@ -38,7 +38,9 @@ class HeaderNavBar extends React.Component {
             link = <Link to={Routes.LOGIN} onClick={() => this.clickHandler(Routes.LOGIN)}>Login</Link>;
         }
 
-        let showSubMenu = (this.props.location.pathname === Routes.MY_ACCT);
+        let showSubMenu = (this.props.location.pathname === Routes.MY_ACCT)
+            && (this.props.IsAuthed === true);
+
         return (
             <React.Fragment>
                 <div id="nav_container" className="nav_container">
