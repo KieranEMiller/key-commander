@@ -30,7 +30,7 @@ namespace KeyCdr
             return _dbSeq;
         }
 
-        public KeySequence GetById(Guid seqId)
+        public KeySequence GetKeySequenceById(Guid seqId)
         {
             return _db.KeySequence
                 .Where(ks => ks.KeySequenceId.Equals(seqId))
@@ -39,7 +39,7 @@ namespace KeyCdr
 
         public virtual IList<IAnalytic> Stop(Guid seqId, string textEntered, TimeSpan timespan)
         {
-            KeySequence keySeq = GetById(seqId);
+            KeySequence keySeq = GetKeySequenceById(seqId);
             keySeq.TextEntered = textEntered;
 
             IMeasuredKeySequence measuredSequence = new MeasuredKeySequence();
