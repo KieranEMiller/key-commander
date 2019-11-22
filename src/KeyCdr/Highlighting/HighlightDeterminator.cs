@@ -32,6 +32,22 @@ namespace KeyCdr.Highlighting
                 }
             }
 
+            //compute the words that were not evaluated; first figure out the last
+            //index that was measured...it should be equal to either the shown or 
+            //entered text and should be less than the other
+            if (accuracy.TotalNumWordsEntered != accuracy.TotalNumWordsShown)
+            {
+                if (accuracy.IndexOfLastCharEvaluated < accuracy._analyticData.TextShown.Length)
+                {
+                    details.Add(new HighlightDetail()
+                    {
+                        HighlightType = HighlightType.Unevaluated,
+                        IndexStart = accuracy.IndexOfLastCharEvaluated + 1,
+                        IndexEnd = accuracy._analyticData.TextShown.Length
+                    });
+                }
+            }
+
             return details;
         }
 

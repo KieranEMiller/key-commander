@@ -142,5 +142,39 @@ namespace KeyCdr.Tests.AnalyticsTests
             Assert.That(accuracy.GetResultSummary(), Contains.Substring("50%"));
         }
 
+        [TestCase("asdfdd" ,"asdf", 5)]
+        [TestCase("asdf", "as", 3)]
+        [TestCase("asdf zxcv" ,"asdf", 3)]
+        [TestCase("asdf zx cv" ,"asdf", 3)]
+        [TestCase("asdf zx cv" ,"asdf zx", 6)]
+        public void last_char_evaluated_accurate_for_shown_text_longer_than_entered(
+            string shown, string input, int numWords)
+        {
+            var accuracy = new Accuracy(new AnalyticData { TextShown = shown, TextEntered = input });
+            accuracy.Compute();
+            Assert.That(accuracy.IndexOfLastCharEvaluated, Is.EqualTo(numWords));
+        }
+
+        [TestCase("asdf" ,"asdfas", 3)]
+        [TestCase("asdf" ,"asdf asdf", 3)]
+        [TestCase("asdf" , "asdf zx cv", 3)]
+        [TestCase("asdf zx" , "asdf zx cv", 6)]
+        public void last_char_evaluated_accurate_for_entered_text_longer_than_shown(
+            string shown, string input, int numWords)
+        {
+            var accuracy = new Accuracy(new AnalyticData { TextShown = shown, TextEntered = input });
+            accuracy.Compute();
+            Assert.That(accuracy.IndexOfLastCharEvaluated, Is.EqualTo(numWords));
+        }
+
+        [TestCase("asdf zx", "asdf zxasdf qwer", 6)]
+        [TestCase("asdf zx qwer", "asdf zxasdf", 6)]
+        public void last_char_evaluated_accurate_for_extra_chars(
+           string shown, string input, int numWords)
+        {
+            var accuracy = new Accuracy(new AnalyticData { TextShown = shown, TextEntered = input });
+            accuracy.Compute();
+            Assert.That(accuracy.IndexOfLastCharEvaluated, Is.EqualTo(numWords));
+        }
     }
 }

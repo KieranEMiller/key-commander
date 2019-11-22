@@ -11,6 +11,7 @@ namespace KeyCdr.Highlighting
         IncorrectChar = 0,
         ExtraChars = 1,
         ShortChars = 2,
-        Normal = 3
+        Normal = 3,
+        Unevaluated = 4
     }
 }

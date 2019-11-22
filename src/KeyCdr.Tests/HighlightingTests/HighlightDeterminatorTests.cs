@@ -84,6 +84,50 @@ namespace KeyCdr.Tests.HighlightingTests
             }));
         }
 
+        [TestCase("abc xyz qwer", "abc xyz", 7, 12)]
+        [TestCase("abc xyz q", "abc xyz", 7, 9)]
+        [TestCase("abc xyz ", "abc xyz", 7, 8)]
+        public void unevalated_text_classified_at_end(
+                 string shown, string entered, int start, int end)
+        {
+            var accuracy = new Accuracy(new AnalyticData() { TextShown = shown, TextEntered = entered });
+            accuracy.Compute();
+
+            HighlightDeterminator det = new HighlightDeterminator();
+            var details = det.Compute(accuracy);
+            Assert.That(details, Is.EquivalentTo(new List<HighlightDetail>() {
+                    new HighlightDetail() {
+                        HighlightType=HighlightType.Unevaluated,
+                        IndexStart=start,
+                        IndexEnd=end,
+                    }
+            }));
+        }
+
+        [TestCase("abc xyz q", "abc xyza")]
+        public void unevalated_text_classified_at_end_with_extra_char_right_before(
+                 string shown, string entered)
+        {
+            var accuracy = new Accuracy(new AnalyticData() { TextShown = shown, TextEntered = entered });
+            accuracy.Compute();
+
+            HighlightDeterminator det = new HighlightDeterminator();
+            var details = det.Compute(accuracy);
+            Assert.That(details, Is.EquivalentTo(new List<HighlightDetail>() {
+                new HighlightDetail() {
+                        HighlightType=HighlightType.ExtraChars,
+                        IndexStart=7,
+                        IndexEnd=8,
+                    },
+
+                new HighlightDetail() {
+                        HighlightType=HighlightType.Unevaluated,
+                        IndexStart=7,
+                        IndexEnd=9,
+                    }
+            }));
+        }
+
         [TestCase("abc xyz", "abc xyzw", 7, 8)]
         [TestCase("abc xyz", "abc xyzww", 7, 9)]
         [TestCase("abc xyz qwer", "abc xyz qwerqwerqwer", 12, 20)]

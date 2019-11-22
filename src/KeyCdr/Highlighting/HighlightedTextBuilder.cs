@@ -23,6 +23,7 @@ namespace KeyCdr.Highlighting
                         Text = origText.Substring(lastIndex, highlight.IndexStart - lastIndex),
                         HighlightType = HighlightType.Normal
                     };
+
                     textSections.Enqueue(nextUnformattedBlock);
                 }
 
@@ -31,15 +32,17 @@ namespace KeyCdr.Highlighting
                     HighlightType = highlight.HighlightType
                 };
 
-                if (highlight.HighlightType == HighlightType.ExtraChars) {
+                if (highlight.HighlightType == HighlightType.ExtraChars)
+                {
                     formattedBlock.Text = string.Empty.PadLeft(highlight.IndexEnd - highlight.IndexStart, '+');
                     lastIndex = highlight.IndexStart;
                 }
-                else {
+                else
+                {
                     formattedBlock.Text = origText.Substring(highlight.IndexStart, highlight.IndexEnd - highlight.IndexStart);
                     lastIndex = highlight.IndexEnd;
                 }
-                
+
                 textSections.Enqueue(formattedBlock);
             }
 

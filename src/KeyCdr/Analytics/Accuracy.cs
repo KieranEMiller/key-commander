@@ -32,6 +32,9 @@ namespace KeyCdr.Analytics
             string[] shownWords = this._analyticData.TextShown.Split(Constants.StringSplits.SEPARATOR_WORD);
             string[] enteredWords = this._analyticData.TextEntered.Split(Constants.StringSplits.SEPARATOR_WORD);
 
+            this.TotalNumWordsEntered = enteredWords.Length;
+            this.TotalNumWordsShown = shownWords.Length;
+
             int charIndexCounter = 0;
 
             //TODO: need to be able to handle different numbers of words
@@ -46,6 +49,16 @@ namespace KeyCdr.Analytics
                 //the word was split on
                 charIndexCounter += 1;
             }
+
+            int indexLastWord = Math.Min(shownWords.Length, enteredWords.Length) - 1;
+            this.IndexOfLastCharEvaluated = shownWords
+                .Take(indexLastWord+1)      //take all words before the last one
+                .Sum(w => w.Length) +       //sum of all characters
+                (indexLastWord);            //add the number of spaces
+
+            //subtract one to convert from length calculated above
+            //to an index
+            this.IndexOfLastCharEvaluated -= 1;
         }
 
         public AccuracyMeasurement ComputeForWord(string shown, string entered)
@@ -190,5 +203,9 @@ namespace KeyCdr.Analytics
                 return _measurements.Sum(m => m.NumExtraChars);
             }
         }
+
+        public int IndexOfLastCharEvaluated { get; set; }
+        public int TotalNumWordsShown { get; set; }
+        public int TotalNumWordsEntered { get; set; }
     }
 }

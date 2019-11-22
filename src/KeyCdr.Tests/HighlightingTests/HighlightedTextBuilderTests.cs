@@ -206,6 +206,43 @@ namespace KeyCdr.Tests.HighlightingTests
             ));
         }
 
+
+        [Test]
+        public void multi_word_unevaluated_chars_includes_space_in_unevaluated()
+        {
+            var details = run_determinator("abc xyz zxcv", "abc wyzbbb");
+
+            HighlightedTextBuilder builder = new HighlightedTextBuilder();
+            Queue<HighlightedText> result = builder.Compute("abc xyz zxcv", details);
+
+            Assert.That(result, Is.EquivalentTo(
+                new Queue<HighlightedText>(
+                    new List<HighlightedText>(){
+                        new HighlightedText() {
+                            HighlightType = HighlightType.Normal,
+                            Text = "abc ",
+                        },
+                        new HighlightedText() {
+                            HighlightType = HighlightType.IncorrectChar,
+                            Text="x"
+                        },
+                        new HighlightedText() {
+                            HighlightType = HighlightType.Normal,
+                            Text="yz"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.ExtraChars,
+                            Text = "+++"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.Unevaluated,
+                            Text = " zxcv"
+                        }
+                    }
+                )
+            ));
+        }
+
         [Test]
         public void multi_word_extra_chars_in_middle_of_text()
         {
@@ -236,6 +273,58 @@ namespace KeyCdr.Tests.HighlightingTests
                         new HighlightedText() {
                             HighlightType=HighlightType.Normal,
                             Text = " zx"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.IncorrectChar,
+                            Text = "c"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.Normal,
+                            Text = "v"
+                        }
+                    }
+                )
+            ));
+        }
+
+        [Test]
+        public void multi_word_extra_chars_in_middle_of_text02()
+        {
+            var details = run_determinator("abc xyz zxcv", "abc wyzbbbbbbbbbb qxzv");
+
+            HighlightedTextBuilder builder = new HighlightedTextBuilder();
+            Queue<HighlightedText> result = builder.Compute("abc xyz zxcv", details);
+
+            Assert.That(result, Is.EquivalentTo(
+                new Queue<HighlightedText>(
+                    new List<HighlightedText>(){
+                        new HighlightedText() {
+                            HighlightType = HighlightType.Normal,
+                            Text = "abc ",
+                        },
+                        new HighlightedText() {
+                            HighlightType = HighlightType.IncorrectChar,
+                            Text="x"
+                        },
+                        new HighlightedText() {
+                            HighlightType = HighlightType.Normal,
+                            Text="yz"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.ExtraChars,
+                            Text = "++++++++++"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.Normal,
+                            Text = " "
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.IncorrectChar,
+                            Text = "z"
+                        },
+                        new HighlightedText() {
+                            HighlightType=HighlightType.Normal,
+                            Text = "x"
                         },
                         new HighlightedText() {
                             HighlightType=HighlightType.IncorrectChar,
