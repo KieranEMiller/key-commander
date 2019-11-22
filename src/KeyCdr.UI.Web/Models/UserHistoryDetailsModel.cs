@@ -35,7 +35,7 @@ namespace KeyCdr.UI.Web.Models
                 .FirstOrDefault();
 
             if(speedAnalysis != null) {
-                result.AnalysisSpeed = SpeedModel.Create(speedAnalysis.AnalysisSpeed);
+                result.AnalysisSpeed = new SpeedModel().Create(speedAnalysis.AnalysisSpeed);
             }
                 
             var accuracyAnalysis = keySequence.KeySequenceAnalysis
@@ -43,7 +43,7 @@ namespace KeyCdr.UI.Web.Models
                 .FirstOrDefault();
             
             if(accuracyAnalysis != null) {
-                result.AnalysisAccuracy = AccuracyModel.Create(accuracyAnalysis.AnalysisAccuracy);
+                result.AnalysisAccuracy = new AccuracyModel().Create(accuracyAnalysis.AnalysisAccuracy);
             }
 
             return result;

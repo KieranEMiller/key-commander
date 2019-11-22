@@ -76,6 +76,8 @@
     <Compile Include="HighlightingTests\HighlightDeterminatorTests.cs" />
     <Compile Include="HighlightingTests\HighlightedTextBuilderTests.cs" />
     <Compile Include="MeasuredKeySequenceTests.cs" />
+    <Compile Include="ModelTests\AccuracyModelTests.cs" />
+    <Compile Include="ModelTests\SpeedModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextSamplesTests\BaseTextSampleGeneratorTests.cs" />
     <Compile Include="TextSamplesTests\FakeAngleSharpBrowsingContext.cs" />
@@ -88,6 +90,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KeyCdr.Data\KeyCdr.Data.csproj">
+      <Project>{D026DBEE-87AB-4F82-B6BF-D825FE417490}</Project>
+      <Name>KeyCdr.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KeyCdr\KeyCdr.csproj">
       <Project>{9479b307-55bd-426f-8eb0-454a4bace5b3}</Project>
       <Name>KeyCdr</Name>
