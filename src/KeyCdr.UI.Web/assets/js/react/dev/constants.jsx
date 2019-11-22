@@ -60,3 +60,10 @@ export const HighlightType = {
     3: "Normal",
     4: "Unevaluated"
 }
+
+export const HttpErrorHandler = function (response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
+}
