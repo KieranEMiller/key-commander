@@ -19,7 +19,7 @@ namespace KeyCdr.Models
         {
             return new SpeedModel() {
                 CharsPerSec = orig.CharsPerSec,
-                TotalTimeInMilliSec = orig.CharsPerSec,
+                TotalTimeInMilliSec = orig.TotalTimeInMilliSec,
                 WordPerMin = orig.WordPerMin,
                 NumEntitiesRepresented = 1,
             };
