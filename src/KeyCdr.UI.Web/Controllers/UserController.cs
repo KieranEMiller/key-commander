@@ -58,7 +58,7 @@ namespace KeyCdr.UI.Web.Controllers
 
             Data.KCUser user = new Data.KCUser() { UserId = Guid.Parse(token.UserId) };
             var userMgr = new KeyCdr.History.UserSessionHistory();
-            Data.KeySequence detail = userMgr.GetHistoryDetailsByKeySequence(user, Guid.Parse(seqId));
+            Data.KeySequence detail = userMgr.GetHistoryDetailsByKeySequence(Guid.Parse(seqId));
 
             AllTimeStatsCalculator allTimeStats = new AllTimeStatsCalculator(user);
             UserHistoryDetailsModel result = UserHistoryDetailsModel.Create(detail);

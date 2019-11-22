@@ -24,7 +24,7 @@ namespace KeyCdr.History
             return results.ToList();
         }
 
-        public Data.KeySequence GetHistoryDetailsByKeySequence(Data.KCUser currentUser, Guid keySequenceId)
+        public Data.KeySequence GetHistoryDetailsByKeySequence(Guid keySequenceId)
         {
             var result = _db.KeySequence
                 .Where(ks => ks.KeySequenceId.Equals(keySequenceId))
