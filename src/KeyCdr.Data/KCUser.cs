@@ -18,6 +18,7 @@ namespace KeyCdr.Data
         public KCUser()
         {
             this.Session = new HashSet<Session>();
+            this.KCUserLogin = new HashSet<KCUserLogin>();
         }
     
         public System.Guid UserId { get; set; }
@@ -27,5 +28,7 @@ namespace KeyCdr.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Session> Session { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KCUserLogin> KCUserLogin { get; set; }
     }
 }

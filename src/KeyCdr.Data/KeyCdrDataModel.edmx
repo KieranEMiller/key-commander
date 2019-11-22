@@ -45,6 +45,14 @@
           <Property Name="LoginName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Created" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="KCUserLogin">
+          <Key>
+            <PropertyRef Name="KCUserLoginId" />
+          </Key>
+          <Property Name="KCUserLoginId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="KeySequence">
           <Key>
             <PropertyRef Name="KeySequenceId" />
@@ -129,6 +137,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_KCUserLogin_KCUser">
+          <End Role="KCUser" Type="Self.KCUser" Multiplicity="1" />
+          <End Role="KCUserLogin" Type="Self.KCUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KCUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="KCUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_KeySequence_Session">
           <End Role="Session" Type="Self.Session" Multiplicity="1" />
           <End Role="KeySequence" Type="Self.KeySequence" Multiplicity="*" />
@@ -194,6 +214,7 @@
           <EntitySet Name="AnalysisSpeed" EntityType="Self.AnalysisSpeed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnalysisType" EntityType="Self.AnalysisType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KCUser" EntityType="Self.KCUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KCUserLogin" EntityType="Self.KCUserLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KeySequence" EntityType="Self.KeySequence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KeySequenceAnalysis" EntityType="Self.KeySequenceAnalysis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
@@ -213,6 +234,10 @@
           <AssociationSet Name="FK_AnalysisSpeed_KeySequenceAnalysis" Association="Self.FK_AnalysisSpeed_KeySequenceAnalysis">
             <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysis" />
             <End Role="AnalysisSpeed" EntitySet="AnalysisSpeed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KCUserLogin_KCUser" Association="Self.FK_KCUserLogin_KCUser">
+            <End Role="KCUser" EntitySet="KCUser" />
+            <End Role="KCUserLogin" EntitySet="KCUserLogin" />
           </AssociationSet>
           <AssociationSet Name="FK_KeySequence_Session" Association="Self.FK_KeySequence_Session">
             <End Role="Session" EntitySet="Session" />
@@ -284,6 +309,11 @@
             <End Role="KeySequence" EntitySet="KeySequence" />
             <End Role="KeySequenceAnalysis" EntitySet="KeySequenceAnalysis" />
           </AssociationSet>
+          <EntitySet Name="KCUserLogin" EntityType="KeyCommanderModel.KCUserLogin" />
+          <AssociationSet Name="FK_KCUserLogin_KCUser" Association="KeyCommanderModel.FK_KCUserLogin_KCUser">
+            <End Role="KCUser" EntitySet="KCUser" />
+            <End Role="KCUserLogin" EntitySet="KCUserLogin" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AnalysisAccuracy">
           <Key>
@@ -332,6 +362,7 @@
           <Property Name="LoginName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Session" Relationship="KeyCommanderModel.FK_Session_KCUser" FromRole="KCUser" ToRole="Session" />
+          <NavigationProperty Name="KCUserLogin" Relationship="KeyCommanderModel.FK_KCUserLogin_KCUser" FromRole="KCUser" ToRole="KCUserLogin" />
         </EntityType>
         <EntityType Name="KeySequence">
           <Key>
@@ -487,6 +518,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="KCUserLogin">
+          <Key>
+            <PropertyRef Name="KCUserLoginId" />
+          </Key>
+          <Property Name="KCUserLoginId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="KCUser" Relationship="KeyCommanderModel.FK_KCUserLogin_KCUser" FromRole="KCUserLogin" ToRole="KCUser" />
+        </EntityType>
+        <Association Name="FK_KCUserLogin_KCUser">
+          <End Type="KeyCommanderModel.KCUser" Role="KCUser" Multiplicity="1" />
+          <End Type="KeyCommanderModel.KCUserLogin" Role="KCUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KCUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="KCUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -574,6 +626,15 @@
               <MappingFragment StoreEntitySet="SourceType">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SourceTypeId" ColumnName="SourceTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KCUserLogin">
+            <EntityTypeMapping TypeName="KeyCommanderModel.KCUserLogin">
+              <MappingFragment StoreEntitySet="KCUserLogin">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="KCUserLoginId" ColumnName="KCUserLoginId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -33,5 +33,6 @@ namespace KeyCdr.Data
         public virtual DbSet<KeySequenceAnalysis> KeySequenceAnalysis { get; set; }
         public virtual DbSet<Session> Session { get; set; }
         public virtual DbSet<SourceType> SourceType { get; set; }
+        public virtual DbSet<KCUserLogin> KCUserLogin { get; set; }
     }
 }

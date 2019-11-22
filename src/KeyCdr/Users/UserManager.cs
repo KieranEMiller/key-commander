@@ -22,6 +22,19 @@ namespace KeyCdr.Users
             return user;
         }
 
+        public KCUserLogin RecordLogin(KCUser user)
+        {
+            KCUserLogin newLogin = new KCUserLogin();
+            newLogin.KCUserLoginId = Guid.NewGuid();
+            newLogin.UserId = user.UserId;
+            newLogin.Created = DateTime.Now;
+
+            _db.KCUserLogin.Add(newLogin);
+            _db.SaveChanges();
+
+            return newLogin;
+        }
+
         public KCUser CreateGuest()
         {
             KCUser user = new KCUser();

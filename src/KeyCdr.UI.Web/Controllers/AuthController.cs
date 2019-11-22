@@ -17,7 +17,8 @@ namespace KeyCdr.UI.Web.Controllers
                 IsValid = false
             };
 
-            var dbUser = new Users.UserManager().GetByLoginName(user.username);
+            var userMgr = new Users.UserManager();
+            var dbUser = userMgr.GetByLoginName(user.username);
             if (dbUser == null)
                 return Request.CreateResponse(HttpStatusCode.Forbidden, result);
 
@@ -27,6 +28,9 @@ namespace KeyCdr.UI.Web.Controllers
             result.JWTValue = new JWTManager().GenerateToken(user.username);
             result.IsValid = true;
             result.UserId = dbUser.UserId.ToString();
+
+            userMgr.RecordLogin(dbUser);
+
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
