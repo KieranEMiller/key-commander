@@ -8,6 +8,7 @@ import SecureComponent from     './secure_component.jsx';
 import SpeedAnalysis from       '../components/speed_analysis.jsx';
 import AccuracyAnalysis from    '../components/accuracy_analysis.jsx';
 import { Urls } from            '../constants.jsx';
+import KeySequenceErrorDisplay from  '../components/key_sequence_error_display.jsx';
 
 class HistoryDetails extends SecureComponent {
     constructor(props) {
@@ -66,22 +67,18 @@ class HistoryDetails extends SecureComponent {
                                 readOnly
                             />
                         </form>
-                        
                     </div>
 
                     <div className="content_row_sm">
-                        <Loading showLoading={this.state.isLoading} />
                         <h3>Text You Entered</h3>
 
-                        <form>
-                            <textarea name="textEntered"
-                                value={
-                                    (this.state.data != null) ? 
-                                        this.state.data.TextEntered : ""
-                                }
-                                readOnly
+                        { (this.state.data != null) && 
+                            <KeySequenceErrorDisplay
+                                TextEntered={this.state.data.TextEntered}
+                                sequenceId={this.props.match.params.sequenceId}
                             />
-                        </form>
+                        }
+                       
                     </div>
 
                     <div className="content_row_sm">

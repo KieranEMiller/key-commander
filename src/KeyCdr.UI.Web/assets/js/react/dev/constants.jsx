@@ -8,6 +8,7 @@ export const Urls = {
     API_NEW_SESSION: "/api/Session/GetNewSession",
     API_NEW_SEQUENCE: "/api/Sequence/GetNewSequence",
     API_END_SEQUENCE: "/api/Sequence/EndSequence",
+    API_RUN_ANALYSIS_FOR_SEQ: "/api/ErrorAnalysis/RunForSequence",
 
     External: {
         JS: {
@@ -50,4 +51,12 @@ export const Runtime = {
 export const UserMsgs = {
     AUTH_FAILURE: "unable to login with the username and password provided",
     NEW_SEQUENCE_INSTRUCTIONS: "PRESS SHIFT+ENTER OR PRESS START TO BEGIN"
+}
+
+export const HighlightType = {
+    0: "IncorrectChar",
+    1: "ExtraChars", 
+    2: "ShortChars", 
+    3: "Normal",
+    4: "Unevaluated"
 }
