@@ -363,6 +363,7 @@
     <Content Include="assets\js\react\dev\components\hideable_screen_mask.jsx" />
     <Content Include="assets\js\react\dev\components\speed_analysis.jsx" />
     <Content Include="assets\js\react\dev\components\stopwatch.jsx" />
+    <Content Include="assets\js\react\dev\components\key_sequence_error_display.jsx" />
     <Content Include="assets\js\react\dev\components\toolbar_new_sequence.jsx" />
     <Content Include="assets\js\react\dev\constants.jsx" />
     <Content Include="assets\js\react\dev\content.jsx" />
@@ -394,6 +395,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ErrorAnalysisController.cs" />
     <Compile Include="Controllers\NavController.cs" />
     <Compile Include="Controllers\SequenceController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
