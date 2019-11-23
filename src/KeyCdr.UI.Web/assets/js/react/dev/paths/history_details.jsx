@@ -58,26 +58,27 @@ class HistoryDetails extends SecureComponent {
                         <Loading showLoading={this.state.isLoading} />
                         <h3>Text Presented to You</h3>
 
-                        <form>
-                            <textarea name="textShown"
-                                value={
-                                    (this.state.data != null) ?
-                                    this.state.data.TextShown : ""
-                                }
-                                readOnly
-                            />
-                        </form>
-                    </div>
-
-                    <div className="content_row_sm">
-                        <h3>Text You Entered</h3>
-
-                        { (this.state.data) && 
+                        {(this.state.data) &&
                             <KeySequenceErrorDisplay
                                 TextEntered={this.state.data.TextEntered}
                                 sequenceId={this.props.match.params.sequenceId}
                             />
                         }
+
+                    </div>
+
+                    <div className="content_row_sm">
+                        <h3>Text You Entered</h3>
+
+                        <form>
+                            <textarea name="textEntered"
+                                value={
+                                    (this.state.data != null) ?
+                                        this.state.data.TextEntered : ""
+                                }
+                                readOnly
+                            />
+                        </form> 
                        
                     </div>
 
