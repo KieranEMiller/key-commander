@@ -7,11 +7,11 @@ GO
 ALTER TABLE [dbo].[KCUserLogin] DROP CONSTRAINT [DF_KCUserLogin_Created]
 GO
 
-/****** Object:  Table [dbo].[KCUserLogin]    Script Date: 11/22/2019 17:44:26 ******/
+/****** Object:  Table [dbo].[KCUserLogin]    Script Date: 11/23/2019 14:28:53 ******/
 DROP TABLE [dbo].[KCUserLogin]
 GO
 
-/****** Object:  Table [dbo].[KCUserLogin]    Script Date: 11/22/2019 17:44:26 ******/
+/****** Object:  Table [dbo].[KCUserLogin]    Script Date: 11/23/2019 14:28:53 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -22,6 +22,8 @@ CREATE TABLE [dbo].[KCUserLogin](
 	[KCUserLoginId] [uniqueidentifier] NOT NULL,
 	[UserId] [uniqueidentifier] NOT NULL,
 	[Created] [datetime] NOT NULL,
+	[UserAgent] [nvarchar](512) NULL,
+	[IpAddress] [nvarchar](15) NULL,
  CONSTRAINT [PK_KCUserLogin] PRIMARY KEY CLUSTERED 
 (
 	[KCUserLoginId] ASC
@@ -38,5 +40,4 @@ GO
 
 ALTER TABLE [dbo].[KCUserLogin] CHECK CONSTRAINT [FK_KCUserLogin_KCUser]
 GO
-
 

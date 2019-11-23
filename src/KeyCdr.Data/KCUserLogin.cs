@@ -17,6 +17,8 @@ namespace KeyCdr.Data
         public System.Guid KCUserLoginId { get; set; }
         public System.Guid UserId { get; set; }
         public System.DateTime Created { get; set; }
+        public string UserAgent { get; set; }
+        public string IpAddress { get; set; }
     
         public virtual KCUser KCUser { get; set; }
     }

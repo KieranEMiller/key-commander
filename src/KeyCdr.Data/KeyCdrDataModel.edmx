@@ -52,6 +52,8 @@
           <Property Name="KCUserLoginId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="UserAgent" Type="nvarchar" MaxLength="512" />
+          <Property Name="IpAddress" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="KeySequence">
           <Key>
@@ -526,6 +528,8 @@
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="KCUser" Relationship="KeyCommanderModel.FK_KCUserLogin_KCUser" FromRole="KCUserLogin" ToRole="KCUser" />
+          <Property Name="UserAgent" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="IpAddress" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_KCUserLogin_KCUser">
           <End Type="KeyCommanderModel.KCUser" Role="KCUser" Multiplicity="1" />
@@ -632,6 +636,8 @@
           <EntitySetMapping Name="KCUserLogin">
             <EntityTypeMapping TypeName="KeyCommanderModel.KCUserLogin">
               <MappingFragment StoreEntitySet="KCUserLogin">
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="UserAgent" ColumnName="UserAgent" />
                 <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="KCUserLoginId" ColumnName="KCUserLoginId" />

@@ -29,7 +29,7 @@ namespace KeyCdr.UI.Web.Controllers
             result.IsValid = true;
             result.UserId = dbUser.UserId.ToString();
 
-            userMgr.RecordLogin(dbUser);
+            userMgr.RecordLogin(dbUser, System.Web.HttpContext.Current);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
