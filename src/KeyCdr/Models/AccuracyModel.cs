@@ -32,21 +32,25 @@ namespace KeyCdr.Models
             get { return _numChars; }
             set { _numChars = base.ToPrecision(value); }
         }
+
         public double NumCorrectChars
         {
             get { return _numCorrectChars; }
             set { _numCorrectChars = base.ToPrecision(value); }
         }
+
         public double NumIncorrectChars
         {
             get { return _numIncorrectChars; }
             set { _numIncorrectChars = base.ToPrecision(value); }
         }
+
         public double NumExtraChars
         {
             get { return _numExtraChars; }
             set { _numExtraChars = base.ToPrecision(value); }
         }
+
         public double NumShortChars {
             get { return _numShortChars; }
             set { _numShortChars = base.ToPrecision(value); }
