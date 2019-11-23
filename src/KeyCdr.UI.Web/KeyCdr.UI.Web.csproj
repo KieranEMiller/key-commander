@@ -429,6 +429,7 @@
     </None>
     <Content Include="Views\_DefaultLayout.cshtml" />
     <Content Include="Views\Nav\IndexView.cshtml" />
+    <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
