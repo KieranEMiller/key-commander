@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Loading from     './loading.jsx';
 import Auth from        '../auth.jsx';
-import { Urls, HighlightType } from    '../constants.jsx';
+import { Urls, HighlightType, HttpErrorHandler } from    '../constants.jsx';
 
 export default class KeySequenceErrorDisplay extends React.Component {
     constructor(props) {
@@ -11,6 +11,7 @@ export default class KeySequenceErrorDisplay extends React.Component {
 
         this.state = {
             isLoading: true,
+            isError: false,
             data: null
         }
     }
@@ -27,10 +28,16 @@ export default class KeySequenceErrorDisplay extends React.Component {
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
             , body: JSON.stringify(data)
         })
+            .then(resp => HttpErrorHandler(resp))
             .then(resp => resp.json())
             .then(data => {
                 this.setState({ isLoading: false, data: data });
                 return Promise.resolve(data);
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({ isLoading: false, isError: true });
+                return Promise.reject();
             });
     }
 
@@ -40,13 +47,21 @@ export default class KeySequenceErrorDisplay extends React.Component {
                 <Loading showLoading={this.state.isLoading} />
                 <form>
                     <div className="error_analysis">
-                        { (this.state.isLoading === false && this.state.data != null) &&
+                        {this.state.isLoading === false &&
+                           this.state.data &&
+                           this.state.isError === false &&
                            this.state.data.map((highlight, index) => {
                                 var css = "highlight-" + HighlightType[highlight.HighlightType];
                                 return (
                                     <span key={index} className={css}>{highlight.Text}</span>
                                 )
                             })
+                        }
+
+                        {this.state.isError === true &&
+                            <p className="position_center error">
+                            A problem was encountered processing your input
+                            </p>
                         }
                     </div>
                     <div className="error_analysis_legend">
