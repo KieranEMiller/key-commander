@@ -72,7 +72,7 @@ class HistoryDetails extends SecureComponent {
                     <div className="content_row_sm">
                         <h3>Text You Entered</h3>
 
-                        { (this.state.data != null) && 
+                        { (this.state.data) && 
                             <KeySequenceErrorDisplay
                                 TextEntered={this.state.data.TextEntered}
                                 sequenceId={this.props.match.params.sequenceId}
@@ -86,6 +86,9 @@ class HistoryDetails extends SecureComponent {
                         <h3>Speed Analysis</h3>
 
                         {this.state.isLoading == false && 
+                            this.state.data &&
+                            this.state.data.AnalysisSpeed &&
+                            this.state.data.AnalysisSpeedAllTime &&
                             <SpeedAnalysis
                                 AnalysisSpeed={this.state.data.AnalysisSpeed}
                                 AnalysisSpeedAllTime={this.state.data.AnalysisSpeedAllTime}
@@ -98,6 +101,10 @@ class HistoryDetails extends SecureComponent {
                         <h3>Accuracy Analysis</h3>
 
                         {this.state.isLoading == false && 
+                            this.state.data &&
+                            this.state.data.AnalysisAccuracy &&
+                            this.state.data.AnalysisAccuracyAllTime &&
+
                             <AccuracyAnalysis
                                 AnalysisAccuracy={this.state.data.AnalysisAccuracy}
                                 AnalysisAccuracyAllTime={this.state.data.AnalysisAccuracyAllTime}
