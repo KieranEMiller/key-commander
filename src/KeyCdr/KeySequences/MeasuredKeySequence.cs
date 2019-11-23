@@ -46,23 +46,30 @@ namespace KeyCdr.KeySequences
 
         public IList<IAnalytic> Peek(string enteredText)
         {
-            return Stop(enteredText, _stopwatch.Elapsed);
+            return Stop(enteredText, _stopwatch.Elapsed, true);
         }
 
         public IList<IAnalytic> Peek(string enteredText, TimeSpan elapsed)
         {
-            return Stop(enteredText, elapsed);
+            return Stop(enteredText, elapsed, true);
         }
 
         public virtual IList<IAnalytic> Stop(string enteredText)
         {
             _stopwatch.Stop();
 
-            return Stop(enteredText, _stopwatch.Elapsed);
+            return this.Stop(enteredText, _stopwatch.Elapsed);
         }
 
         public virtual IList<IAnalytic> Stop(string enteredText, TimeSpan elapsed)
         {
+            return this.Stop(enteredText, elapsed, false);
+        }
+
+        public virtual IList<IAnalytic> Stop(string enteredText, TimeSpan elapsed, bool isPeeking)
+        {
+            var analyses = new List<IAnalytic>();
+
             AnalyticData data = new AnalyticData
             {
                 TextShown = this.Sequence,
@@ -74,10 +81,13 @@ namespace KeyCdr.KeySequences
             {
                 var analysis = BaseAnalytic.Create(analyticType, data);
                 analysis.Compute();
-                this.Analysis.Add(analysis);
+                analyses.Add(analysis);
             }
 
-            return this.Analysis;
+            if(!isPeeking)
+                this.Analysis = new List<IAnalytic>(analyses);
+
+            return analyses;
         }
     }
 }

@@ -63,5 +63,26 @@ namespace KeyCdr.Tests
             Assert.That(seq.Analysis, Has.One.Matches<Analytics.Accuracy>(a => a._analyticData.TextShown.Equals("textin")));
             Assert.That(seq.Analysis, Has.One.Matches<Analytics.Accuracy>(a => a._analyticData.TextEntered.Equals("textout")));
         }
+
+        [Test]
+        public void peek_does_not_update_saved_analytics()
+        {
+            var seq = new MeasuredKeySequence(
+                new List<AnalyticType>() {
+                    AnalyticType.Accuracy,
+                    AnalyticType.Speed,
+            });
+
+            seq.Start("textin");
+
+            //run peek a few times
+            for (int i = 0; i < 3; i++)
+                seq.Peek("textout");
+
+            Assert.That(seq.Analysis.Count, Is.EqualTo(0));
+
+            seq.Stop("textout");
+            Assert.That(seq.Analysis.Count, Is.EqualTo(2));
+        }
     }
 }
