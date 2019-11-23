@@ -6,7 +6,7 @@ $GRID_CELL_PADDING:8px;
 .dataTable, .static_grid {
     border-collapse: collapse;
     width: 100%;
-    table-layout:fixed;
+    table-layout: fixed;
 
     thead {
         th {
@@ -36,6 +36,10 @@ $GRID_CELL_PADDING:8px;
         font-weight: bold;
     }
 
+    th.grid_header_sm{
+        width:125px;
+    }
+        
     td {
         border: 1px solid $GRID_CELL_BORDER;
         padding-left: $GRID_CELL_PADDING;
@@ -66,12 +70,17 @@ span.delta {
     font-weight: bold;
 
     .delta_label {
-        width:50px;
         display:inline-block;
+        float:left;
+    }
+
+    .delta_change_indicator {
+        float:right;
+        width: 80px;
     }
 
     img {
-        float: none;
+        float: left;
         margin-right: 5px;
         height: 16px;
         width: 16px;

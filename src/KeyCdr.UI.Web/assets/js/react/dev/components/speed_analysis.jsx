@@ -17,7 +17,7 @@ class SpeedAnalysis extends React.Component {
             <table className="static_grid">
                 <thead>
                     <tr>
-                        <th>Metric</th>
+                        <th className="grid_header_sm">Metric</th>
                         <th>This Session</th>
                         <th>All Time ({this.state.SpeedAllTime.NumEntitiesRepresented} sessions)</th>
                     </tr>
@@ -28,10 +28,11 @@ class SpeedAnalysis extends React.Component {
                         <td>
                             <DeltaIndicator
                                 Val1={this.state.SpeedThisSeq.TotalTimeInMilliSec}
+                                ValToDisplay={this.state.SpeedThisSeq.TotalTimeDisplayFriendly}
                                 Val2={this.state.SpeedAllTime.TotalTimeInMilliSec}
                             />
                         </td>
-                        <td>{this.state.SpeedAllTime.TotalTimeInMilliSec}</td>
+                        <td>{this.state.SpeedAllTime.TotalTimeDisplayFriendly}</td>
                     </tr>
                     <tr>
                         <td>Chars/sec</td>
