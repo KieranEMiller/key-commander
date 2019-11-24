@@ -27,7 +27,7 @@ class Index extends BaseComponent {
                     <div className="clear_both"></div>
                 </div>
 
-                <div className="content_row">
+                <div className="content_row_sm">
                     <h2>Already Have an Account?</h2>
                     Login and continue where you left off
                     <input className="button-size-medium" type="button"
@@ -36,7 +36,7 @@ class Index extends BaseComponent {
                     />
                 </div>
 
-                <div className="content_row">
+                <div className="content_row_sm">
                     <h2>Review Reporting Features</h2>
                     Review a public account to see the analytics on speed and accuracy
                     <input className="button-size-medium" type="button" value="Review Reporting" />
