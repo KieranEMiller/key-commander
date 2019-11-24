@@ -37,14 +37,24 @@ class MyAccount extends SecureComponent {
 
                     <div className="content_row_sm block_hover_highlight" onClick={() => this.navTo(Routes.HISTORY)} >
                         <h3>Your Session History</h3>
-                        <img className="thumb" src="/assets/img/graph_thumbnail.png" />
+                        <img className="thumb" src="/assets/img/analysis_table_thumbnail.png" />
                         <ul className="">
-                            <li>Practice your typing against samples of text</li>
-                            <li>Analyze your speed, accuracy and problem key combinations</li>
-                            <li>Measure performance over time </li>
+                            <li>Review recent key sequences and sessions</li>
+                            <li>Compare an instance to your all-time performance</li>
                         </ul>
 
                         <input onClick={() => this.navTo(Routes.HISTORY)} className="button-size-medium position_bottom_right" type="button" value="View Session History" />
+                        <div className="clear_both"></div>
+                    </div>
+
+                    <div className="content_row_sm block_hover_highlight" onClick={() => this.navTo(Routes.HISTORY)} >
+                        <h3>Your Session History, Graphically</h3>
+                        <img className="thumb" src="/assets/img/graph_thumbnail.png" />
+                        <ul className="">
+                            <li>Review session and all-time performance...visually!</li>
+                        </ul>
+
+                        <input onClick={() => this.navTo(Routes.HISTORY)} className="button-size-medium position_bottom_right" type="button" value="View Visual History" />
                         <div className="clear_both"></div>
                     </div>
 
