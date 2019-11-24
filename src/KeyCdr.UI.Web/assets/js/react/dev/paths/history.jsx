@@ -54,16 +54,25 @@ class History extends SecureComponent {
             scrollY: 250,
             order: [[0, "desc"]],
             columns: [
-                { data: "CreateDate" },
-                { data: "SourceType" },
-                { data: "SourceKey" },
+                { data: "CreateDate", width:"120" },
+                { data: "SourceType", width:"60" },
+                {
+                    "data": "SourceKey",
+                    "render": function (data, type, row, meta) {
+                        if (type === 'display') {
+                            data = '<a target="_blank" href="' + data + '">' + data + '</a>';
+                        }
+
+                        return data;
+                    }
+                },
                 {
                     "data": "KeySequenceId",
+                    "width": "35",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
                             data = '<a class="historyDetailsLink" href="/secure/HistoryDetails/' + data + '">details</a>';
                         }
-
                         return data;
                     }
                 } 
