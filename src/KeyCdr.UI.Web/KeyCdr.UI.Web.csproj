@@ -370,6 +370,7 @@
     <Content Include="assets\js\react\dev\constants.jsx" />
     <Content Include="assets\js\react\dev\content.jsx" />
     <Content Include="assets\js\react\dev\components\header-nav-bar.jsx" />
+    <Content Include="assets\js\react\dev\footer.jsx" />
     <Content Include="assets\js\react\dev\header.jsx" />
     <Content Include="assets\js\react\dev\components\loading.jsx" />
     <Content Include="assets\js\react\dev\paths\base_component.jsx" />
@@ -416,7 +417,7 @@
     <Content Include="Views\web.config" />
     <Content Include="assets\css\common.scss" />
     <Content Include="assets\css\content.scss" />
-    <Content Include="assets\css\header.scss" />
+    <Content Include="assets\css\header_and_footer.scss" />
     <Content Include="assets\css\master.min.css.map" />
     <Content Include="assets\css\master.scss" />
     <Content Include="assets\css\reset.scss" />

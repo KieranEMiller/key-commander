@@ -4,6 +4,7 @@ import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 
 import Routing from     './routing.jsx';
 import Header from      './header.jsx';
+import Footer from      './footer.jsx';
 import Auth from        './auth.jsx';
 
 import '../../../../assets/css/master.scss';
@@ -42,6 +43,8 @@ class App extends React.Component {
                     appLogin={this.appLogin}
                     appLogout={this.appLogout}
                 />
+
+                <Footer />
             </Router>
         ); 
     }

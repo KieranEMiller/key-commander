@@ -1,13 +1,20 @@
 
 #header {
 	border-bottom:solid $COLOR_PRIMARY 1px;
+}
+
+#footer {
+	border-top:solid $COLOR_PRIMARY 1px;
+}
+
+#header, #footer {
 
 	.top_bar {
 		height:20px;
 		background-color:$COLOR_PRIMARY;
 	}
 
-	#header_contents {
+	#header_contents, #footer_contents {
 		width:95%;
 		margin:0px auto;
 
