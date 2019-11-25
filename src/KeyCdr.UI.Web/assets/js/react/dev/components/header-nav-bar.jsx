@@ -38,7 +38,7 @@ class HeaderNavBar extends React.Component {
             link = <Link to={Routes.LOGIN} onClick={() => this.clickHandler(Routes.LOGIN)}>Login</Link>;
         }
 
-        var validRoutes = [Routes.MY_ACCT, Routes.HISTORY, Routes.NEW_SEQUENCE];
+        var validRoutes = [Routes.MY_ACCT, Routes.HISTORY, Routes.HISTORY_VISUAL, Routes.NEW_SEQUENCE];
         let showSubMenu = (
                 (validRoutes.indexOf(this.props.location.pathname) >= 0)
                 || this.props.location.pathname.indexOf(Routes.HISTORY_DETAILS) >= 0
@@ -69,6 +69,9 @@ class HeaderNavBar extends React.Component {
                             </li>
                             <li> 
                                 <Link to={Routes.HISTORY} onClick={() => this.clickHandler(Routes.HISTORY)}>History</Link>
+                            </li>
+                            <li> 
+                                <Link to={Routes.HISTORY_VISUAL} onClick={() => this.clickHandler(Routes.HISTORY_VISUAL)}>Visual History</Link>
                             </li>
                         </ul>
                     </div>
