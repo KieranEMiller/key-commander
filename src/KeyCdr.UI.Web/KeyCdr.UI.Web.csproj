@@ -374,6 +374,7 @@
     <Content Include="assets\js\react\dev\header.jsx" />
     <Content Include="assets\js\react\dev\components\loading.jsx" />
     <Content Include="assets\js\react\dev\paths\base_component.jsx" />
+    <Content Include="assets\js\react\dev\paths\history_visual.jsx" />
     <Content Include="assets\js\react\dev\paths\history_details.jsx" />
     <Content Include="assets\js\react\dev\paths\history.jsx" />
     <Content Include="assets\js\react\dev\paths\new_sequence.jsx" />
@@ -409,8 +410,8 @@
     <Compile Include="Models\SequenceModel.cs" />
     <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Models\UserHistoryDetailsModel.cs" />
-    <Compile Include="Models\UserHistoryItemModel.cs" />
-    <Compile Include="Models\UserHistoryKeySequenceItemModel.cs" />
+    <Compile Include="Models\UserHistoryModel.cs" />
+    <Compile Include="Models\UserHistoryAnalyticsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

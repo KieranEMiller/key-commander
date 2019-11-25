@@ -1,5 +1,7 @@
 ﻿using KeyCdr.Analytics;
+using KeyCdr.Data;
 using KeyCdr.History;
+using KeyCdr.Models;
 using KeyCdr.UI.Web.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,23 +23,9 @@ namespace KeyCdr.UI.Web.Controllers
             var userMgr = new KeyCdr.History.UserSessionHistory();
             IList<Data.Session> history = userMgr.GetSessionsByUser(new Data.KCUser() { UserId = Guid.Parse(token.UserId) });
 
-            /* heirarchal result set */
-            /*
-            var historyItems = history.Select(h => new UserHistoryItemModel() {
-                CreateDate = h.Created,
-                UserId = h.UserId,
-                SessionId = h.SessionId,
-                KeySequences = h.KeySequences.Select(ks => new UserHistoryKeySequenceItemModel() {
-                    Created = ks.Created,
-                    KeySequenceId = ks.KeySequenceId,
-                    SourceKey = ks.SourceKey,
-                    SourceType = ks.SourceType.Name
-                }).ToList()
-            });*/
-
             var historyItems = history
                 .SelectMany(h => h.KeySequence
-                .Select(ks => new UserHistoryItemModel() {
+                .Select(ks => new UserHistoryModel() {
                     CreateDate = h.Created,
                     UserId = h.UserId,
                     SessionId = h.SessionId,
@@ -65,6 +53,32 @@ namespace KeyCdr.UI.Web.Controllers
             result.AnalysisSpeedAllTime = allTimeStats.GetSpeedAllTime();
             result.AnalysisAccuracyAllTime = allTimeStats.GetAccuracyAllTime();
 
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage HistoryAnalytics(JWTToken token)
+        {
+            var userMgr = new KeyCdr.History.UserSessionHistory();
+            IList<Data.Session> history = userMgr.GetHistoryDetailsAllTime(new Data.KCUser() { UserId = Guid.Parse(token.UserId) });
+
+            var analyses = history.SelectMany(ks => ks.KeySequence
+                .SelectMany(ksa => ksa.KeySequenceAnalysis))
+                .ToList();
+
+            /* this may eventually need to be truncated to a specific 
+             * period of time */
+            var result = new UserHistoryAnalyticsModel();
+            result.SpeedMeasurements = analyses
+                .Where(a => a.AnalysisTypeId.Equals((int)AnalyticType.Speed))
+                .Select(s => new SpeedModel().Create(s.AnalysisSpeed))
+                .ToList();
+
+            result.AccuracyMeasurements = analyses
+                .Where(a => a.AnalysisTypeId.Equals((int)AnalyticType.Accuracy))
+                .Select(s => new AccuracyModel().Create(s.AnalysisAccuracy))
+                .ToList();
+                    
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }

@@ -4,6 +4,7 @@ export const Urls = {
     API_AUTH_LOGIN: "http://localhost:8080/api/auth/login",
     API_HISTORY: "/api/User/History",
     API_HISTORY_DETAILS: "/api/User/HistoryDetails",
+    API_HISTORY_VISUAL: "/api/User/HistoryAnalytics",
 
     API_NEW_SESSION: "/api/Session/GetNewSession",
     API_NEW_SEQUENCE: "/api/Sequence/GetNewSequence",
@@ -35,7 +36,8 @@ export const Routes = {
     MY_ACCT: "/secure/MyAccount",
     HISTORY: "/secure/History",
     HISTORY_DETAILS: "/secure/HistoryDetails",
-    HISTORY_DETAILS_WITHID: "/secure/HistoryDetails/:sequenceId"
+    HISTORY_DETAILS_WITHID: "/secure/HistoryDetails/:sequenceId",
+    HISTORY_VISUAL: "/secure/History/Visual"
 }
 
 export const LocalStorage = {

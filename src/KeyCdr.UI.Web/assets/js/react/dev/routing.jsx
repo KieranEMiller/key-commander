@@ -9,6 +9,7 @@ import Login from           './paths/login.jsx';
 import MyAccount from       './paths/myaccount.jsx';
 import History from         './paths/history.jsx';
 import HistoryDetails from  './paths/history_details.jsx';
+import HistoryVisual from   './paths/history_visual.jsx';
 import NewSequence from     './paths/new_sequence.jsx';
 import { Routes } from      './constants.jsx';
 
@@ -73,6 +74,18 @@ class Routing extends React.Component {
                         render={
                             (props) =>
                                 <HistoryDetails {...props}
+                                    IsAuthed={this.props.IsAuthed}
+                                    appLogin={this.props.appLogin}
+                                    appLogout={this.props.appLogout}
+                                />
+                        }
+                    />
+
+                    <Route
+                        exact path={Routes.HISTORY_VISUAL}
+                        render={
+                            (props) =>
+                                <HistoryVisual {...props}
                                     IsAuthed={this.props.IsAuthed}
                                     appLogin={this.props.appLogin}
                                     appLogout={this.props.appLogout}
