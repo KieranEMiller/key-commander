@@ -2,10 +2,11 @@
 import ReactDOM from 'react-dom';
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 
-import Routing from     './routing.jsx';
-import Header from      './header.jsx';
-import Footer from      './footer.jsx';
-import Auth from        './auth.jsx';
+import Routing from         './routing.jsx';
+import Header from          './header.jsx';
+import Footer from          './footer.jsx';
+import Auth from            './auth.jsx';
+import SessionManager from  './session_mgr.jsx';
 
 import '../../../../assets/css/master.scss';
 
@@ -19,10 +20,16 @@ class App extends React.Component {
     }
 
     appLogin = () => {
+        var sessionMgr = new SessionManager();
+        sessionMgr.clearSession();
+
         this.setState({ IsAuthed: true });
     }
 
     appLogout = () => {
+        var sessionMgr = new SessionManager();
+        sessionMgr.clearSession();
+
         var auth = new Auth();
         auth.logout();
 

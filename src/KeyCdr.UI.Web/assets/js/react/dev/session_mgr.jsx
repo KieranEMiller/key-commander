@@ -47,6 +47,10 @@ class SessionManager {
         return null;
     }
 
+    clearSession() {
+        localStorage.removeItem(LocalStorage.SESSION_KEY_NAME);
+    }
+
     persistSessionSeqData(data) {
         var sessionData = JSON.stringify(data);
         localStorage.setItem(LocalStorage.SESSION_KEY_NAME, sessionData);
