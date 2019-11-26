@@ -72,9 +72,17 @@ namespace KeyCdr.TextSamples
             return TextToTextSample(text, _wikiResult.Url);
         }
 
-        public WikipediaTextResult GetWikipediaTextFromUrlSynchronously()
+        public virtual WikipediaTextResult GetWikipediaTextFromUrlSynchronously()
         {
             Task<WikipediaTextResult> task = Task.Run<WikipediaTextResult>(async () => await GetWikipediaTextFromUrl());
+            _wikiResult = task.Result;
+            return task.Result;
+        }
+
+        public WikipediaTextResult GetWikipediaTextFromUrlSynchronously(string url)
+        {
+            Task<WikipediaTextResult> task = Task.Run<WikipediaTextResult>(async () => await GetWikipediaTextFromUrl(url));
+            _wikiResult = task.Result;
             return task.Result;
         }
 
