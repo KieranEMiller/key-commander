@@ -71,22 +71,22 @@ namespace KeyCdr.TextSamples
             return GetParagraphFromTextBlock(text, Constants.StringSplits.SEPARATOR_SENTENACE);
         }
 
-        protected string GetParagraphFromTextBlock(string text, char[] splitOn)
+        public string GetParagraphFromTextBlock(string text, char[] splitOn)
         {
             var sentences = text.Split(splitOn, StringSplitOptions.RemoveEmptyEntries);
+            sentences = sentences
+                .Select(s => s.Trim())
+                .Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
-            int startIndex = 0;
-            int endIndex = 0;
-            if (sentences.Length <= NUM_SENTENCES_IN_A_PARAGRAPH)
-            {
-                endIndex = sentences.Length - 1;
+            /* if the total number of sentences is lesss than the set number
+             * just return the original text */
+            if (sentences.Length <= NUM_SENTENCES_IN_A_PARAGRAPH) {
+                return text;
             }
-            else
-            {
-                int variability = sentences.Length - NUM_SENTENCES_IN_A_PARAGRAPH;
-                startIndex = GetRandomIndex(variability);
-                endIndex = startIndex + NUM_SENTENCES_IN_A_PARAGRAPH;
-            }
+
+            int variability = sentences.Length - NUM_SENTENCES_IN_A_PARAGRAPH;
+            int startIndex = startIndex = GetRandomIndex(variability);
+            int endIndex = startIndex + NUM_SENTENCES_IN_A_PARAGRAPH;
 
             //TODO: when we rejoin the sentences we always use a period.  this is wrong
             //should preserve what the original text had there that was split on

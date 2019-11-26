@@ -100,5 +100,30 @@ namespace KeyCdr.Tests.TextSamplesTests
                 var result = _wikiGenerator.ParseHtml(doc.Object);
             });
         }
+
+        [Test]
+        public void section_with_one_sentence_returns_that_one_sentence()
+        {
+            var config = new Moq.Mock<IConfiguration>();
+            var context = new Moq.Mock<IBrowsingContext>();
+            var gen = new Mock<WikipediaTextGenerator>(config, context);
+            gen.Setup(g => g.GetWikipediaTextFromUrlSynchronously())
+                .Returns(new WikipediaTextResult() {
+                    TextSections = new List<string>() {
+                        "The entire route is in Pike County."
+                    }
+                });
+
+            ITextSample paragraph = gen.Object.GetParagraph();
+            string text = paragraph.GetText();
+            Assert.That(text, Is.Not.EqualTo("."));
+        }
+
+        [Test]
+        public void aaablah()
+        {
+
+        }
+
     }
 }
