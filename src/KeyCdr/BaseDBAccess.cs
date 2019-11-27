@@ -24,6 +24,9 @@ namespace KeyCdr
         }
 
         protected KeyCdrDataEntities _db;
-        public KeyCdrDataEntities Database { get; private set; }
+        public KeyCdrDataEntities Database {
+            get { return _db; }
+            private set { _db = value; }
+        }
     }
 }
