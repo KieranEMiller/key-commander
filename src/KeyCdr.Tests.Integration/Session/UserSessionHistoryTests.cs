@@ -40,5 +40,26 @@ namespace KeyCdr.Tests.Integration.Session
             Assert.That(sessions, Is.Not.Null);
             Assert.That(sessions.Count, Is.EqualTo(1));
         }
+
+        [Test]
+        public void stopping_sequence_saves_entered_text()
+        {
+            UserSession session = new UserSession(_user);
+            ITextSample sample = new TextSample()
+            {
+                SourceKey = "http://some_url",
+                SourceType = TextSampleSourceType.Wikipedia,
+                Text = "this is some sample text shown"
+            };
+
+            KeySequence seq = session.StartNewSequence(sample);
+            session.StopSequence("text entered");
+
+            UserSessionHistory history = new UserSessionHistory();
+            var keySeq = history.GetHistoryDetailsByKeySequence(seq.KeySequenceId);
+
+            Assert.That(keySeq, Is.Not.Null);
+            Assert.That(keySeq.TextEntered, Is.EqualTo("text entered"));
+        }
     }
 }
