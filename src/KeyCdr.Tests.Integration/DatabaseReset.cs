@@ -29,7 +29,7 @@ namespace KeyCdr.Tests.Integration
 
         public string GetClearCmd(string table)
         {
-            return string.Format("TRUNCATE TABLE {0}", table);
+            return string.Format("DELETE FROM {0}", table);
         }
     }
 }
