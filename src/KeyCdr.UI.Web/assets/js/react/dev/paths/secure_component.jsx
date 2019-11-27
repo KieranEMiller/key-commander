@@ -20,17 +20,15 @@ class SecureComponent extends BaseComponent {
         var that = this;
         this.auth.isAuthenticated()
             .then(ret => {
-                setTimeout(function () {
-                    if (ret == true)
-                        that.props.appLogin();
-                    else
-                        that.props.appLogout();
+                if (ret == true)
+                    that.props.appLogin();
+                else
+                    that.props.appLogout();
 
-                    that.setState({
-                        isAuthenticated: ret,
-                        authFailed: !ret
-                    });
-                }, 1000);
+                that.setState({
+                    isAuthenticated: ret,
+                    authFailed: !ret
+                });
             });
     }
 
