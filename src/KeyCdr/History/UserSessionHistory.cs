@@ -10,6 +10,8 @@ namespace KeyCdr.History
 {
     public class UserSessionHistory : BaseDBAccess
     {
+        public const int DEFAULT_ALL_HISTORY_NUM_RECORDS = 30;
+
         public UserSessionHistory()
         { }
 
@@ -38,7 +40,12 @@ namespace KeyCdr.History
             return result;
         }
 
-        public IList<Data.Session> GetHistoryDetailsAllTime(Data.KCUser currentUser)
+        public IList<Data.Session> GetHistoryDetailsAllTime(KCUser currentUser)
+        {
+            return GetHistoryDetailsAllTime(currentUser, DEFAULT_ALL_HISTORY_NUM_RECORDS);
+        }
+
+        public IList<Data.Session> GetHistoryDetailsAllTime(KCUser currentUser, int lastXNumberRecords)
         {
             var results = _db.Session
                 .Where(sess => sess.UserId.Equals(currentUser.UserId))
@@ -47,7 +54,8 @@ namespace KeyCdr.History
                 .Include(sess=>sess.KeySequence.Select(b=>b.KeySequenceAnalysis))
                 .Include(sess=>sess.KeySequence.Select(b=>b.KeySequenceAnalysis.Select(c=>c.AnalysisSpeed)))
                 .Include(sess=>sess.KeySequence.Select(b=>b.KeySequenceAnalysis.Select(c=>c.AnalysisAccuracy)))
-                .OrderByDescending(s => s.Created);
+                .OrderByDescending(s => s.Created)
+                .Take(lastXNumberRecords);
 
             return results.ToList();
         }
