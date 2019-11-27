@@ -20,9 +20,6 @@ INSERT INTO [dbo].[AnalysisType]
 		   )
 GO
 
-USE [KeyCommander]
-GO
-
 INSERT INTO [dbo].[SourceType]
            ([SourceTypeId]
            ,[Name])
@@ -60,9 +57,6 @@ INSERT INTO [dbo].[SourceType]
 		   )
 GO
 
-
-USE [KeyCommander]
-GO
 
 INSERT INTO [dbo].[KCUser]
            ([UserId]
