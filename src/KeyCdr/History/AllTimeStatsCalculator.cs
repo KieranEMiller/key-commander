@@ -38,6 +38,9 @@ namespace KeyCdr.History
                     .Where(ksa => ksa.AnalysisTypeId.Equals((int)Analytics.AnalyticType.Speed))
                 .Select(speed => speed.AnalysisSpeed)));
 
+            if (existingSpeedAnalytics.Count() == 0)
+                return null;
+
             //group by a constant lets you average all the properties
             //in a single iteration...weird
             var totals = existingSpeedAnalytics
@@ -45,7 +48,7 @@ namespace KeyCdr.History
                 .Select(a => new SpeedModel(){
                     CharsPerSec = a.Average(s => s.CharsPerSec),
                     WordPerMin = a.Average(s => s.WordPerMin),
-                    TotalTimeInMilliSec = (int)a.Sum(s => s.TotalTimeInMilliSec),
+                    TotalTimeInMilliSec = a.Average(s => s.TotalTimeInMilliSec),
                     NumEntitiesRepresented = existingSpeedAnalytics.Count()
                 })
                 .Single();
@@ -62,6 +65,9 @@ namespace KeyCdr.History
                 .SelectMany(ks => ks.KeySequenceAnalysis
                     .Where(ksa => ksa.AnalysisTypeId.Equals((int)Analytics.AnalyticType.Accuracy))
                 .Select(accuracy => accuracy.AnalysisAccuracy)));
+
+            if (existing.Count() == 0)
+                return null;
 
             //group by a constant lets you average all the properties
             //in a single iteration...weird
