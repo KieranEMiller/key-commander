@@ -76,7 +76,16 @@ namespace KeyCdr
 
         public virtual IList<IAnalytic> StopSequence(string entered)
         {
-            IList<IAnalytic> results = _currentSeq.Stop(entered);
+            return this.StopSequence(entered, null);
+        }
+
+        public virtual IList<IAnalytic> StopSequence(string entered, TimeSpan? elapsed)
+        {
+            IList<IAnalytic> results;
+            if (!elapsed.HasValue)
+                results = _currentSeq.Stop(entered);
+            else
+                results = _currentSeq.Stop(entered, elapsed.Value);
            
             _dbSeq.TextEntered = entered;
 
