@@ -37,7 +37,7 @@ namespace KeyCdr
                 .FirstOrDefault();
         }
 
-        public virtual IList<IAnalytic> Stop(Guid seqId, string textEntered, TimeSpan timespan)
+        public virtual IList<IAnalytic> StopSequence(Guid seqId, string textEntered, TimeSpan timespan)
         {
             KeySequence keySeq = GetKeySequenceById(seqId);
             keySeq.TextEntered = textEntered;
