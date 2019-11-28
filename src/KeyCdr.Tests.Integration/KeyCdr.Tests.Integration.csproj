@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="BaseIntegrationTest.cs" />
     <Compile Include="DatabaseReset.cs" />
+    <Compile Include="History\AllTimeStatsCalculatorTests.cs" />
     <Compile Include="Session\UserSessionHistoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDatabaseEnsurer.cs" />
@@ -91,9 +92,7 @@
     <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="History\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
