@@ -106,7 +106,7 @@ namespace KeyCdr.Tests.TextSamplesTests
         {
             var config = new Moq.Mock<IConfiguration>();
             var context = new Moq.Mock<IBrowsingContext>();
-            var gen = new Mock<WikipediaTextGenerator>(config, context);
+            var gen = new Mock<WikipediaTextGenerator>(config.Object, context.Object);
             gen.Setup(g => g.GetWikipediaTextFromUrlSynchronously())
                 .Returns(new WikipediaTextResult() {
                     TextSections = new List<string>() {
@@ -114,16 +114,11 @@ namespace KeyCdr.Tests.TextSamplesTests
                     }
                 });
 
+            gen.Setup(g => g.GetParagraph()).CallBase();
+
             ITextSample paragraph = gen.Object.GetParagraph();
             string text = paragraph.GetText();
             Assert.That(text, Is.Not.EqualTo("."));
         }
-
-        [Test]
-        public void aaablah()
-        {
-
-        }
-
     }
 }
