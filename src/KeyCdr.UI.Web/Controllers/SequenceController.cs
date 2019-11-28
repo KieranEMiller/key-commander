@@ -47,7 +47,7 @@ namespace KeyCdr.UI.Web.Controllers
             //ignore the results from the call to stop as for now the user is redirected
             //to the details page
             UserSessionStateless sessionMgr = new UserSessionStateless();
-            sessionMgr.Stop(seqFromClient.SequenceId, seqFromClient.TextEntered, timeSpan);
+            sessionMgr.StopSequence(seqFromClient.SequenceId, seqFromClient.TextEntered, timeSpan);
 
             return Request.CreateResponse(HttpStatusCode.OK, string.Empty);
         }
