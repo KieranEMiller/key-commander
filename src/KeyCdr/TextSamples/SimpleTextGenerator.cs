@@ -23,7 +23,7 @@ namespace KeyCdr.TextSamples
             return new TextSample {
                 Text = base.NormalizeText(text),
                 SourceKey = "SimpleText",
-                SourceType = base.GetSourceType()
+                SourceType = GetSourceType()
             };
         }
         
