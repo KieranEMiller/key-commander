@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KeyCdr.TextSamples
 {
-    public class BaseTextSampleGenerator 
+    public class BaseTextSampleGenerator
     {
         public const int NUM_SENTENCES_IN_A_PARAGRAPH = 4;
 
@@ -113,6 +113,24 @@ namespace KeyCdr.TextSamples
         public virtual int GetRandomIndex(int totalItems)
         {
             return _rnd.Next(0, totalItems);
+        }
+
+        public virtual ITextSample GetWordFallback()
+        {
+            var hardCodedGen = new HardCodedTextGenerator();
+            return hardCodedGen.GetWord();
+        }
+
+        public virtual ITextSample GetSentenceFallback()
+        {
+            var hardCodedGen = new HardCodedTextGenerator();
+            return hardCodedGen.GetSentence();
+        }
+
+        public virtual ITextSample GetParagraphFallback()
+        {
+            var hardCodedGen = new HardCodedTextGenerator();
+            return hardCodedGen.GetParagraph();
         }
     }
 }

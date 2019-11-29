@@ -47,28 +47,43 @@ namespace KeyCdr.TextSamples
 
         public virtual ITextSample GetWord()
         {
-            if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
+            ITextSample result = ExtractTextWithFunction(
+                base.SplitAndGetARandomIndex, 
+                Constants.StringSplits.SEPARATOR_WORD
+            );
 
-            string text = _wikiResult.TextSections[base.GetRandomIndex(_wikiResult.TextSections)];
-            string word = SplitAndGetARandomIndex(text, Constants.StringSplits.SEPARATOR_WORD);
-            return TextToTextSample(text, _wikiResult.Url);
+            return result ?? base.GetWordFallback();
         }
 
         public virtual ITextSample GetSentence()
         {
-            if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
+            ITextSample result = ExtractTextWithFunction(
+                base.SplitAndGetARandomIndex, 
+                Constants.StringSplits.SEPARATOR_SENTENACE
+            );
 
-            string text = _wikiResult.TextSections[base.GetRandomIndex(_wikiResult.TextSections)];
-            string sentence = SplitAndGetARandomIndex(text, Constants.StringSplits.SEPARATOR_SENTENACE);
-            return TextToTextSample(text, _wikiResult.Url);
+            return result ?? base.GetSentenceFallback();
         }
 
         public virtual ITextSample GetParagraph()
         {
+            ITextSample result = ExtractTextWithFunction(
+                base.GetParagraphFromTextBlock, 
+                Constants.StringSplits.SEPARATOR_SENTENACE
+            );
+
+            return result ?? base.GetParagraphFallback();
+        }
+
+        public ITextSample ExtractTextWithFunction(Func<string, char[], string> ParsingFunction, char[] separator)
+        {
             if (_wikiResult == null) _wikiResult = GetWikipediaTextFromUrlSynchronously();
 
+            if (_wikiResult == null || _wikiResult.TextSections.Count == 0)
+                return null;
+
             string text = _wikiResult.TextSections[base.GetRandomIndex(_wikiResult.TextSections)];
-            text = base.GetParagraphFromTextBlock(text, Constants.StringSplits.SEPARATOR_SENTENACE);
+            text = ParsingFunction(text, separator);
             return TextToTextSample(text, _wikiResult.Url);
         }
 
