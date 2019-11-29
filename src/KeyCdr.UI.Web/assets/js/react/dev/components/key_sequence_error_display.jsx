@@ -46,7 +46,7 @@ export default class KeySequenceErrorDisplay extends React.Component {
             <React.Fragment>
                 <Loading showLoading={this.state.isLoading} />
                 <form>
-                    <div className="error_analysis">
+                    <div className="error_analysis extra_line_spacing">
                         {this.state.isLoading === false &&
                            this.state.data &&
                            this.state.isError === false &&

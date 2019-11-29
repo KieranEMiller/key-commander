@@ -72,6 +72,7 @@ class HistoryDetails extends SecureComponent {
 
                         <form>
                             <textarea name="textEntered"
+                                className="extra_line_spacing"
                                 value={
                                     (this.state.data != null) ?
                                         this.state.data.TextEntered : ""
@@ -79,7 +80,30 @@ class HistoryDetails extends SecureComponent {
                                 readOnly
                             />
                         </form> 
-                       
+                    </div>
+
+                    <div className="content_row_sm">
+                        <h3>Text Source (AKA: "Where did this text come from")</h3>
+
+                            {this.state.isLoading == false && 
+                                this.state.data &&
+                                <table className="static_grid">
+                                    <thead>
+                                        <tr>
+                                            <th className="grid_header_sm">SourceType</th>
+                                            <th>Source Key</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{this.state.data.SourceType}</td>
+                                            <td>
+                                                <a href={this.state.data.SourceKey}> {this.state.data.SourceKey}</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
                     </div>
 
                     <div className="content_row_sm">

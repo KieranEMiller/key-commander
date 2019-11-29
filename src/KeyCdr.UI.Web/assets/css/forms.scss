@@ -32,6 +32,10 @@ form {
         font-family: monospace;
     }
 
+    .extra_line_spacing {
+        line-height:27px;
+    }
+
     .presented_text_size_ref {
         visibility: hidden;
     }
@@ -62,6 +66,14 @@ form {
         box-sizing: border-box;
         border: solid #979797 2px;
         font-weight: bold;
+    }
+
+    span.highlight-IncorrectChar,
+    span.highlight-ExtraChars,
+    span.highlight-ShortChars,
+    span.highlight-Normal,
+    span.highlight-Unevaluated {
+
     }
 
     span.highlight-IncorrectChar {
