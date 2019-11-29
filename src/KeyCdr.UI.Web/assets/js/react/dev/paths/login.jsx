@@ -42,17 +42,14 @@ class Login extends BaseComponent {
         var that = this;
         this.AuthService.login(logindata)
             .then(data => {
-                setTimeout(function () {
-                    that.showLoading(false);
+                that.showLoading(false);
 
-                    if (data.IsValid) {
-                        that.props.appLogin();
-                        that.props.history.push(that.state.redirectToOnLogin);
-                    }
-                    else
-                        that.setState({ errorMsg: UserMsgs.AUTH_FAILURE });
-
-                }, 1000);
+                if (data.IsValid) {
+                    that.props.appLogin();
+                    that.props.history.push(that.state.redirectToOnLogin);
+                }
+                else
+                    that.setState({ errorMsg: UserMsgs.AUTH_FAILURE });
             })
             .catch(err => {
                 console.log(err);
