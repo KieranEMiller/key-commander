@@ -11,6 +11,7 @@ namespace KeyCdr.Models
         private decimal _totalTimeInMs;
         private decimal _wordPerMin;
         private decimal _charsPerSec;
+        private DateTime _createDate;
 
         public decimal TotalTimeInMilliSec {
             get { return _totalTimeInMs; }
@@ -29,6 +30,16 @@ namespace KeyCdr.Models
         public decimal CharsPerSec {
             get { return _charsPerSec; }
             set { _charsPerSec = base.ToPrecision(value);  }
+        }
+
+        public DateTime CreateDate {
+            get { return _createDate; }
+            set { _createDate = value;  }
+        }
+
+        public string CreateDateDisplayFriendly
+        {
+            get { return _createDate.ToString("yyyy-MM-dd HH:mm:ss"); }
         }
         
         //used for the all time model to reflect the total
@@ -54,6 +65,7 @@ namespace KeyCdr.Models
                 TotalTimeInMilliSec = base.ToPrecision(orig.TotalTimeInMilliSec),
                 WordPerMin = base.ToPrecision(orig.WordPerMin),
                 NumEntitiesRepresented = 1,
+                CreateDate = orig.KeySequenceAnalysis.Created
             };
         }
     }

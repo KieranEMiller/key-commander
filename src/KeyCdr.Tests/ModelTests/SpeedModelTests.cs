@@ -20,6 +20,7 @@ namespace KeyCdr.Tests.ModelTests
                 CharsPerSec = repeatingDec, 
                 TotalTimeInMilliSec = repeatingDec,
                 WordPerMin = repeatingDec,
+                KeySequenceAnalysis = new KeySequenceAnalysis() { Created = DateTime.Now}
             });
 
             int expectedPrecision = Constants.PRECISION_FOR_DECIMALS;
@@ -59,6 +60,7 @@ namespace KeyCdr.Tests.ModelTests
                 CharsPerSec = 1, 
                 TotalTimeInMilliSec = 2,
                 WordPerMin = 3,
+                KeySequenceAnalysis = new KeySequenceAnalysis() { Created = DateTime.Now }
             });
 
             Assert.That(model.CharsPerSec, Is.EqualTo(1M));

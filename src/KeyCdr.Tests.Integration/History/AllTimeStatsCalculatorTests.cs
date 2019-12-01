@@ -60,6 +60,7 @@ namespace KeyCdr.Tests.Integration.History
             Assert.That(speedCalcs.NumEntitiesRepresented, Is.EqualTo(1));
             Assert.That(speedCalcs.WordPerMin, Is.EqualTo(speedThisInstance.WordsPerMinute));
             Assert.That(speedCalcs.CharsPerSec, Is.EqualTo(speedThisInstance.CharsPerSecond));
+            Assert.That(speedCalcs.CreateDate, Is.Not.Null);
         }
 
         [Test]
