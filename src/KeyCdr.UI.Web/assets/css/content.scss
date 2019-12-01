@@ -93,27 +93,6 @@
     }
 }
 
-input.button, input.checkbox {
-	background-color: #106fbf; 
-	border: solid #FFFFFF 2px;
-	color: white;
-	padding: 15px 32px;
-	font-size: 16px;			
-	cursor:pointer;
-	-webkit-transition-duration: 0.4s; /* Safari */
-	transition-duration: 0.4s;
-}
-
-input.button:hover, input.checkbox:hover {
-	background-color: white; 
-	color: black;
-	border:solid #000000 2px;
-}
-
-input.button-size-medium {
-	@extend .button;
-	width:250px;
-}
 
 .position_center {
     position: absolute;
@@ -138,12 +117,5 @@ p.position_center {
     bottom: 0px;
     right: 0px;
     position: absolute;
-}
-
-input.button-size-small {
-    @extend .button;
-    font-size:small;
-    width:145px;
-	padding: 8px 16px;
 }
 
