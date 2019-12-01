@@ -17,6 +17,8 @@ namespace KeyCdr.UI.Web.Controllers
 {
     public class UserController : ApiController
     {
+        private const int NUM_RECORDS_LOOKBACK = 30;
+
         [HttpPost]
         public HttpResponseMessage History(JWTToken token)
         {
@@ -60,22 +62,24 @@ namespace KeyCdr.UI.Web.Controllers
         public HttpResponseMessage HistoryAnalytics(JWTToken token)
         {
             var userMgr = new KeyCdr.History.UserSessionHistory();
-            IList<Data.Session> history = userMgr.GetHistoryDetailsAllTime(new Data.KCUser() { UserId = Guid.Parse(token.UserId) });
+            IList<Data.Session> history = userMgr.GetHistoryDetailsAllTime(
+                new Data.KCUser() { UserId = Guid.Parse(token.UserId) },
+                NUM_RECORDS_LOOKBACK);
 
             var analyses = history.SelectMany(ks => ks.KeySequence
                 .SelectMany(ksa => ksa.KeySequenceAnalysis))
                 .ToList();
 
-            /* this may eventually need to be truncated to a specific 
-             * period of time */
             var result = new UserHistoryAnalyticsModel();
             result.SpeedMeasurements = analyses
                 .Where(a => a.AnalysisTypeId.Equals((int)AnalyticType.Speed))
+                .Take(NUM_RECORDS_LOOKBACK)
                 .Select(s => new SpeedModel().Create(s.AnalysisSpeed))
                 .ToList();
 
             result.AccuracyMeasurements = analyses
                 .Where(a => a.AnalysisTypeId.Equals((int)AnalyticType.Accuracy))
+                .Take(NUM_RECORDS_LOOKBACK)
                 .Select(s => new AccuracyModel().Create(s.AnalysisAccuracy))
                 .ToList();
                     
