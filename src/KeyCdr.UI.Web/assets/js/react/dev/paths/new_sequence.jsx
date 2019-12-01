@@ -7,6 +7,7 @@ import Loading from                  '../components/loading.jsx';
 import HideableScreenMask from       '../components/hideable_screen_mask.jsx';
 import ToolbarNewSequence from       '../components/toolbar_new_sequence.jsx';
 import SessionManager from           '../session_mgr.jsx';
+import KeySequenceErrorDisplay from  '../components/key_sequence_error_display.jsx';
 import { Routes, Urls, UserMsgs, Runtime } from  '../constants.jsx';
 
 class NewSequence extends SecureComponent {
@@ -33,6 +34,10 @@ class NewSequence extends SecureComponent {
     componentDidMount() {
         if(this.inputSequenceField)
             this.inputSequenceField.focus();
+
+        document.querySelector('body').addEventListener('keydown', (e) => {
+            this.onTextEnteredKeyDown(e);
+        });
     }
 
     autoresize() {
@@ -128,6 +133,7 @@ class NewSequence extends SecureComponent {
                         <div className="content_row_sm show_above_mask">
                             <h3>Text to Type</h3>
                             <form>
+                                {/*
                                 <textarea name="textShown"
                                     className="presented_text"
                                     value={this.state.TextShown}
@@ -136,7 +142,7 @@ class NewSequence extends SecureComponent {
                                         resize: this.state.height <= Runtime.DEFAULT_NEW_SEQUENCE_INPUT_FIELD_HEIGHT ? "none" : null
                                     }}
                                     readOnly
-                                />
+                                />*/}
                             </form>
                         </div>
 
