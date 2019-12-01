@@ -20,58 +20,60 @@ export default class HistoryVisual extends SecureComponent {
     }
 
     loadDependencies() {
-        this.loadScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js")
+        this.loadScript("/assets/js/external/Chart.bundle.min.js")
             .then(() => {
                 this.getUserHistory()
                     .then(resp => {
-                        console.log('visual history resp', resp);
                         this.setState({ isLoading: false, data: resp });
-                        this.initGrid();
                     });
             });
-        
     }
 
-    initGrid = () => {
+    componentDidUpdate() {
+        if (this.state && this.state.data) {
+            this.initGrid();
+        }
+    }
 
-        var ctx = document.getElementById('myChart');
+    transformDataToPoints = (data) => {
+        var points = data.SpeedMeasurements.map((item, index) => {
+            return { t: (item.CreateDateDisplayFriendly), y: item.CharsPerSec };
+        });
+        return points;
+    }
+
+    transformPointsToLabels = (points) => {
+        var labels = points.map((item, index) => {
+            return item.t;
+        });
+        return labels;
+    }
+
+    initGrid = (points) => {
+
+        var points = this.transformDataToPoints(this.state.data);
+        var labels = this.transformPointsToLabels(points);
+
+        var ctx = document.getElementById('chart');
+
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
+            borderColor: "#bae755",
+            borderDash: [5, 5],
+            backgroundColor: "#e755ba",
+            pointBackgroundColor: "#55bae7",
+            pointBorderColor: "#55bae7",
+            pointHoverBackgroundColor: "#55bae7",
+            pointHoverBorderColor: "#55bae7",
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: labels,
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
+                    label: 'Characters per Second',
+                    data: points,
                     borderWidth: 1
                 }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
             }
         });
-       
     }
 
     getUserHistory() {
@@ -87,12 +89,6 @@ export default class HistoryVisual extends SecureComponent {
             });
     }
 
-    componentDidUpdate() {
-        if (this.state && this.state.data && this.state.data.length > 0) {
-            this.initGrid();
-        }
-    }
-
     render() {
         if (this.authenticationComplete()) {
             return (
@@ -101,24 +97,11 @@ export default class HistoryVisual extends SecureComponent {
 
                     <div className="content_row">
                         <Loading showLoading={this.state.isLoading} />
-                        <canvas id="myChart" width="400" height="400"></canvas>
 
+                        <div className="chart_container">
+                            <canvas id="chart"></canvas>
+                        </div>
 
-
-                        {/*
-                        <table id="grid" className="display cell-border stripe hover">
-                            <thead>
-                                <tr>
-                                    <th>CreateDate</th>
-                                    <th>SourceType</th>
-                                    <th>SourceKey</th>
-                                    <th>Details</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            </table>
-                            */}
                     </div>
                 </ContentContainer>
             );
