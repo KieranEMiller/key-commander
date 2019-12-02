@@ -38,8 +38,10 @@ export default class ChartDisplayer extends React.Component {
         }
     }
 
-    handleChartTypeChange = (e) => {
-        console.log("chart type changing", this.state, e);
+    handleChartTypeChange = (selection) => {
+        if(selection)
+            this.setState({ SelectedChartType: selection });
+
         var chart;
         if (this.state.SelectedChartType.value == 'cps')
             chart = new CharsPerSecondChart();
