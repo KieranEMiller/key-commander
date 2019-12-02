@@ -361,6 +361,9 @@
     <Content Include="assets\js\external\Chart.bundle.min.js" />
     <Content Include="assets\js\react\dev\app.jsx" />
     <Content Include="assets\js\react\dev\auth.jsx" />
+    <Content Include="assets\js\react\dev\charts\base_chart.jsx" />
+    <Content Include="assets\js\react\dev\charts\chars_per_second_chart.jsx" />
+    <Content Include="assets\js\react\dev\charts\chart_component.jsx" />
     <Content Include="assets\js\react\dev\components\delta_indicator.jsx" />
     <Content Include="assets\js\react\dev\components\accuracy_analysis.jsx" />
     <Content Include="assets\js\react\dev\components\hideable_screen_mask.jsx" />
@@ -430,6 +433,7 @@
     <Content Include="assets\css\loading_and_mask.scss" />
     <Content Include="assets\css\toolbars.scss" />
     <Content Include="assets\css\chart.scss" />
+    <Content Include="assets\css\controls.scss" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
