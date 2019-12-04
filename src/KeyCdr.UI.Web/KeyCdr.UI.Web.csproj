@@ -362,11 +362,13 @@
     <Content Include="assets\js\react\dev\app.jsx" />
     <Content Include="assets\js\react\dev\auth.jsx" />
     <Content Include="assets\js\react\dev\charts\base_chart.jsx" />
+    <Content Include="assets\js\react\dev\charts\words_per_minute_chart.jsx" />
     <Content Include="assets\js\react\dev\charts\chars_per_second_chart.jsx" />
     <Content Include="assets\js\react\dev\charts\chart_component.jsx" />
     <Content Include="assets\js\react\dev\components\delta_indicator.jsx" />
     <Content Include="assets\js\react\dev\components\accuracy_analysis.jsx" />
     <Content Include="assets\js\react\dev\components\hideable_screen_mask.jsx" />
+    <Content Include="assets\js\react\dev\components\real_time_analysis_updater.jsx" />
     <Content Include="assets\js\react\dev\components\speed_analysis.jsx" />
     <Content Include="assets\js\react\dev\components\stopwatch.jsx" />
     <Content Include="assets\js\react\dev\components\key_sequence_error_display.jsx" />

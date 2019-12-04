@@ -14,16 +14,27 @@ namespace KeyCdr.UI.Web.Controllers
     public class ErrorAnalysisController : ApiController
     {
         [HttpPost]
-        public HttpResponseMessage RunForSequence(SequenceModel sequence)
+        public HttpResponseMessage RunForSequence(SequenceModel sequenceFromClient)
         {
-            KeySequence keySeq = new History.UserSessionHistory().GetHistoryDetailsByKeySequence(sequence.SequenceId);
+            KeySequence keySeq = new History.UserSessionHistory().GetHistoryDetailsByKeySequence(sequenceFromClient.SequenceId);
 
-            if (string.IsNullOrWhiteSpace(keySeq.TextEntered))
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, string.Empty);
+            //if the text entered from the db and the text from the client is 
+            //empty or null then return analysis unavailable
+            if (string.IsNullOrWhiteSpace(keySeq.TextEntered)
+                && string.IsNullOrWhiteSpace(sequenceFromClient.TextEntered))
+            {
+                var invalid =  new List<HighlightedText>() { new HighlightedText() {
+                    HighlightType = HighlightType.Unevaluated,
+                    Text = "No analysis available for this sequence.  No user provided text detected."
+                }};
+                return Request.CreateResponse(HttpStatusCode.OK, invalid);
+            }
 
             Accuracy accuracy = new Accuracy(new AnalyticData() {
                 TextShown = keySeq.TextShown,
-                TextEntered = keySeq.TextEntered
+                TextEntered = 
+                    (string.IsNullOrWhiteSpace(keySeq.TextEntered))
+                    ? sequenceFromClient.TextEntered : keySeq.TextEntered
             });
             accuracy.Compute();
 

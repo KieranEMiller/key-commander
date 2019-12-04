@@ -1,8 +1,10 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Loading from     './loading.jsx';
-import Auth from        '../auth.jsx';
+import Loading from             './loading.jsx';
+import Auth from                '../auth.jsx';
+import RealTimeAnalysis from    './real_time_analysis_updater.jsx';
+
 import { Urls, HighlightType, HttpErrorHandler } from    '../constants.jsx';
 
 export default class KeySequenceErrorDisplay extends React.Component {
@@ -17,11 +19,25 @@ export default class KeySequenceErrorDisplay extends React.Component {
     }
 
     componentDidMount() {
-        this.getErrorAnalysis();
+        if (this.props.peekInRealTime === true) {
+            this.setState({isLoading: false});
+        }
+        else {
+            if (this.props.sequenceId != null && this.props.sequenceId != -1)
+                this.getErrorAnalysisForExistingSequence();
+        }
     }
 
-    getErrorAnalysis() {
-        var data = { SequenceId: this.props.sequenceId };
+    reanalyze = () => {
+        console.log('reanalyze fired');
+        this.getErrorAnalysisForExistingSequence();
+    }
+
+    getErrorAnalysisForExistingSequence = () => {
+        var data = {
+            SequenceId: this.props.sequenceId,
+            TextEntered: (this.props.TextEntered) ? this.props.TextEntered : ""
+        };
 
         return fetch(Urls.API_RUN_ANALYSIS_FOR_SEQ, {
             method: "Post",
@@ -42,21 +58,39 @@ export default class KeySequenceErrorDisplay extends React.Component {
     }
 
     render() {
+
+        var textOrAnalysisToShow;
+
+        if (this.state.isLoading === false
+            && this.state.isError === false
+            && this.state.data) {
+            textOrAnalysisToShow = this.state.data.map((highlight, index) => {
+                var css = "highlight-" + HighlightType[highlight.HighlightType];
+                return (
+                    <span key={index} className={css}>{highlight.Text}</span>
+                )
+            });
+        }
+        else if (this.props.peekInRealTime == true) {
+            textOrAnalysisToShow = (
+                <span>{this.props.TextShown}</span>
+            )
+        }
+            
         return (
             <React.Fragment>
                 <Loading showLoading={this.state.isLoading} />
+
+                <RealTimeAnalysis
+                    runAnalyze={this.reanalyze}
+                    TextEntered={this.props.TextEntered}
+                    IsRunning={this.props.IsRunning}
+                />
+
                 <form>
                     <div className="error_analysis extra_line_spacing">
-                        {this.state.isLoading === false &&
-                           this.state.data &&
-                           this.state.isError === false &&
-                           this.state.data.map((highlight, index) => {
-                                var css = "highlight-" + HighlightType[highlight.HighlightType];
-                                return (
-                                    <span key={index} className={css}>{highlight.Text}</span>
-                                )
-                            })
-                        }
+
+                        {textOrAnalysisToShow}
 
                         {this.state.isError === true &&
                             <p className="position_center error">

@@ -20,7 +20,7 @@ class NewSequence extends SecureComponent {
             IsRunning: false,
             IsLoading: false,
             UseTheatreMode: false,
-            CurrentSequence: null,
+            CurrentSequence: { SequenceId: -1 },
             height: Runtime.DEFAULT_NEW_SEQUENCE_INPUT_FIELD_HEIGHT
         };
 
@@ -117,6 +117,7 @@ class NewSequence extends SecureComponent {
             <React.Fragment>
                 <HideableScreenMask MaskIsVisible={this.state.UseTheatreMode} />
 
+
                 <ToolbarNewSequence
                     MaskIsVisible={this.state.UseTheatreMode}
                     IsRunning={this.state.IsRunning}
@@ -132,8 +133,17 @@ class NewSequence extends SecureComponent {
 
                         <div className="content_row_sm show_above_mask">
                             <h3>Text to Type</h3>
+
+                            <KeySequenceErrorDisplay
+                                TextShown={this.state.TextShown}
+                                TextEntered={this.state.TextEntered}
+                                sequenceId={this.state.CurrentSequence.SequenceId}
+                                peekInRealTime={true}
+                                IsRunning={this.state.IsRunning}
+                            />
+
+                            {/*
                             <form>
-                                {/*
                                 <textarea name="textShown"
                                     className="presented_text"
                                     value={this.state.TextShown}
@@ -142,8 +152,9 @@ class NewSequence extends SecureComponent {
                                         resize: this.state.height <= Runtime.DEFAULT_NEW_SEQUENCE_INPUT_FIELD_HEIGHT ? "none" : null
                                     }}
                                     readOnly
-                                />*/}
+                                />
                             </form>
+                            */}
                         </div>
 
                         <div className="content_row_sm show_above_mask">
