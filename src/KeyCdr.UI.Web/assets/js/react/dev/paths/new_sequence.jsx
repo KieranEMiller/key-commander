@@ -142,19 +142,6 @@ class NewSequence extends SecureComponent {
                                 IsRunning={this.state.IsRunning}
                             />
 
-                            {/*
-                            <form>
-                                <textarea name="textShown"
-                                    className="presented_text"
-                                    value={this.state.TextShown}
-                                    style={{
-                                        height: this.state.height,
-                                        resize: this.state.height <= Runtime.DEFAULT_NEW_SEQUENCE_INPUT_FIELD_HEIGHT ? "none" : null
-                                    }}
-                                    readOnly
-                                />
-                            </form>
-                            */}
                         </div>
 
                         <div className="content_row_sm show_above_mask">
