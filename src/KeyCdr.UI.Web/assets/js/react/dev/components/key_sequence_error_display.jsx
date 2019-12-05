@@ -5,7 +5,9 @@ import Loading from             './loading.jsx';
 import Auth from                '../auth.jsx';
 import RealTimeAnalysis from    './real_time_analysis_updater.jsx';
 
-import { Urls, HighlightType, HttpErrorHandler } from    '../constants.jsx';
+import {
+    Urls, HighlightType, HttpErrorHandler, Runtime
+} from '../constants.jsx';
 
 export default class KeySequenceErrorDisplay extends React.Component {
     constructor(props) {
