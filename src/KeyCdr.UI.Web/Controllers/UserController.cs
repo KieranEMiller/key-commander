@@ -73,12 +73,14 @@ namespace KeyCdr.UI.Web.Controllers
             var result = new UserHistoryAnalyticsModel();
             result.SpeedMeasurements = analyses
                 .Where(a => a.AnalysisTypeId.Equals((int)AnalyticType.Speed))
+                .OrderBy(a => a.Created)
                 .Take(NUM_RECORDS_LOOKBACK)
                 .Select(s => new SpeedModel().Create(s.AnalysisSpeed))
                 .ToList();
 
             result.AccuracyMeasurements = analyses
                 .Where(a => a.AnalysisTypeId.Equals((int)AnalyticType.Accuracy))
+                .OrderBy(a => a.Created)
                 .Take(NUM_RECORDS_LOOKBACK)
                 .Select(s => new AccuracyModel().Create(s.AnalysisAccuracy))
                 .ToList();
