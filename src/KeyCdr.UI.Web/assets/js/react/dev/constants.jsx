@@ -70,3 +70,8 @@ export const HttpErrorHandler = function (response) {
     return response;
 }
 
+export const RealTimeAnalysisSettings = {
+    LENGTH_BUFFER: 5,
+    TICK_INTERVAL_IN_MS: 5000,
+    UNCHANGED_TEXT_TICK_THRESHOLD: 5
+}
