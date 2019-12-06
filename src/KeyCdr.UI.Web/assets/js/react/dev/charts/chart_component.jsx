@@ -23,13 +23,16 @@ export default class ChartDisplayer extends React.Component {
         this.state = {
             data: null,
             isLoading: true,
-            SelectedChartType: Charts.VisualHistoryChartTypes.filter(option => option.value === Charts.DefaultChartType)[0]
+            SelectedChartType: Charts.VisualHistoryChartTypes.filter(option => option.value === Charts.DefaultChartType)[0],
+            TriggerChartDetailUpdate: false
         }
 
         this.getUserHistory()
             .then(data => {
                 this.setState({data: data, isLoading: false})
             });
+
+        this.currentChart = null;
     }
 
     componentDidUpdate() {
@@ -42,19 +45,22 @@ export default class ChartDisplayer extends React.Component {
         if(selection)
             this.setState({ SelectedChartType: selection });
 
-        var chart;
         if (this.state.SelectedChartType.value == 'cps')
-            chart = new CharsPerSecondChart();
+            this.currentChart = new CharsPerSecondChart();
 
         else if(this.state.SelectedChartType.value == 'wpm')
-            chart = new WordsPerMinuteChart();
+            this.currentChart = new WordsPerMinuteChart();
 
         else
-            chart = null;
+            this.currentChart = null;
 
-        if (chart != null) {
-            var displayName = chart.getChartDisplayName();
-            chart.initChart(displayName, this.state.data);
+        if (this.currentChart != null) {
+            var displayName = this.currentChart.getChartDisplayName();
+            this.currentChart.initChart(displayName, this.state.data);
+
+            document.getElementById('chartDateFrom').innerText = this.currentChart.getDateFromDisplay(this.state.data);
+            document.getElementById('chartDateTo').innerText = this.currentChart.getDateToDisplay(this.state.data);
+            document.getElementById('chartTotalCount').innerText = this.currentChart.getTotalCountDisplay(this.state.data);
         }
     }
 
@@ -86,6 +92,23 @@ export default class ChartDisplayer extends React.Component {
                                 options={Charts.VisualHistoryChartTypes}
                                 defaultValue={Charts.DefaultChartType}
                             />
+                        </div>
+
+                        <div className="centered_list">
+                            <ul>
+                            <li>
+                                <span className="strong">Total Count: </span>
+                                <span id="chartTotalCount"></span>
+                            </li>
+                            <li>
+                                <span className="strong">Dates From: </span>
+                                <span id="chartDateFrom"></span>
+                            </li>
+                            <li>
+                                <span className="strong">Dates To: </span>
+                                <span id="chartDateTo"></span>
+                            </li>
+                            </ul>
                         </div>
 
                         <div className="chart_container">

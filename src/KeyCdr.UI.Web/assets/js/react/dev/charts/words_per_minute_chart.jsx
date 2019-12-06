@@ -9,6 +9,10 @@ export default class WordsPerMinuteChart extends BaseChart {
         return "Words Per Minute";
     }
 
+    getDateFrom(data) { return data.SpeedDateFrom; }
+    getDateTo(data) { return data.SpeedDateFrom; }
+    getTotalCount(data) { return data.SpeedMeasurementCount; }
+
     transformDataToPoints = (data) => {
         var points = data.SpeedMeasurements.map((item, index) => {
             return { t: (item.CreateDateDisplayFriendly), y: item.WordPerMin };

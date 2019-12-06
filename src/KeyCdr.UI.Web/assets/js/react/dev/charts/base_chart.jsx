@@ -2,10 +2,23 @@
     constructor(props) {
     }
 
-    //absract members
-    //getChartDisplayName() { }
-    //transformDataToPoints(data) { }
-    //transformPointsToLabels(points) { }
+    //abstract members
+    //getChartDisplayName() {}
+    //getDateFrom() {}
+    //getDateTo() {}
+    //getTotalCount() {}
+    //transformDataToPoints(data) {}
+    //transformPointsToLabels(points) {}
+
+    getDateFromDisplay(data) {
+        var dt = new Date(this.getDateFrom(data));
+        return dt.toDateString();
+    }
+    getDateToDisplay(data) {
+        var dt = new Date(this.getDateTo(data));
+        return dt.toDateString();
+    }
+    getTotalCountDisplay(data) { return this.getTotalCount(data);}
 
     initChart = (title, data) => {
 
