@@ -68,6 +68,21 @@
 		}
 	}
 }
+
+.centered_list {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom:7px;
+
+    li {
+        display: inline;
+        list-style-type: none;
+        padding: 5px;
+        text-align: center;
+    }
+}
 	
 .nav_container {
 	margin:10px 0px 0px 0px;
@@ -83,10 +98,7 @@
 	}
 
 	ul {
-		list-style-type: none; 
-		display:flex;
-		flex-wrap:wrap;
-		justify-content:center;
+        @extend .centered_list;
 
 		@media screen and (max-width: $SCREEN_SIZE_SMALL) {
 			width:auto;
