@@ -16,7 +16,9 @@ namespace KeyCdr.Models
         private double _numIncorrectChars;
         private double _numExtraChars;
         private double _numShortChars;
-        
+
+        private DateTime _createDate;
+
         public decimal Accuracy {
             get { return _accuracy; }
             set { _accuracy = base.ToPrecision(value);  }
@@ -56,6 +58,11 @@ namespace KeyCdr.Models
             set { _numShortChars = base.ToPrecision(value); }
         }
 
+        public DateTime CreateDate {
+            get { return _createDate; }
+            set { _createDate = value; }
+        }
+
         //used for the all time model to reflect the total
         //number of accuracies this was computed from
         public int NumEntitiesRepresented { get; set; }
@@ -70,6 +77,7 @@ namespace KeyCdr.Models
                 NumIncorrectChars = base.ToPrecision((double)orig.NumIncorrectChars),
                 NumShortChars = base.ToPrecision((double)orig.NumShortChars), 
                 NumWords = base.ToPrecision((double)orig.NumWords), 
+                CreateDate = orig.KeySequenceAnalysis.Created,
                 NumEntitiesRepresented = 1
             };
         }
