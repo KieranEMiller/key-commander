@@ -23,8 +23,7 @@ export default class ChartDisplayer extends React.Component {
         this.state = {
             data: null,
             isLoading: true,
-            SelectedChartType: Charts.VisualHistoryChartTypes.filter(option => option.value === Charts.DefaultChartType)[0],
-            TriggerChartDetailUpdate: false
+            SelectedChartType: Charts.VisualHistoryChartTypes.filter(option => option.value === Charts.DefaultChartType)[0]
         }
 
         this.getUserHistory()
