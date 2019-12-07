@@ -25,6 +25,8 @@ namespace KeyCdr.Data
         public string Name { get; set; }
         public string LoginName { get; set; }
         public System.DateTime Created { get; set; }
+        public string PasswordHash { get; set; }
+        public string PasswordSalt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Session> Session { get; set; }

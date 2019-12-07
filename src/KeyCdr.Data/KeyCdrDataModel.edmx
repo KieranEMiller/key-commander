@@ -44,6 +44,8 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LoginName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="KCUserLogin">
           <Key>
@@ -365,6 +367,8 @@
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Session" Relationship="KeyCommanderModel.FK_Session_KCUser" FromRole="KCUser" ToRole="Session" />
           <NavigationProperty Name="KCUserLogin" Relationship="KeyCommanderModel.FK_KCUserLogin_KCUser" FromRole="KCUser" ToRole="KCUserLogin" />
+          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="KeySequence">
           <Key>
@@ -586,6 +590,8 @@
           <EntitySetMapping Name="KCUser">
             <EntityTypeMapping TypeName="KeyCommanderModel.KCUser">
               <MappingFragment StoreEntitySet="KCUser">
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="LoginName" ColumnName="LoginName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

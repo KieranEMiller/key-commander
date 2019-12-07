@@ -120,6 +120,8 @@
     <Compile Include="TextSamples\HardCodedTextGenerator.cs" />
     <Compile Include="TextSamples\ITextSampleGenerator.cs" />
     <Compile Include="TextSamples\WikipediaTextResult.cs" />
+    <Compile Include="Users\UserAuthenticationDigest.cs" />
+    <Compile Include="Users\UserAuthenticationSecurity.cs" />
     <Compile Include="Users\UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
