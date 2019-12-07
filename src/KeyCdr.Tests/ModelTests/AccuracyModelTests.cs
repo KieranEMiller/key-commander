@@ -53,6 +53,7 @@ namespace KeyCdr.Tests.ModelTests
                 NumIncorrectChars = 5,
                 NumShortChars = 6, 
                 NumWords = 7,
+                KeySequenceAnalysis = new KeySequenceAnalysis() { Created = DateTime.Now }
             });
 
             Assert.That(model.Accuracy, Is.EqualTo(1M));

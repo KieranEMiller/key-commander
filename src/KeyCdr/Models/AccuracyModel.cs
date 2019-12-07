@@ -69,7 +69,7 @@ namespace KeyCdr.Models
 
         public AccuracyModel Create(Data.AnalysisAccuracy orig)
         {
-            return new AccuracyModel() {
+            var model = new AccuracyModel() {
                 Accuracy = base.ToPrecision(orig.Accuracy),
                 NumChars = base.ToPrecision((double)orig.NumChars),
                 NumCorrectChars = base.ToPrecision((double)orig.NumCorrectChars),
@@ -77,9 +77,13 @@ namespace KeyCdr.Models
                 NumIncorrectChars = base.ToPrecision((double)orig.NumIncorrectChars),
                 NumShortChars = base.ToPrecision((double)orig.NumShortChars), 
                 NumWords = base.ToPrecision((double)orig.NumWords), 
-                CreateDate = orig.KeySequenceAnalysis.Created,
                 NumEntitiesRepresented = 1
             };
+
+            if (orig.KeySequenceAnalysis != null)
+                model.CreateDate = orig.KeySequenceAnalysis.Created;
+
+            return model;
         }
     }
 }
