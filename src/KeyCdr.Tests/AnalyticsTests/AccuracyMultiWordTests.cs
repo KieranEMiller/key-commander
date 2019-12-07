@@ -74,5 +74,16 @@ namespace KeyCdr.Tests.AnalyticsTests
             Assert.That(accuracy.Measurements[2].IndexInLargerText, Is.EqualTo(8));
             Assert.That(accuracy.Measurements[3].IndexInLargerText, Is.EqualTo(13));
         }
+
+        [Test]
+        public void double_spaces_between_words_doesnt_affect_accuracy()
+        {
+            var accuracy = new Accuracy(new AnalyticData { TextShown = "abc xyz", TextEntered = "abc  xyz" });
+            accuracy.Compute();
+            Assert.That(accuracy.NumIncorrectChars, Is.EqualTo(0));
+            Assert.That(accuracy.TotalNumWordsShown, Is.EqualTo(accuracy.TotalNumWordsEntered));
+            Assert.That(accuracy.NumShortChars, Is.EqualTo(0));
+            Assert.That(accuracy.NumExtraChars, Is.EqualTo(0));
+        }
     }
 }

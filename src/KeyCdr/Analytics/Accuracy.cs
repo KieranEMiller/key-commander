@@ -29,8 +29,8 @@ namespace KeyCdr.Analytics
 
         public void Compute()
         {
-            string[] shownWords = this._analyticData.TextShown.Split(Constants.StringSplits.SEPARATOR_WORD);
-            string[] enteredWords = this._analyticData.TextEntered.Split(Constants.StringSplits.SEPARATOR_WORD);
+            string[] shownWords = this._analyticData.TextShown.Split(Constants.StringSplits.SEPARATOR_WORD, StringSplitOptions.RemoveEmptyEntries);
+            string[] enteredWords = this._analyticData.TextEntered.Split(Constants.StringSplits.SEPARATOR_WORD, StringSplitOptions.RemoveEmptyEntries);
 
             this.TotalNumWordsEntered = enteredWords.Length;
             this.TotalNumWordsShown = shownWords.Length;
