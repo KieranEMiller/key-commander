@@ -32,12 +32,16 @@ class NewSequence extends SecureComponent {
     }
 
     componentDidMount() {
-        if(this.inputSequenceField)
-            this.inputSequenceField.focus();
+        this.setInputTextFocus();
 
         document.querySelector('body').addEventListener('keydown', (e) => {
             this.onTextEnteredKeyDown(e);
         });
+    }
+
+    setInputTextFocus = () => {
+        if(this.inputSequenceField)
+            this.inputSequenceField.focus();
     }
 
     autoresize() {
@@ -89,6 +93,7 @@ class NewSequence extends SecureComponent {
 
                 this.setFilledTextareaHeight();
                 this.SessionManager.sequenceStarting();
+                this.setInputTextFocus();
             });
     }
 
@@ -116,7 +121,6 @@ class NewSequence extends SecureComponent {
         return (
             <React.Fragment>
                 <HideableScreenMask MaskIsVisible={this.state.UseTheatreMode} />
-
 
                 <ToolbarNewSequence
                     MaskIsVisible={this.state.UseTheatreMode}
