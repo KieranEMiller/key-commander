@@ -13,11 +13,17 @@ $ZINDEX_LOADING_LOCAL: 7;
     z-index: $ZINDEX_LOADING_LOCAL;
 }
 
-.loading_mask_screen{
+.loading_mask_screen {
     @extend .loading_mask;
     transition: opacity 0.7s;
     opacity: .7;
     z-index: $ZINDEX_LOADING_SCREEN;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
 }
 
 .loading_mask_screen_hide{
