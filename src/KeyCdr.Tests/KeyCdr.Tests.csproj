@@ -84,6 +84,7 @@
     <Compile Include="TextSamplesTests\SimpleTextGeneratorTests.cs" />
     <Compile Include="TextSamplesTests\WikipediaTextGeneratorParsingTests.cs" />
     <Compile Include="TextSamplesTests\WikipediaTextGeneratorTests.cs" />
+    <Compile Include="UserTests\UserAuthenticationSecurityTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
