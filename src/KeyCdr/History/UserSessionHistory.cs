@@ -10,7 +10,7 @@ namespace KeyCdr.History
 {
     public class UserSessionHistory : BaseDBAccess
     {
-        public const int DEFAULT_ALL_HISTORY_NUM_RECORDS = 30;
+        public const int DEFAULT_ALL_HISTORY_NUM_RECORDS = 75;
 
         public UserSessionHistory()
         { }

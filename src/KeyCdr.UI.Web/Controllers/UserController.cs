@@ -63,8 +63,7 @@ namespace KeyCdr.UI.Web.Controllers
         {
             var userMgr = new KeyCdr.History.UserSessionHistory();
             IList<Data.Session> history = userMgr.GetHistoryDetailsAllTime(
-                new Data.KCUser() { UserId = Guid.Parse(token.UserId) },
-                NUM_RECORDS_LOOKBACK);
+                new Data.KCUser() { UserId = Guid.Parse(token.UserId) });
 
             var analyses = history.SelectMany(ks => ks.KeySequence
                 .SelectMany(ksa => ksa.KeySequenceAnalysis))
