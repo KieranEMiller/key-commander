@@ -11,8 +11,7 @@ namespace KeyCdr.Users
     public class UserManager: BaseDBAccess
     {
         public UserManager()
-        {
-        }
+        { }
 
         public KCUser GetByLoginName(string loginName)
         {
@@ -21,6 +20,31 @@ namespace KeyCdr.Users
                 .FirstOrDefault();
 
             return user;
+        }
+
+        public bool IsValidLogin(string loginName, string password)
+        {
+            var user = this.GetByLoginName(loginName);
+            return IsValidLogin(user, password);
+        }
+
+        public bool IsValidLogin(KCUser user, string password)
+        {
+            if (user == null) return false;
+
+            //if the password salt or hash is null then let the user login 
+            //regardless of password
+            //this is probably a huge security hole...
+            if (user.PasswordSalt == null || user.PasswordHash == null)
+                return true;
+
+            UserAuthenticationSecurity sec = new UserAuthenticationSecurity();
+            bool isValidLogin = sec.IsValid(new UserAuthenticationDigest() {
+                Hash = Convert.FromBase64String(user.PasswordHash),
+                Salt = Convert.FromBase64String(user.PasswordSalt)
+            }, password);
+
+            return isValidLogin;
         }
 
         public KCUserLogin RecordLogin(KCUser user, HttpContext context)

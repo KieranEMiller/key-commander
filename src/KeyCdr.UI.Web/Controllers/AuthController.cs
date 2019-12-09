@@ -19,13 +19,10 @@ namespace KeyCdr.UI.Web.Controllers
 
             var userMgr = new Users.UserManager();
             var dbUser = userMgr.GetByLoginName(user.username);
-            if (dbUser == null)
+            if(dbUser == null || !userMgr.IsValidLogin(dbUser, user.password))
                 return Request.CreateResponse(HttpStatusCode.Forbidden, result);
 
-            if(user.password.Equals("asdfasdf") == false)
-                return Request.CreateResponse(HttpStatusCode.Forbidden, result);
-
-            result.JWTValue = new JWTManager().GenerateToken(user.username);
+            result.JWTValue = new JWTManager().GenerateToken(dbUser.LoginName);
             result.IsValid = true;
             result.UserId = dbUser.UserId.ToString();
 
