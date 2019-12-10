@@ -62,20 +62,34 @@ namespace KeyCdr.Users
             return newLogin;
         }
 
-        public KCUser CreateGuest()
+        public KCUser CreateUser(string username, string password)
         {
             KCUser user = new KCUser();
             user.UserId = Guid.NewGuid();
-
-            string guestname = GetNewGuestName();
-            user.Name = guestname;
-            user.LoginName = guestname;
+            user.Name = username;
+            user.LoginName = username;
             user.Created = DateTime.Now;
+
+            if(string.IsNullOrEmpty(password)) {
+                user.PasswordHash = null;
+                user.PasswordSalt = null;
+            }
+            else {
+                var digest = new Users.UserAuthenticationSecurity().Hash(password);
+                user.PasswordHash = digest.HashBase64;
+                user.PasswordSalt = digest.SaltBase64;
+            }
 
             _db.KCUser.Add(user);
             _db.SaveChanges();
 
             return user;
+        }
+
+        public KCUser CreateGuest()
+        {
+            string guestname = GetNewGuestName();
+            return CreateUser(guestname, null);
         }
 
         public string GetNewGuestName()

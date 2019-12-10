@@ -132,6 +132,37 @@ class Auth {
             return Promise.resolve(data.IsValid);
         });
     }
+
+    isUsernameInUse(loginName) {
+
+        if (loginName == "") return Promise.resolve(false);
+
+        var req = { username: loginName };
+        return fetch(Urls.API_AUTH_USERNAME_AVAILABLE, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
+            , body: JSON.stringify(req)
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            return Promise.resolve(data.IsInUse);
+        });
+    }
+
+    register(loginName, password) {
+        var user = { username: loginName, password: password};
+        return fetch(Urls.API_AUTH_REGISTER, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
+            , body: JSON.stringify(user)
+        })
+        .then(resp => resp.json())
+            .then(data => {
+            if(data.IsValid == true)
+                this.setToken(data);
+            return Promise.resolve(data);
+        });
+    }
 };
 
 export default Auth;

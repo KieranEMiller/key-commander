@@ -9,5 +9,8 @@ namespace KeyCdr.UI.Web
     {
         public string username { get; set; }
         public string password { get; set; }
+
+        //used in registration is a username is already in use
+        public bool IsInUse { get; set; }
     }
 }

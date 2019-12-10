@@ -2,6 +2,9 @@
 export const Urls = {
     API_AUTH_VALIDATE: "http://localhost:8080/api/auth/validate",
     API_AUTH_LOGIN: "http://localhost:8080/api/auth/login",
+    API_AUTH_USERNAME_AVAILABLE: "http://localhost:8080/api/auth/IsUsernameInUse",
+    API_AUTH_REGISTER: "http://localhost:8080/api/auth/register",
+
     API_HISTORY: "/api/User/History",
     API_HISTORY_DETAILS: "/api/User/HistoryDetails",
     API_HISTORY_VISUAL: "/api/User/HistoryAnalytics",
@@ -31,6 +34,7 @@ export const Routes = {
 
     LOGIN: "/Login",
     LOGOUT: "/Logout",
+    REGISTER: "/Register",
     NEW_SEQUENCE: "/secure/NewSequence",
 
     MY_ACCT: "/secure/MyAccount",
@@ -52,7 +56,13 @@ export const Runtime = {
 
 export const UserMsgs = {
     AUTH_FAILURE: "unable to login with the username and password provided",
-    NEW_SEQUENCE_INSTRUCTIONS: "PRESS SHIFT+ENTER OR PRESS START TO BEGIN"
+    NEW_SEQUENCE_INSTRUCTIONS: "PRESS SHIFT+ENTER OR PRESS START TO BEGIN",
+
+    Registration: {
+        PASSWORD_MATCH: "both your passwords must match",
+        USERNAME_IN_USE: "the username {0} is already in use",
+        MUST_BE_NON_EMPTY: "must be non empty"
+    }
 }
 
 export const HighlightType = {

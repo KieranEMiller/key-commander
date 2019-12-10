@@ -383,6 +383,7 @@
     <Content Include="assets\js\react\dev\paths\history_visual.jsx" />
     <Content Include="assets\js\react\dev\paths\history_details.jsx" />
     <Content Include="assets\js\react\dev\paths\history.jsx" />
+    <Content Include="assets\js\react\dev\paths\register.jsx" />
     <Content Include="assets\js\react\dev\paths\new_sequence.jsx" />
     <Content Include="assets\js\react\dev\paths\secure_component.jsx" />
     <Content Include="assets\js\react\dev\paths\myaccount.jsx" />

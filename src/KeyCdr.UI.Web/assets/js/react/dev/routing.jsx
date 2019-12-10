@@ -6,6 +6,7 @@ import Header from          './header.jsx';
 import Index from           './paths/index.jsx';
 import About from           './paths/about.jsx';
 import Login from           './paths/login.jsx';
+import Register from        './paths/register.jsx';
 import MyAccount from       './paths/myaccount.jsx';
 import History from         './paths/history.jsx';
 import HistoryDetails from  './paths/history_details.jsx';
@@ -38,6 +39,18 @@ class Routing extends React.Component {
                         render={
                             (props) =>
                                 <Login {...props}
+                                    IsAuthed={this.props.IsAuthed}
+                                    appLogin={this.props.appLogin}
+                                    appLogout={this.props.appLogout}
+                                />
+                        } 
+                    />
+                    
+                    <Route
+                        exact path={Routes.REGISTER}
+                        render={
+                            (props) =>
+                                <Register {...props}
                                     IsAuthed={this.props.IsAuthed}
                                     appLogin={this.props.appLogin}
                                     appLogout={this.props.appLogout}
