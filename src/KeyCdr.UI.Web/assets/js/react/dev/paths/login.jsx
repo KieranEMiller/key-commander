@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom'
 
 import BaseComponent from           './base_component.jsx';
 import ContentContainer from        '../content.jsx';
@@ -92,6 +93,8 @@ class Login extends BaseComponent {
                             {(this.state.errorMsg != '') &&
                                 <p className="form_error">{this.state.errorMsg}</p>
                             }
+
+                            <Link to={Routes.REGISTER}>Not a user?  Register here</Link>
 
                             <input onClick={this.handleSubmit} className="button-size-medium" type="submit" value="Login" />
                             <div className="clear_both"></div>
