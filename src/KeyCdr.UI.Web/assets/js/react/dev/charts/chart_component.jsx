@@ -53,7 +53,7 @@ export default class ChartDisplayer extends React.Component {
         else
             this.currentChart = null;
 
-        if (this.currentChart != null) {
+        if (this.currentChart != null && this.state.data) {
             var displayName = this.currentChart.getChartDisplayName();
             this.currentChart.initChart(displayName, this.state.data);
 

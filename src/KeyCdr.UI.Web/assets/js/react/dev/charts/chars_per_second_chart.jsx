@@ -14,9 +14,12 @@ export default class CharsPerSecondChart extends BaseChart {
     getTotalCount(data) { return data.SpeedMeasurementCount; }
 
     transformDataToPoints = (data) => {
-        var points = data.SpeedMeasurements.map((item, index) => {
-            return { t: (item.CreateDateDisplayFriendly), y: item.CharsPerSec };
-        });
+        var points = [];
+        if (data.SpeedMeasurements) {
+            points = data.SpeedMeasurements.map((item, index) => {
+                return { t: (item.CreateDateDisplayFriendly), y: item.CharsPerSec };
+            });
+        }
         return points;
     }
 
