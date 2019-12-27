@@ -6,7 +6,9 @@ a project to measure, improve and analyze typing speed and accuracy
 ### UI
 - [x] console app prototype
 - [x] windows thick client prototype in wpf
-- [ ] web UI
+- [x] web UI
+- [ ] web UI: improve responsiveness of as-you-type analysis
+- [ ] implement additional functionality as described below
 
 ### Glaring Deficiencies
 #### Likeness Algorithm: 
@@ -22,12 +24,3 @@ currently limited; base prototype is in place but would like to add features suc
 - [ ] pick certain types of characters to prioritize.  these would presumably be ones the user needs practice with
 - [ ] analyze cross session/sequence performance
 
-## Windows Thick Client Screenshots
-##### The login screen (just takes a name)
-![Login](/external_resources/ui_wpf_login.png)
-
-##### Main screen showing recent sessions
-![Main](/external_resources/ui_wpf_main.png)
-
-##### Main input screen
-![Input Screen](/external_resources/ui_wpf_input.png)
