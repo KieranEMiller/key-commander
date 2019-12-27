@@ -389,6 +389,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\master.min.css" />
+    <Content Include="assets\css\styles.css" />
     <Content Include="assets\img\favicon.ico" />
     <Content Include="assets\img\favicon.png" />
     <Content Include="assets\img\graph_thumbnail.png" />
