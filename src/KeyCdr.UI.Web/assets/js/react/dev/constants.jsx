@@ -1,9 +1,9 @@
 ﻿
 export const Urls = {
-    API_AUTH_VALIDATE: "http://localhost:8080/api/auth/validate",
-    API_AUTH_LOGIN: "http://localhost:8080/api/auth/login",
-    API_AUTH_USERNAME_AVAILABLE: "http://localhost:8080/api/auth/IsUsernameInUse",
-    API_AUTH_REGISTER: "http://localhost:8080/api/auth/register",
+    API_AUTH_VALIDATE: "http://localhost:8081/api/auth/validate",
+    API_AUTH_LOGIN: "http://localhost:8081/api/auth/login",
+    API_AUTH_USERNAME_AVAILABLE: "http://localhost:8081/api/auth/IsUsernameInUse",
+    API_AUTH_REGISTER: "http://localhost:8081/api/auth/register",
 
     API_HISTORY: "/api/User/History",
     API_HISTORY_DETAILS: "/api/User/HistoryDetails",
